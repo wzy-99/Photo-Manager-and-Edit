@@ -74,7 +74,7 @@ int FileScaleInput(char* scale, int type)
 			scale[len] = '\0';
 			if (type == 0)
 			{
-				Bar(330, 250, 450, 290, White);
+				Bar(330, 255, 450, 290, White);
 				TextASC24(335, 260, 14, 0, scale);
 			}
 			else if (type == 1)
@@ -372,6 +372,7 @@ int FileNew(BMPATTR* bmpattr)
 			{
 				;
 			}
+			SpecialKey = 0;
 		}
 		if (bioskey(1))
 		{
