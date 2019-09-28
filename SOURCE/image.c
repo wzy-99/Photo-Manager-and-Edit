@@ -187,7 +187,7 @@ int ImageZoomSet(u8* patton)
 				BmpPut(248, 198, "UI//temp6");
 				return 0;
 			}
-			else if (MouseDown(485, 225, 540, 285))
+			else if (MouseDown(485, 305, 540, 335))
 			{
 				//È¡Ïû
 				MousePutBk(mouse_old.x, mouse_old.y);
@@ -665,6 +665,7 @@ int ImageFileZoom(FILEATTR fileattr)
 	}
 
 	fclose(fw);
+	return 1;
 }
 
 u32 ImageFileRGB(FILE* fp, int x1, int x2, int y1, int y2, double x, double y, u32 linebytes, u16 h)

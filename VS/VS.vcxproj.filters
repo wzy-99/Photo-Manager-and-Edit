@@ -45,6 +45,12 @@
     <ClCompile Include="..\SOURCE\file.c">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="..\SOURCE\pic.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="..\SOURCE\box.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\INCLUDE\head.h">
@@ -75,6 +81,12 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="..\INCLUDE\file.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\INCLUDE\pic.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="..\INCLUDE\box.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

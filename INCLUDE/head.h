@@ -64,4 +64,13 @@ typedef struct {
 	unsigned int nWidth, nHeigth;		//图像长宽
 } FILEATTR;
 
+//菜单状态变量
+typedef struct {
+	u8 size;		//画笔大小
+	u8 size2;		//图形大小
+	u8 patton;		//放大模式	1双线性内插法 0临近点插值法
+	u32 color;		//颜色
+} MENUSTATE;
+
+
 #endif

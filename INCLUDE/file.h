@@ -11,9 +11,10 @@
 #include "dir.h"	//定义findfirst、findnext查找文件函数
 #include "io.h"		//定义remove删除文件的函数
 
-void DrawNewBox();
-void DrawOpenBox();
-void DrawSaveBox();
+void DrawNewBox(void);
+void DrawOpenBox(void);
+void DrawSaveBox(void);
+void DrawListBox(void);
 int FileList(BMPATTR* bmpattr);
 int FileNew(BMPATTR* bmpattr);
 int FileOpen(BMPATTR* bmpattr);
@@ -23,8 +24,6 @@ int FileInfo(FILEATTR* fileattr, char* filename);
 int FileInfoShow(FILEATTR attr, struct ffblk dir);
 int FindAllFile(int* n);
 int FileListShow(int i);
-int WarnBox(char* error);					//错误窗口
-
 
 
 #endif

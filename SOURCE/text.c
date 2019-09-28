@@ -1,6 +1,6 @@
 #include "text.h"
 
-int TextASC24(int x, int y, int part, u32 color, char* str)
+int TextASC24(int x, int y, int part, u32 color,unsigned char* str)
 {
 	int i, j;
 	unsigned int offset, bytes;
@@ -42,7 +42,7 @@ int TextASC24(int x, int y, int part, u32 color, char* str)
 }
 
 
-int TextASC16(int x, int y, int part, u32 color, char* str)
+int TextASC16(int x, int y, int part, u32 color, unsigned char* str)
 {
 	int i, j;
 	unsigned int offset;
@@ -84,7 +84,7 @@ int TextASC16(int x, int y, int part, u32 color, char* str)
 	return 1;
 }
 
-int TextASC12(int x, int y, int part, u32 color, char* str)
+int TextASC12(int x, int y, int part, u32 color, unsigned char* str)
 {
 	int i, j;
 	unsigned int offset;
@@ -175,10 +175,10 @@ int TextGB16(int x, int y, int part, u32 color, unsigned char* str)
 	return 1;
 }
 
-int TextGB32(int x, int y, int part, u32 color, unsigned char* str)
+int TextGB32(int x, int y, int part, u32 color, unsigned char* str)		//使用uchar因为位码、段码的值大于127
 {
 	int i, j;
-	char asc[2] = { '\0','\0' };
+	//char asc[2] = { '\0','\0' };
 	unsigned char hBytes, lBytes;
 	unsigned long int offset;
 	unsigned long int bytes;

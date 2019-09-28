@@ -3,7 +3,7 @@
 
 #include"head.h"
 
-void SetSVGA();
+void SetSVGA(void);
 u32 GetPixel(int x, int y);
 void SelectPage(register u8 page);
 void PutPixel(int x, int y, u32 color);

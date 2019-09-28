@@ -7,7 +7,7 @@
 #include "mouse.h"
 #include "text.h"
 
-void DrawColorBox();
+void DrawColorBox(void);
 
 int SelectColor(u32* color);							//Ñ¡É«²Ù×÷
 

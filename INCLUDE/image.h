@@ -3,8 +3,10 @@
 
 #include "head.h"
 #include "svga.h"
-#include "menu.h"
+#include "mouse.h"
 #include "bmp.h"
+#include "pic.h"
+#include "box.h"
 
 int ImageZoom(BMPATTR* bmpattr, double times, u8 patton);
 int ImageXY(int* position, int boundary, int origin);

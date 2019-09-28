@@ -135,6 +135,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\SOURCE\bmp.c" />
+    <ClCompile Include="..\SOURCE\box.c" />
     <ClCompile Include="..\SOURCE\color.c" />
     <ClCompile Include="..\SOURCE\draw.c" />
     <ClCompile Include="..\SOURCE\file.c" />
@@ -142,11 +143,13 @@
     <ClCompile Include="..\SOURCE\main.c" />
     <ClCompile Include="..\SOURCE\menu.c" />
     <ClCompile Include="..\SOURCE\mouse.c" />
+    <ClCompile Include="..\SOURCE\pic.c" />
     <ClCompile Include="..\SOURCE\svga.c" />
     <ClCompile Include="..\SOURCE\text.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\INCLUDE\bmp.h" />
+    <ClInclude Include="..\INCLUDE\box.h" />
     <ClInclude Include="..\INCLUDE\color.h" />
     <ClInclude Include="..\INCLUDE\draw.h" />
     <ClInclude Include="..\INCLUDE\file.h" />
@@ -154,6 +157,7 @@
     <ClInclude Include="..\INCLUDE\image.h" />
     <ClInclude Include="..\INCLUDE\menu.h" />
     <ClInclude Include="..\INCLUDE\mouse.h" />
+    <ClInclude Include="..\INCLUDE\pic.h" />
     <ClInclude Include="..\INCLUDE\svga.h" />
     <ClInclude Include="..\INCLUDE\text.h" />
   </ItemGroup>
