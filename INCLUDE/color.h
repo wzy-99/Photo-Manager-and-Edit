@@ -1,19 +1,22 @@
 #ifndef COLOR_H
 #define COLOR_H
 
-#include "bmp.h"
 #include "head.h"
 #include "svga.h"
 #include "mouse.h"
-#include "text.h"
+
+#include "bmp.h"	//基础库
+#include "text.h"	//文本库
+#include "box.h"	//窗口库
 
 void DrawColorBox(void);
 
 int SelectColor(u32* color);							//选色操作
 
-int FreshColor(u32 color, u32* nowcolor, HSL* nowhsl);	//初始化信息
+int FreshColor(u32 color, u32* nowcolor, HSL* nowhsl);	//初始信息
 int RefreshColor(HSL hsl, u32* nowcolor);				//刷新信息
 
+RGB* U32TRGB(RGB* rgb, u32 color);						//U32 to RGB
 u32 RGB2U32(u8 r, u8 g, u8 b);							//RGB to U32
 int HSL2RGB(u8* r, u8* g, u8* b, HSL hsl);				//HSL to RGB
 int RGB2HSL(RGB rgb, int* h, double* s, double* l);		//RGB to HSL

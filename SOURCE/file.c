@@ -1,25 +1,5 @@
 #include "file.h"
 
-void DrawOpenBox()
-{
-	BmpPut(248, 198, "UI//OPEN");
-}
-
-void DrawNewBox()
-{
-	BmpPut(248, 198, "UI//NEW");
-}
-
-void DrawSaveBox()
-{
-	BmpPut(248, 198, "UI//SAVE");
-}
-
-void DrawListBox()
-{
-	BmpPut(150, 150, "UI//LIST");
-}
-
 int FileNameInput(char* filename)
 {
 	unsigned int key;
@@ -136,7 +116,7 @@ int FileOpen(BMPATTR* bmpattr)
 	int SpecialKey = 0;
 	char filename[18] = "";
 	MOUSE mouse_old, mouse_new;
-	BmpSave(248, 198, 552, 352, "UI//temp0");
+	BmpSave(248, 198, 552, 352, "DATA//BK0");
 	DrawOpenBox();
 	MouseStatus(&mouse_old);
 	MouseStoreBk(mouse_old.x, mouse_old.y);
@@ -175,7 +155,7 @@ int FileOpen(BMPATTR* bmpattr)
 			{
 				//关闭
 				MousePutBk(mouse_old.x, mouse_old.y);
-				BmpPut(248, 198, "UI//temp0");
+				BmpPut(248, 198, "DATA//BK0");
 				return 0;
 			}
 			else if (MouseDown(750, 0, 800, 50))
@@ -211,7 +191,7 @@ int FileSave(BMPATTR* bmpattr)
 		return 0;
 	}
 
-	BmpSave(248, 198, 552, 352, "UI//temp1");
+	BmpSave(248, 198, 552, 352, "DATA//BK1");
 	DrawSaveBox();
 	MouseStatus(&mouse_old);
 	MouseStoreBk(mouse_old.x, mouse_old.y);
@@ -242,7 +222,7 @@ int FileSave(BMPATTR* bmpattr)
 				{
 					MousePutBk(mouse_old.x, mouse_old.y);
 					BmpName(filename);
-					BmpPut(248, 198, "UI//temp1");
+					BmpPut(248, 198, "DATA//BK1");
 					BmpSave(bmpattr->x1, bmpattr->y1, bmpattr->x2, bmpattr->y2, filename);
 					return 0;
 				}
@@ -251,7 +231,7 @@ int FileSave(BMPATTR* bmpattr)
 			{
 				//关闭
 				MousePutBk(mouse_old.x, mouse_old.y);
-				BmpPut(248, 198, "UI//temp1");
+				BmpPut(248, 198, "DATA//BK1");
 				return 0;
 			}
 			else if (MouseDown(750, 0, 800, 50))
@@ -284,7 +264,7 @@ int FileNew(BMPATTR* bmpattr)
 	char cWidth[6] = "";
 	char cHeigth[6] = "";
 	MOUSE mouse_old, mouse_new;
-	BmpSave(248, 198, 552, 352, "UI//temp2");
+	BmpSave(248, 198, 552, 352, "DATA//BK2");
 	DrawNewBox();
 	MouseStatus(&mouse_old);
 	MouseStoreBk(mouse_old.x, mouse_old.y);
@@ -360,7 +340,7 @@ int FileNew(BMPATTR* bmpattr)
 			{
 				//关闭
 				MousePutBk(mouse_old.x, mouse_old.y);
-				BmpPut(248, 198, "UI//temp2");
+				BmpPut(248, 198, "DATA//BK2");
 				return 0;
 			}
 			else if (MouseDown(750, 0, 800, 50))
@@ -409,7 +389,7 @@ int FileList(BMPATTR* bmpattr)
 	FILEATTR fileattr = { 0,"",1.0,0,0,0,0,0,0};
 	MOUSE mouse_old, mouse_new;
 
-	BmpSave(150, 150, 650, 500, "UI//temp5");
+	BmpSave(150, 150, 650, 500, "DATA//BK5");
 	DrawListBox();
 	FindAllFile(&number);
 	FileListShow(page);
@@ -507,7 +487,7 @@ int FileList(BMPATTR* bmpattr)
 			{
 				//关闭
 				MousePutBk(mouse_new.x, mouse_new.y);
-				BmpPut(150, 150, "UI//temp5");
+				BmpPut(150, 150, "DATA//BK5");
 				return 0;
 			}
 			else if (MouseDown(750, 0, 800, 50))
@@ -638,6 +618,8 @@ int FileInfoShow(FILEATTR attr, struct ffblk dir)
 	TextGB16(485, 385, part, 0, time);
 	TextGB16(545, 420, part, 0, cWidth);
 	TextGB16(545, 450, part, 0, cHeigth);
+
+	TextASC16(320, 300, 12, 0, "Waiting...");	//显示等待信息
 
 	ImageFileZoom(attr);
 	return 0;

@@ -1,21 +1,5 @@
 #include "image.h"
 
-void DrawSettingBox(u8 patton)
-{
-	BmpPut(248, 198, "UI/ZOOM");
-
-	if (patton)
-	{
-		Bar(455, 265, 465, 275, 0);
-		Bar(455, 315, 465, 325, White);
-	}
-	else
-	{
-		Bar(455, 265, 465, 275, White);
-		Bar(455, 315, 465, 325, 0);
-	}
-}
-
 int ImageZoom(BMPATTR* bmpattr, double times, u8 patton)
 {
 	FILE* fp;
@@ -122,9 +106,9 @@ int ImageZoomSet(u8* patton)
 	u8 nPatton = *patton;
 	MOUSE mouse_old, mouse_new;
 
-	BmpSave(248, 198, 552, 352, "UI//temp6");
+	BmpSave(248, 198, 552, 352, "DATA//BK6");
 
-	DrawSettingBox(nPatton);
+	DrawZoomSettingBox(nPatton);
 
 	MouseStatus(&mouse_old);
 	MouseStoreBk(mouse_old.x, mouse_old.y);
@@ -184,21 +168,21 @@ int ImageZoomSet(u8* patton)
 				//确认
 				MousePutBk(mouse_old.x, mouse_old.y);
 				*patton = nPatton;
-				BmpPut(248, 198, "UI//temp6");
+				BmpPut(248, 198, "DATA//BK6");
 				return 0;
 			}
 			else if (MouseDown(485, 305, 540, 335))
 			{
 				//取消
 				MousePutBk(mouse_old.x, mouse_old.y);
-				BmpPut(248, 198, "UI//temp6");
+				BmpPut(248, 198, "DATA//BK6");
 				return 0;
 			}
 			else if (MouseDown(500, 200, 550, 240))
 			{
 				//关闭
 				MousePutBk(mouse_old.x, mouse_old.y);
-				BmpPut(248, 198, "UI//temp6");
+				BmpPut(248, 198, "DATA//BK6");
 				return 0;
 			}
 			else if (MouseDown(750, 0, 800, 50))
@@ -351,7 +335,9 @@ int ImageTailor(BMPATTR* bmpattr)
 					x2 = mouse_new.x;
 					y2 = mouse_new.y;
 					flag = 0;
+
 					MousePutBk(mouse_new.x, mouse_new.y);
+
 					bmpattr->heigth = abs(y2 - y1);
 					bmpattr->width = abs(x2 - x1);
 					bmpattr->oWidth = bmpattr->width;
@@ -360,9 +346,11 @@ int ImageTailor(BMPATTR* bmpattr)
 					bmpattr->x2 = SCR_WIDTH / 2 + bmpattr->width / 2;
 					bmpattr->y1 = SCR_HEIGHT / 2 - bmpattr->heigth / 2 + 35;
 					bmpattr->y2 = SCR_HEIGHT / 2 + bmpattr->heigth / 2 + 35;
+
 					BmpSave(x1, y1, x2, y2, "DATA//temp0");
 					Bar(0, 100, 800, 570, White);
 					BmpPut(bmpattr->x1, bmpattr->y1, "DATA//temp0");
+
 					MouseStatus(&mouse_new);
 					MouseStoreBk(mouse_new.x, mouse_new.y);
 				}
@@ -718,4 +706,157 @@ u32 ImageFileRGB(FILE* fp, int x1, int x2, int y1, int y2, double x, double y, u
 	}
 
 	return ((u32)r << 16) | ((u32)g << 8) | ((u32)b);
+}
+
+int ImageContrast(BMPATTR attr,int value)
+{
+	int i, j;		//循环变量
+	u32 oldcolor;	//色彩变量
+	RGB rgb;		//色彩分量
+
+	if (value >= -30 && value <= 30)
+	{	//value的值范围限定为-30~30，而实际上应该是-63~63，这里为了减少画质损失因此缩小范围。
+		for (i = attr.y1; i < attr.y2; i++)
+		{
+			for (j = attr.x1; j < attr.x2; j++)
+			{
+				oldcolor = GetPixel(j, i);
+				U32TRGB(&rgb, oldcolor);
+				//计算公式
+				rgb.r = ContrastCalc(rgb.r, value);
+				rgb.g = ContrastCalc(rgb.g, value);
+				rgb.b = ContrastCalc(rgb.b, value);
+				//类型转换
+				oldcolor = RGB2U32(rgb.r, rgb.g, rgb.b);
+				PutPixel(j, i, oldcolor);
+			}
+		}
+	}
+	else
+	{
+		//范围超出
+		return -1;
+	}
+	return 0;
+}
+
+u8 ContrastCalc(u8 color,int value)
+{
+	int tcolor;
+	tcolor = -1.29 * value * pow(color, 3) * 1e-6 + 4.93 * value * pow(color, 2) * 1e-4 + (1 - 4.18 * value * 1e-2) * color;
+	//函数原型为：f(x)=a*x^3+bx^2+cx，通过此函数模拟“S”型灰度曲线。（具体推导见报告）
+	if (tcolor > 255)
+	{
+		return 255;
+	}
+	else if (tcolor < 0)
+	{
+		return 0;
+	}
+	else
+	{
+		return tcolor;
+	}
+}
+
+int ImageSaturation(BMPATTR attr, int value)
+{
+	int i, j;		//循环变量
+	u32 oldcolor;	//色彩变量
+	RGB rgb;		//色彩分量
+	HSL hsl;		//色彩分量
+
+	if (value >= -100 && value <= 100)
+	{	//value的值范围限定为**************，而实际上应该是**************，这里为了减少画质损失因此缩小范围。
+		for (i = attr.y1; i < attr.y2; i++)
+		{
+			for (j = attr.x1; j < attr.x2; j++)
+			{
+				oldcolor = GetPixel(j, i);
+				//类型转换
+				U32TRGB(&rgb, oldcolor);
+				RGB2HSL(rgb, &hsl.h, &hsl.s, &hsl.l);
+				//计算公式
+				hsl.s = hsl.s * (1 + value / 100.0);
+				if (hsl.s > 1)
+				{
+					hsl.s = 1.0;
+				}
+				else if (hsl.s < 0)
+				{
+					hsl.s = 0.0;
+				}
+				else
+				{
+					;
+				}
+				//类型转换
+				HSL2RGB(&rgb.r, &rgb.g, &rgb.b, hsl);
+				oldcolor = RGB2U32(rgb.r, rgb.g, rgb.b);
+
+				PutPixel(j, i, oldcolor);
+			}
+		}
+	}
+	else
+	{
+		//范围超出
+		return -1;
+	}
+	return 0;
+}
+
+int ImageLightness(BMPATTR attr, int value)
+{
+	int i, j;		//循环变量
+	u32 oldcolor;	//色彩变量
+	RGB rgb;		//色彩分量
+	HSL hsl;		//色彩分量
+
+	if (value >= -40 && value <= 40)
+	{	//value的值范围限定为**************。
+		for (i = attr.y1; i < attr.y2; i++)
+		{
+			for (j = attr.x1; j < attr.x2; j++)
+			{
+				oldcolor = GetPixel(j, i);
+				//类型转换
+				U32TRGB(&rgb, oldcolor);
+				RGB2HSL(rgb, &hsl.h, &hsl.s, &hsl.l);
+				//计算公式
+				hsl.l = hsl.l * (1 + value / 100.0);
+				if (hsl.l > 1)
+				{
+					hsl.l = 1.0;
+				}
+				else if (hsl.s < 0)
+				{
+					hsl.l = 0.0;
+				}
+				else
+				{
+					;
+				}
+				//类型转换
+				HSL2RGB(&rgb.r, &rgb.g, &rgb.b, hsl);
+				oldcolor = RGB2U32(rgb.r, rgb.g, rgb.b);
+
+				PutPixel(j, i, oldcolor);
+			}
+		}
+	}
+	else
+	{
+		//范围超出
+		return -1;
+	}
+	return 0;
+}
+
+int ImageAdjustment(BMPATTR* bmpattr)
+{
+
+
+
+
 }

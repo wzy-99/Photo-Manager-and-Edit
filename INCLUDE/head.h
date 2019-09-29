@@ -72,5 +72,15 @@ typedef struct {
 	u32 color;		//ÑÕÉ«
 } MENUSTATE;
 
+//BMPÍ¼ÏñÊôĞÔ
+typedef struct {
+	int flag;						//Í¼Ïñ×´Ì¬
+	char name[18];					//Í¼ÏñÃû³Æ
+	double scale;					//Í¼Ïñ·ÅËõ
+	int x1, y1, x2, y2;				//Í¼Ïñ×ø±ê
+	unsigned int width, heigth;		//Í¼Ïñ³¤¿í
+	unsigned int oWidth, oHeigth;
+} BMPATTR;
+
 
 #endif

@@ -1,12 +1,5 @@
 #include "draw.h"
 
-void DrawSizeBox()
-{
-	BmpPut(248, 198, "UI//SIZE");
-}
-
-
-
 int DrawPen(BMPATTR bmpattr, MENUSTATE* state)
 {
 	MOUSE mouse_old, mouse_new;
@@ -152,12 +145,14 @@ int SelectSize(u8* size1, u8* size2)
 	int s1 = *size1, s2 = *size2;
 	char c1[2], c2[2];
 	MOUSE mouse_old, mouse_new;
-	BmpSave(248, 198, 552, 352, "UI//temp4");
+
+	BmpSave(248, 198, 552, 352, "DATA//BK4");
 	DrawSizeBox();
 	itoa(s1, c1, 10);
 	itoa(s2, c2, 10);
 	TextASC24(385, 260, 24, 0, c1);
 	TextASC24(385, 300, 24, 0, c2);
+
 	MouseStatus(&mouse_old);
 	MouseStoreBk(mouse_old.x, mouse_old.y);
 	while (1)
@@ -235,21 +230,21 @@ int SelectSize(u8* size1, u8* size2)
 				*size1 = s1;
 				*size2 = s2;
 				MousePutBk(mouse_new.x, mouse_new.y);
-				BmpPut(248, 198, "UI//temp4");
+				BmpPut(248, 198, "DATA//BK4");
 				return 0;
 			}
 			else if (MouseDown(490, 305, 535, 325))
 			{
 				//È¡Ïû
 				MousePutBk(mouse_new.x, mouse_new.y);
-				BmpPut(248, 198, "UI//temp4");
+				BmpPut(248, 198, "DATA//BK4");
 				return 0;
 			}
 			else if (MouseDown(500, 200, 550, 240))
 			{
 				//¹Ø±Õ
 				MousePutBk(mouse_old.x, mouse_old.y);
-				BmpPut(248, 198, "UI//temp4");
+				BmpPut(248, 198, "DATA//BK4");
 				return 0;
 			}
 			else if (MouseDown(750, 0, 800, 50))

@@ -158,6 +158,14 @@ u32 RGB2U32(u8 r,u8 g,u8 b)
 	return ((u32)r << 16) | ((u32)g << 8) | (u32)b;
 }
 
+RGB* U32TRGB(RGB* rgb, u32 color)
+{
+	rgb->r = (color & 0xff0000) >> 16;
+	rgb->g = (color & 0x00ff00) >> 8;
+	rgb->b = (color & 0x0000ff);
+	return rgb;
+}
+
 int RefreshColor(HSL hsl, u32* nowcolor)
 {
 	int i,j;
@@ -217,8 +225,6 @@ int FreshColor(u32 color, u32* nowcolor, HSL* nowhsl)
 	return 1;
 }
 
-
-
 void DrawColorBox()
 {
 	int i, j;
@@ -242,7 +248,7 @@ int SelectColor(u32* color)
 	HSL nowhsl = { 0,0,0 };
 	u32 nowcolor = 0;
 	MOUSE mouse_old, mouse_new;
-	BmpSave(248, 198, 552, 352, "UI//temp3");
+	BmpSave(248, 198, 552, 352, "DATA//BK4");
 	DrawColorBox();
 	FreshColor(*color, &nowcolor, &nowhsl);
 	MouseStatus(&mouse_old);
@@ -280,14 +286,14 @@ int SelectColor(u32* color)
 				//»∑»œ
 				*color = nowcolor;
 				MousePutBk(mouse_old.x, mouse_old.y);
-				BmpPut(248, 198, "UI//temp3");
+				BmpPut(248, 198, "DATA//BK4");
 				return 0;
 			}
 			else if (MouseDown(500, 200, 550, 240))
 			{
 				//πÿ±’
 				MousePutBk(mouse_old.x, mouse_old.y);
-				BmpPut(248, 198, "UI//temp3");
+				BmpPut(248, 198, "DATA//BK4");
 				return 0;
 			}
 			else if (MouseDown(750, 0, 800, 50))

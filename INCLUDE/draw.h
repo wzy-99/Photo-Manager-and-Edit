@@ -3,14 +3,14 @@
 
 #include "head.h"
 #include "svga.h"
+#include "mouse.h"	
 
-#include "bmp.h"
-#include "mouse.h"
-#include "pic.h"
-#include "box.h"
-#include "color.h"
+#include "bmp.h"	//图像基础库
+#include "pic.h"	//图形库
+#include "box.h"	//窗口库
+#include "color.h"	//色彩库
 
-void DrawSizeBox(void);
+
 
 int SelectSize(u8* size1, u8* size2);								//选择绘制规格
 
