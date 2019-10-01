@@ -69,8 +69,15 @@ int DrawPen(BMPATTR bmpattr, MENUSTATE* state)
 			// {
 				//图形
 				//Rectangle(12, 52, 68, 98, Gray, 2);
-				// return 
+				// return 65
 			// }
+			else if (MouseDown(650, 50, 700, 100))
+			{
+				//调整
+				MousePutBk(mouse_new.x, mouse_new.y);
+				Rectangle(12, 52, 68, 98, Gray, 2);
+				return 70;
+			}
 			 else if(MouseDown(700,50,750,100))
 			 {
 				//粗细
@@ -86,6 +93,13 @@ int DrawPen(BMPATTR bmpattr, MENUSTATE* state)
 				SelectColor(&state->color);
 				MouseStatus(&mouse_old);
 				MouseStoreBk(mouse_old.x, mouse_old.y);
+			}
+			else if (MouseDown(703, 570, 735, 600))
+			{
+				//缩小
+				MousePutBk(mouse_new.x, mouse_new.y);
+				Rectangle(12, 52, 68, 98, Gray, 2);
+				return 85;
 			}
 			else if (MouseDown(735, 570, 767, 600))
 			{

@@ -101,3 +101,8 @@ void DrawSizeBox()
 {
 	BmpPut(248, 198, "UI//SIZE");
 }
+
+void DrawAdjustBox()
+{
+	BmpPut(248, 198, "UI//ADST");	//ADST:adjust
+}

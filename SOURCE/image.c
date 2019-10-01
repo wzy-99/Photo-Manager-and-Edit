@@ -14,7 +14,7 @@ int ImageZoom(BMPATTR* bmpattr, double times, u8 patton)
 	if (!bmpattr->flag)
 	{
 		//判断图片是否打开
-		return 0;
+		return -1;
 	}
 
 	tscale = bmpattr->scale;
@@ -23,7 +23,7 @@ int ImageZoom(BMPATTR* bmpattr, double times, u8 patton)
 	if ((fp = fopen("DATA//temp1", "wb")) == NULL)
 	{
 		//文件无法创建
-		return 0;
+		return -2;
 	}
 
 	nWidth = (unsigned int)(bmpattr->width * times);
@@ -31,14 +31,14 @@ int ImageZoom(BMPATTR* bmpattr, double times, u8 patton)
 
 	if (nWidth > 798 || nHeigth > 468)
 	{
-		//超界
-		return 0;
+		//上限
+		return -3;
 	}
 
 	if (nWidth < bmpattr->oWidth - 5 || nHeigth < bmpattr->oHeigth - 5)
 	{
-		//过小
-		return 0;
+		//下限
+		return -4;
 	}
 
 	for (i = 0; i < nHeigth; i++)
@@ -66,7 +66,7 @@ int ImageZoom(BMPATTR* bmpattr, double times, u8 patton)
 	if ((fp = fopen("DATA//temp1", "rb")) == NULL)
 	{
 		//文件无法打开
-		return 0;
+		return -5;
 	}
 
 	fseek(fp, 0, 0);
@@ -286,15 +286,18 @@ u32 ImageRGB(int x1, int x2, int y1, int y2, double x, double y, u8 patton)
 
 int ImageTailor(BMPATTR* bmpattr)
 {
-	int x1, y1, x2, y2;
 	int flag = 0;
+	int x1, y1, x2, y2;
 	MOUSE mouse_old, mouse_new;
+
 	if (bmpattr->flag == 0)
 	{
 		WarnBox("图片未打开");
 		return 0;
 	}
+
 	Rectangle(72, 52, 128, 98, 0xff0000, 2);
+
 	MouseStatus(&mouse_old);
 	MouseStoreBk(mouse_old.x, mouse_old.y);
 	MouseDraw(mouse_old);
@@ -303,64 +306,78 @@ int ImageTailor(BMPATTR* bmpattr)
 		MouseStatus(&mouse_new);
 		if (mouse_new.x == mouse_old.x && mouse_new.y == mouse_old.y && mouse_new.button == mouse_old.button)
 		{
-			;
+			continue;	//如果鼠标没有移动也没有点击
 		}
 		else
 		{
 			MousePutBk(mouse_old.x, mouse_old.y);
 			MouseStoreBk(mouse_new.x, mouse_new.y);
 			MouseDraw(mouse_new);
-			if (MouseDown(bmpattr->x1, bmpattr->y1, bmpattr->x2, bmpattr->y2) && flag == 0)
+
+			//简化模型：我们只关注鼠标的按下与弹起，对于鼠标的移动过程可以简化
+			if (mouse_old.button == mouse_new.button)
 			{
-				if (mouse_old.button == 1)
-				{
-					;
-				}
-				else
-				{
-					x1 = mouse_new.x;
-					y1 = mouse_new.y;
-					flag = 1;
-				}
-			}
-			else if (MouseUp(bmpattr->x1, bmpattr->y1, bmpattr->x2, bmpattr->y2) && flag == 1)
-			{
-
-				if (mouse_new.x == x1 && mouse_new.y == y1)
-				{
-					flag = 0;
-				}
-				else
-				{
-					x2 = mouse_new.x;
-					y2 = mouse_new.y;
-					flag = 0;
-
-					MousePutBk(mouse_new.x, mouse_new.y);
-
-					bmpattr->heigth = abs(y2 - y1);
-					bmpattr->width = abs(x2 - x1);
-					bmpattr->oWidth = bmpattr->width;
-					bmpattr->oHeigth = bmpattr->heigth;
-					bmpattr->x1 = SCR_WIDTH / 2 - bmpattr->width / 2;
-					bmpattr->x2 = SCR_WIDTH / 2 + bmpattr->width / 2;
-					bmpattr->y1 = SCR_HEIGHT / 2 - bmpattr->heigth / 2 + 35;
-					bmpattr->y2 = SCR_HEIGHT / 2 + bmpattr->heigth / 2 + 35;
-
-					BmpSave(x1, y1, x2, y2, "DATA//temp0");
-					Bar(0, 100, 800, 570, White);
-					BmpPut(bmpattr->x1, bmpattr->y1, "DATA//temp0");
-
-					MouseStatus(&mouse_new);
-					MouseStoreBk(mouse_new.x, mouse_new.y);
-				}
-			}
-			else if (MouseUp(0, 0, 800, 600) && flag == 1)
-			{
-				flag = 0;
+				//如果鼠标移动了但未改变点击状态
+				mouse_old = mouse_new;
 				continue;
 			}
-			else if (MouseDown(10, 0, 70, 50))
+
+			mouse_old = mouse_new;
+
+			if (MouseDown(bmpattr->x1, bmpattr->y1, bmpattr->x2, bmpattr->y2) && flag == 0)
+			{
+				x1 = mouse_new.x;
+				y1 = mouse_new.y;
+				flag = 1;	//记录状态
+			}
+			//鼠标在图像区点击后有两种情况：1.在图像区松开2.在图像区外松开
+			//情况1:
+			else if (MouseUp(bmpattr->x1, bmpattr->y1, bmpattr->x2, bmpattr->y2) && flag == 1)
+			{
+				x2 = mouse_new.x;
+				y2 = mouse_new.y;
+				flag = 0;	//重新记录
+
+				if (x1 == x2 || y1 == y2)
+				{
+					//判断是否为完全裁剪
+					//如果是，则本次裁剪无效
+					continue;
+				}
+
+				MousePutBk(mouse_new.x, mouse_new.y);
+
+				//重新计算图像属性
+				bmpattr->width = abs(x2 - x1);
+				bmpattr->heigth = abs(y2 - y1);
+				bmpattr->oWidth = bmpattr->width;
+				bmpattr->oHeigth = bmpattr->heigth;
+				bmpattr->x1 = SCR_WIDTH / 2 - bmpattr->width / 2;
+				bmpattr->x2 = SCR_WIDTH / 2 + bmpattr->width / 2;
+				bmpattr->y1 = SCR_HEIGHT / 2 - bmpattr->heigth / 2 + 35;
+				bmpattr->y2 = SCR_HEIGHT / 2 + bmpattr->heigth / 2 + 35;
+
+				//裁剪图像
+				BmpSave(bmpattr->x1, bmpattr->y1, bmpattr->x2, bmpattr->y2, "DATA//temp0");
+				Bar(0, 100, 800, 570, White);
+				BmpPut(bmpattr->x1, bmpattr->y1, "DATA//temp0");
+
+				//注意：这里是old_mouse
+				MouseStatus(&mouse_old);
+				MouseStoreBk(mouse_old.x, mouse_old.y);
+			}
+			//情况2：
+			else if(MouseOutUp(bmpattr->x1, bmpattr->y1, bmpattr->x2, bmpattr->y2) && flag == 1)
+			{
+				flag = 0;
+				//删除记录
+			}
+			else
+			{
+				;
+			}
+
+			if (MouseDown(10, 0, 70, 50))
 			{
 				//打开
 				MousePutBk(mouse_new.x, mouse_new.y);
@@ -381,6 +398,13 @@ int ImageTailor(BMPATTR* bmpattr)
 				Rectangle(72, 52, 128, 98, Gray, 2);
 				return 40;
 			}
+			else if (MouseDown(190,0,250,50))
+			{
+				//新建
+				MousePutBk(mouse_new.x, mouse_new.y);
+				Rectangle(72, 52, 128, 98, Gray, 2);
+				return 45;
+			}
 			else if (MouseDown(10, 50, 70, 100))
 			{
 				//画笔
@@ -398,14 +422,21 @@ int ImageTailor(BMPATTR* bmpattr)
 			// else if(MouseDown(130,50,190,100))
 			// {
 				// Rectangle(72, 52, 128, 98, Gray, 2);
-				// return 
+				// return 65
 			// }
+			else if (MouseDown(650, 50, 700, 100))
+			{
+				//调整
+				MousePutBk(mouse_new.x, mouse_new.y);
+				Rectangle(12, 52, 68, 98, Gray, 2);
+				return 70;
+			}
 			else if (MouseDown(700, 50, 750, 100))
 			{
 				//粗细
 				MousePutBk(mouse_new.x, mouse_new.y);
 				Rectangle(12, 52, 68, 98, Gray, 2);
-				return 85;
+				return 75;
 			}
 			else if (MouseDown(750, 50, 800, 100))
 			{
@@ -414,19 +445,12 @@ int ImageTailor(BMPATTR* bmpattr)
 				Rectangle(72, 52, 128, 98, Gray, 2);
 				return 80;
 			}
-			else if (MouseDown(0, 570, 42, 600))
+			else if (MouseDown(703, 570, 735, 600))
 			{
-				//旋转
+				//设置
 				MousePutBk(mouse_new.x, mouse_new.y);
 				Rectangle(72, 52, 128, 98, Gray, 2);
-				return 100;
-			}
-			else if (MouseDown(42, 570, 84, 600))
-			{
-				//翻转
-				MousePutBk(mouse_new.x, mouse_new.y);
-				Rectangle(72, 52, 128, 98, Gray, 2);
-				return 105;
+				return 85;
 			}
 			else if (MouseDown(735, 570, 767, 600))
 			{
@@ -442,6 +466,20 @@ int ImageTailor(BMPATTR* bmpattr)
 				Rectangle(72, 52, 128, 98, Gray, 2);
 				return 95;
 			}
+			else if (MouseDown(0, 570, 42, 600))
+			{
+				//旋转
+				MousePutBk(mouse_new.x, mouse_new.y);
+				Rectangle(72, 52, 128, 98, Gray, 2);
+				return 100;
+			}
+			else if (MouseDown(42, 570, 84, 600))
+			{
+				//翻转
+				MousePutBk(mouse_new.x, mouse_new.y);
+				Rectangle(72, 52, 128, 98, Gray, 2);
+				return 105;
+			}
 			else if (MouseDown(750, 0, 800, 50))
 			{
 				//退出
@@ -451,7 +489,6 @@ int ImageTailor(BMPATTR* bmpattr)
 			{
 				;
 			}
-			mouse_old = mouse_new;
 		}
 	}
 }
@@ -605,13 +642,15 @@ int ImageFileZoom(FILEATTR fileattr)
 
 	if ((fp = fopen(fileattr.name, "rb")) == NULL)
 	{
-		return 0;
+		return -1;
 	}
 	
 	if ((fw = fopen("DATA/temp5", "wb")) == NULL)
 	{
-		return 0;
+		return -1;
 	}
+
+	
 
 	for (i = 0; i < fileattr.nHeigth; i++)
 	{
@@ -716,6 +755,9 @@ int ImageContrast(BMPATTR attr,int value)
 
 	if (value >= -30 && value <= 30)
 	{	//value的值范围限定为-30~30，而实际上应该是-63~63，这里为了减少画质损失因此缩小范围。
+
+		TextGB32(315, 570, 24, 0x626262, "对比度调节中...");
+
 		for (i = attr.y1; i < attr.y2; i++)
 		{
 			for (j = attr.x1; j < attr.x2; j++)
@@ -737,13 +779,19 @@ int ImageContrast(BMPATTR attr,int value)
 		//范围超出
 		return -1;
 	}
+	TextGB32(315, 570, 24, ThemeColor2, "对比度调节中...");
 	return 0;
 }
 
-u8 ContrastCalc(u8 color,int value)
+u8 ContrastCalc(u8 color,int param)
 {
 	int tcolor;
-	tcolor = -1.29 * value * pow(color, 3) * 1e-6 + 4.93 * value * pow(color, 2) * 1e-4 + (1 - 4.18 * value * 1e-2) * color;
+	if (param > 50 || param < -50)
+	{
+		//如果输入调节参数超出限制范围
+		return -1;
+	}
+	tcolor = -1.29 * param * pow(color, 3) * 1e-6 + 4.93 * param * pow(color, 2) * 1e-4 + (1 - 4.18 * param * 1e-2) * color;
 	//函数原型为：f(x)=a*x^3+bx^2+cx，通过此函数模拟“S”型灰度曲线。（具体推导见报告）
 	if (tcolor > 255)
 	{
@@ -759,15 +807,18 @@ u8 ContrastCalc(u8 color,int value)
 	}
 }
 
-int ImageSaturation(BMPATTR attr, int value)
+int ImageSaturation(BMPATTR attr, double times)
 {
 	int i, j;		//循环变量
 	u32 oldcolor;	//色彩变量
 	RGB rgb;		//色彩分量
 	HSL hsl;		//色彩分量
 
-	if (value >= -100 && value <= 100)
-	{	//value的值范围限定为**************，而实际上应该是**************，这里为了减少画质损失因此缩小范围。
+	if (times <= 4 && times >= 0.25)
+	{	//value的值范围限定为**************
+
+		TextGB32(315, 570, 24, 0x626262, "饱和度调节中...");
+
 		for (i = attr.y1; i < attr.y2; i++)
 		{
 			for (j = attr.x1; j < attr.x2; j++)
@@ -777,7 +828,7 @@ int ImageSaturation(BMPATTR attr, int value)
 				U32TRGB(&rgb, oldcolor);
 				RGB2HSL(rgb, &hsl.h, &hsl.s, &hsl.l);
 				//计算公式
-				hsl.s = hsl.s * (1 + value / 100.0);
+				hsl.s = hsl.s * times;
 				if (hsl.s > 1)
 				{
 					hsl.s = 1.0;
@@ -803,18 +854,22 @@ int ImageSaturation(BMPATTR attr, int value)
 		//范围超出
 		return -1;
 	}
+	TextGB32(315, 570, 24, ThemeColor2, "饱和度调节中...");
 	return 0;
 }
 
-int ImageLightness(BMPATTR attr, int value)
+int ImageLightness(BMPATTR attr, double times)
 {
 	int i, j;		//循环变量
 	u32 oldcolor;	//色彩变量
 	RGB rgb;		//色彩分量
 	HSL hsl;		//色彩分量
 
-	if (value >= -40 && value <= 40)
+	if (times <= 4 && times >= 0.25)
 	{	//value的值范围限定为**************。
+
+		TextGB32(315, 570, 24, 0x626262, "亮度调节中...");
+
 		for (i = attr.y1; i < attr.y2; i++)
 		{
 			for (j = attr.x1; j < attr.x2; j++)
@@ -824,14 +879,14 @@ int ImageLightness(BMPATTR attr, int value)
 				U32TRGB(&rgb, oldcolor);
 				RGB2HSL(rgb, &hsl.h, &hsl.s, &hsl.l);
 				//计算公式
-				hsl.l = hsl.l * (1 + value / 100.0);
-				if (hsl.l > 1)
+				hsl.l = hsl.l * times;
+				if (hsl.l > 1.0)
 				{
 					hsl.l = 1.0;
 				}
 				else if (hsl.s < 0)
 				{
-					hsl.l = 0.0;
+					hsl.l = 0;
 				}
 				else
 				{
@@ -850,13 +905,191 @@ int ImageLightness(BMPATTR attr, int value)
 		//范围超出
 		return -1;
 	}
+	TextGB32(315, 570, 24, ThemeColor2, "亮度调节中...");
 	return 0;
 }
 
 int ImageAdjustment(BMPATTR* bmpattr)
 {
+	int value = 0;	//调整值
+	int c;			//对比度
+	double s, l;	//饱和度 亮度
+	double times;	//变换倍率
+	char valuestr[5] = { '\0' };
+	MOUSE mouse_old, mouse_new;
 
+	if (bmpattr->flag==0)
+	{
+		WarnBox("图像未打开");
+		return -1;
+	}
 
+	BmpSave(248, 198, 552, 352, "DATA//BK7");
+	DrawAdjustBox();
 
+	c = bmpattr->contrast;
+	s = bmpattr->saturation;
+	l = bmpattr->lightness;
 
+	//输出当前对比度
+	value = c * 2;
+	itoa(value, valuestr, 10);
+	TextASC16(450, 255, 12, 0x626262, valuestr);
+
+	//输出当前饱和度
+	if (s<1.0)
+	{
+		value = (s - 1) * 200.0 + 0.5;	//+0.5四舍五入
+	}
+	else
+	{
+		value = (s - 1) * 100.0 + 0.5;
+	}
+	itoa(value, valuestr, 10);
+	TextASC16(450, 285, 12, 0x626262, valuestr);
+
+	//输出当前亮度
+	if (l < 1.0)
+	{
+		value = (l - 1) * 500.0 + 0.5;
+	}
+	else
+	{
+		value = (l - 1) * 400.0 + 0.5;
+	}
+	itoa(value, valuestr, 10);
+	TextASC16(450, 315, 8, 0x626262, valuestr);
+
+	MouseStatus(&mouse_old);
+	MouseStoreBk(mouse_old.x, mouse_old.y);
+	while (1)
+	{
+		MouseStatus(&mouse_new);
+		if (mouse_new.x == mouse_old.x && mouse_new.y == mouse_old.y && mouse_old.button == mouse_new.button)
+		{
+			;
+		}
+		else
+		{
+			MousePutBk(mouse_old.x, mouse_old.y);
+			MouseStoreBk(mouse_new.x, mouse_new.y);
+			MouseDraw(mouse_new);
+			mouse_old = mouse_new;
+			if (MouseDown(345,260,445,270))
+			{
+				//对比度
+				MousePutBk(mouse_new.x, mouse_new.y);
+
+				//数据处理：s的范围为0.5~2.0
+				value = (mouse_new.x - 345) * 2 - 98;
+				c = value / 2;
+				itoa(value, valuestr, 10);
+
+				//信息输出
+				Bar(345, 250, 480, 280, ThemeColor2);
+				Bar(345, 264, 445, 266, 0xD6DADF);
+				TextASC16(450, 255, 12, 0x626262, valuestr);
+
+				MouseStatus(&mouse_old);
+				MouseStoreBk(mouse_old.x, mouse_old.y);
+			}
+			else if (MouseDown(345,290,445,300))
+			{
+				//饱和度
+				MousePutBk(mouse_new.x, mouse_new.y);
+
+				//数据处理
+				value = (mouse_new.x - 345) * 2 - 98;
+				if (value < 0)
+					s = value / 200.0 + 1.0;
+				else
+					s = value / 100.0 + 1.0;
+				itoa(value, valuestr, 10);
+
+				//信息输出
+				Bar(345, 280, 480, 310, ThemeColor2);
+				Bar(345, 294, 445, 296, 0xD6DADF);
+				TextASC16(450, 285, 12, 0x626262, valuestr);
+
+				MouseStatus(&mouse_old);
+				MouseStoreBk(mouse_old.x, mouse_old.y);
+			}
+			else if (MouseDown(345,320,445,330))
+			{
+				//亮度
+				MousePutBk(mouse_new.x, mouse_new.y);
+
+				//数据处理:l的范围为0.8~1.25
+				value = (mouse_new.x - 345) * 2 - 98;
+				if (value < 0)
+					l = value / 500.0 + 1.0;
+				else
+					l = value / 400.0 + 1.0;
+				itoa(value, valuestr, 10);
+
+				//信息输出
+				Bar(345, 310, 480, 330, ThemeColor2);
+				Bar(345, 324, 445, 326, 0xD6DADF);
+				TextASC16(450, 315, 8, 0x626262, valuestr);
+
+				MouseStatus(&mouse_old);
+				MouseStoreBk(mouse_old.x, mouse_old.y);
+			}
+			else if (MouseDown(485, 225, 540, 285))
+			{
+				//确认
+				MousePutBk(mouse_old.x, mouse_old.y);
+				BmpPut(248, 198, "DATA//BK7");
+
+				if (c != bmpattr->contrast)
+				{
+					if (bmpattr->contrast != 0)
+					{
+						ImageContrast(*bmpattr, -bmpattr->contrast);	//逆变换
+					}
+					ImageContrast(*bmpattr, c);							//正变换
+					bmpattr->contrast = c;
+				}
+
+				if (s != bmpattr->saturation)
+				{
+					times = s / bmpattr->saturation;
+					ImageSaturation(*bmpattr, times);
+					bmpattr->saturation = s;
+				}
+
+				if (l != bmpattr->lightness)
+				{
+					times = l / bmpattr->lightness;
+					ImageLightness(*bmpattr, times);
+					bmpattr->lightness = l;
+				}
+
+				return 0;
+			}
+			else if (MouseDown(485, 305, 540, 335))
+			{
+				//取消
+				MousePutBk(mouse_old.x, mouse_old.y);
+				BmpPut(248, 198, "DATA//BK7");
+				return 0;
+			}
+			else if (MouseDown(500, 200, 550, 240))
+			{
+				//关闭
+				MousePutBk(mouse_old.x, mouse_old.y);
+				BmpPut(248, 198, "DATA//BK7");
+				return 0;
+			}
+			else if (MouseDown(750, 0, 800, 50))
+			{
+				//退出
+				exit(0);
+			}
+			else
+			{
+				;
+			}
+		}
+	}
 }

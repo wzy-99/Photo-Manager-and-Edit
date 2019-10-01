@@ -23,7 +23,15 @@ void MenuManager()
 			MousePutBk(mouse_old.x, mouse_old.y);
 			MouseStoreBk(mouse_new.x, mouse_new.y);
 			MouseDraw(mouse_new);
+
+			//if (mouse_new.button = mouse_old.button);
+			//{
+			//	continue;
+			//	mouse_old = mouse_new;
+			//}
+
 			mouse_old = mouse_new;
+
 			if (MouseDown(10, 0, 70, 50) || message == 20)
 			{
 				//打开
@@ -65,15 +73,27 @@ void MenuManager()
 				//图形
 				;
 			}
+			else if (MouseDown(650, 50, 700, 100) || message == 70)
+			{
+				//调整
+				MousePutBk(mouse_old.x, mouse_old.y);
+				message = 70;
+			}
+			else if (MouseDown(700, 50, 750, 100) || message == 75)
+			{
+				//粗细
+				MousePutBk(mouse_old.x, mouse_old.y);
+				message = 75;
+			}
 			else if (MouseDown(750, 50, 800, 100) || message == 80)
 			{
 				//调色板
 				MousePutBk(mouse_old.x, mouse_old.y);
 				message=80;
 			}
-			else if (MouseDown(700, 50, 750, 100) || message == 85)
+			else if (MouseDown(703, 570, 735, 600) || message == 85)
 			{
-				//粗细
+				//设置
 				MousePutBk(mouse_old.x, mouse_old.y);
 				message = 85;
 			}
@@ -88,12 +108,6 @@ void MenuManager()
 				//放大
 				MousePutBk(mouse_old.x, mouse_old.y);
 				message = 95;
-			}
-			else if (MouseDown(703, 570, 735, 600) || message == 110)
-			{
-				//缩小
-				MousePutBk(mouse_old.x, mouse_old.y);
-				message = 110;
 			}
 			else if (MouseDown(0, 570, 42, 600) || message == 100)
 			{
@@ -147,17 +161,35 @@ void MenuManager()
 				MouseStoreBk(mouse_old.x, mouse_old.y);
 				break;
 			case 60:
+				//裁剪
 				message = ImageTailor(&bmpattr);
 				MouseStatus(&mouse_old);
 				MouseStoreBk(mouse_old.x, mouse_old.y);
 				break;
+			//case 65:
+			//	//图形
+			//	break;
+			case 70:
+				//调整
+				message = ImageAdjustment(&bmpattr);
+				MouseStatus(&mouse_old);
+				MouseStoreBk(mouse_old.x, mouse_old.y);
+				break;
+			case 75:
+				//粗细
+				message = SelectSize(&state.size, &state.size2);
+				MouseStatus(&mouse_old);
+				MouseStoreBk(mouse_old.x, mouse_old.y);
+				break;
 			case 80:
+				//选色
 				message = SelectColor(&state.color);
 				MouseStatus(&mouse_old);
 				MouseStoreBk(mouse_old.x, mouse_old.y);
 				break;
 			case 85:
-				message = SelectSize(&state.size, &state.size2);
+				//设置
+				message = ImageZoomSet(&state.patton);
 				MouseStatus(&mouse_old);
 				MouseStoreBk(mouse_old.x, mouse_old.y);
 				break;
@@ -182,12 +214,6 @@ void MenuManager()
 			case 105:
 				//旋转
 				message = ImageMirror(bmpattr);
-				MouseStatus(&mouse_old);
-				MouseStoreBk(mouse_old.x, mouse_old.y);
-				break;
-			case 110:
-				//设置
-				message = ImageZoomSet(&state.patton);
 				MouseStatus(&mouse_old);
 				MouseStoreBk(mouse_old.x, mouse_old.y);
 				break;

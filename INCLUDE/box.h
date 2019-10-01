@@ -17,6 +17,7 @@ void DrawOpenBox(void);
 void DrawSaveBox(void);
 void DrawListBox(void);
 void DrawSizeBox(void);
+void DrawAdjustBox(void);
 
 void DrawZoomSettingBox(u8 patton);
 

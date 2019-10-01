@@ -9,12 +9,13 @@
 #include "pic.h"	//图形库
 #include "box.h"	//窗口库
 #include "color.h"	//色彩库
+#include "text.h"	//字体库
 
 
 //图像放缩
 int ImageZoom(BMPATTR* bmpattr, double times, u8 patton);
-int ImageXY(int* position, int boundary, int origin);
-u32 ImageRGB(int x1, int x2, int y1, int y2, double x, double y, u8 patton);
+int ImageXY(int* position, int boundary, int origin);							//相对坐标->绝对坐标
+u32 ImageRGB(int x1, int x2, int y1, int y2, double x, double y, u8 patton);	//计算RGB
 
 //图像文件放缩
 int ImageFileZoom(FILEATTR fileattr);
@@ -26,9 +27,9 @@ int ImageMirror(BMPATTR bmpattr);	//图像镜像
 
 int ImageContrast(BMPATTR bmpattr, int value);	//图像对比度
 u8 ContrastCalc(u8 color, int value);			//图像对比度计算
-int ImageSaturation(BMPATTR bmpattr, int value);//图像饱和度
-int ImageLightness(BMPATTR bmpattr,int value);	//图像亮度
-//int ImageAdjustment(BMPATTR* bmpattr);//图像调整
+int ImageSaturation(BMPATTR bmpattr, double value);//图像饱和度
+int ImageLightness(BMPATTR attr, double times);	//图像亮度
+int ImageAdjustment(BMPATTR* bmpattr);//图像调整
 
 
 int ImageZoomSet(u8* patton);		//模式选择

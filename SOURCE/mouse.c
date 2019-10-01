@@ -102,6 +102,26 @@ int MouseUp(int x1, int y1, int x2, int y2)
 	}
 }
 
+/*判断鼠标左键是否在指定位置外松开*/
+int MouseOutUp(int x1, int y1, int x2, int y2)
+{
+	MOUSE m = { 0,0,0 };
+	MouseStatus(&m);
+
+	if (((m.x < x1)
+		|| (m.x > x2)
+		|| (m.y < y1)
+		|| (m.y > y2))
+		&& (m.button & 1) == 0)
+	{
+		return 1;
+	}
+	else
+	{
+		return 0;
+	}
+}
+
 /*存储被鼠标遮挡部分的显存内容*/
 void MouseStoreBk(int x, int y)
 {

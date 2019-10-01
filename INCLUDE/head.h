@@ -27,6 +27,9 @@
 #define Gray 0xa9b6c2
 #define Silvery 0xe4e8eb	//银色
 
+#define ThemeColor1 0x728fa8
+#define ThemeColor2 0xA9B6C2
+
 typedef unsigned char u8;
 typedef unsigned int u16;
 typedef unsigned long u32;
@@ -78,8 +81,10 @@ typedef struct {
 	char name[18];					//图像名称
 	double scale;					//图像放缩
 	int x1, y1, x2, y2;				//图像坐标
-	unsigned int width, heigth;		//图像长宽
-	unsigned int oWidth, oHeigth;
+	unsigned int width, heigth;		//当前长宽
+	unsigned int oWidth, oHeigth;	//原始长宽
+	int contrast;					//对比度呀
+	double saturation, lightness;	//调整属性
 } BMPATTR;
 
 

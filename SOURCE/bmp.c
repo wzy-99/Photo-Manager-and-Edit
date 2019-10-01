@@ -9,6 +9,7 @@ int BmpPut(int x, int y, char* path)
 	FILE* fp = fopen(path, "rb");
 	BITMAPFILEHEADER bmphead;
 	BITMAPINFOHEADER bmpinfo;
+
 	if (fp)
 	{
 		fseek(fp, 28L, 0);
@@ -50,7 +51,7 @@ int BmpPut(int x, int y, char* path)
 		if ((buffer = (BGR*)malloc(linebytes)) == 0)
 		{
 			fclose(fp);
-			return 0;
+			return -1;
 		}
 		fseek(fp, 54L, 0);
 		for (i = bmpinfo.biHeight - 1; i > -1; i--)
@@ -69,6 +70,7 @@ int BmpPut(int x, int y, char* path)
 	{
 		//打开失败
 		exit(0);
+		//return -1;
 	}
 	return 1;
 }
@@ -117,12 +119,14 @@ int BmpSave(int x1,int y1,int x2,int y2,char* path)
 	if ((buffer = (BGR*)malloc(3 * width)) == 0)
 	{
 		//无法开辟内存
-		return 0;
+		//exit(0);
+		return -1;
 	}
 	if ((fp = fopen(path, "wb")) == NULL)
 	{
 		//无法创建文件
-		return 0;
+		//exit(0);
+		return -1;
 	}
 
 	fwrite(&bmphead, sizeof(BITMAPFILEHEADER), 1, fp);
@@ -141,6 +145,7 @@ int BmpSave(int x1,int y1,int x2,int y2,char* path)
 		fwrite(buffer, linebytes, 1, fp);
 	}
 
+	free(buffer);
 	fclose(fp);
 	return 1;
 }
@@ -199,15 +204,20 @@ int BmpInfo(BMPATTR* bmpattr,char* filename)
 		bmpattr->y1 = SCR_HEIGHT / 2 - bmpattr->heigth / 2 + 35;
 		bmpattr->y2 = SCR_HEIGHT / 2 + bmpattr->heigth / 2 + 35;
 
-		//状态改变
+		//图像打开状态改变
 		bmpattr->flag = 1;
 
-		//放缩改变
+		//初始化放缩状态
 		bmpattr->scale = 1.0;
 
 		//记录原始长宽
 		bmpattr->oHeigth = bmpattr->heigth;
 		bmpattr->oWidth = bmpattr->width;
+
+		//初始化调整属性
+		bmpattr->contrast = 0;
+		bmpattr->saturation = 1.0;
+		bmpattr->lightness = 1.0;
 
 		//复制名称
 		strcpy(bmpattr->name, filename);

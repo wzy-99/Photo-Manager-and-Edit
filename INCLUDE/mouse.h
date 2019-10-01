@@ -29,4 +29,6 @@ extern void MouseDraw(MOUSE mouse);
 
 extern int MouseUp(int x1, int y1, int x2, int y2);
 
+extern int MouseOutUp(int x1, int y1, int x2, int y2);
+
 #endif
