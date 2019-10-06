@@ -256,4 +256,3 @@ int BmpName(char* filename)
 		return 1;
 	}
 }
-
