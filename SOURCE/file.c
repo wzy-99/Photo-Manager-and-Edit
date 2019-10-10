@@ -167,6 +167,7 @@ int FileOpen(BMPATTR* bmpattr)
 			{
 				;
 			}
+			SpecialKey = 0;
 		}
 		if (bioskey(1))
 		{
@@ -243,6 +244,7 @@ int FileSave(BMPATTR* bmpattr)
 			{
 				;
 			}
+			SpecialKey = 0;
 		}
 		if (bioskey(1))
 		{
