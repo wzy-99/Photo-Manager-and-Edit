@@ -68,10 +68,11 @@ void MenuManager()
 				MousePutBk(mouse_old.x, mouse_old.y);
 				message=60;
 			}
-			else if (MouseDown(130, 50, 190, 100))
+			else if (MouseDown(130, 50, 190, 100) || message == 65)
 			{
 				//图形
-				;
+				MousePutBk(mouse_old.x, mouse_old.y);
+				message = 65;
 			}
 			else if (MouseDown(650, 50, 700, 100) || message == 70)
 			{
@@ -166,9 +167,12 @@ void MenuManager()
 				MouseStatus(&mouse_old);
 				MouseStoreBk(mouse_old.x, mouse_old.y);
 				break;
-			//case 65:
-			//	//图形
-			//	break;
+			case 65:
+				//图形
+				message = DrawPicture(bmpattr, &state);
+				MouseStatus(&mouse_old);
+				MouseStoreBk(mouse_old.x, mouse_old.y);
+				break;
 			case 70:
 				//调整
 				message = ImageAdjustment(&bmpattr);
