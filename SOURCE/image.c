@@ -374,99 +374,99 @@ int ImageTailor(BMPATTR* bmpattr)
 			{
 				//打开
 				MousePutBk(mouse_new.x, mouse_new.y);
-				ImgRectangle(72, 52, 128, 98, Gray, 2);
+				ImgRectangle(72, 52, 128, 98, ThemeColor2, 2);
 				return 20;
 			}
 			else if (MouseDown(70, 0, 130, 50))
 			{
 				//保存
 				MousePutBk(mouse_new.x, mouse_new.y);
-				ImgRectangle(72, 52, 128, 98, Gray, 2);
+				ImgRectangle(72, 52, 128, 98, ThemeColor2, 2);
 				return 30;
 			}
 			else if (MouseDown(130, 0, 190, 50))
 			{
 				//新建
 				MousePutBk(mouse_new.x, mouse_new.y);
-				ImgRectangle(72, 52, 128, 98, Gray, 2);
+				ImgRectangle(72, 52, 128, 98, ThemeColor2, 2);
 				return 40;
 			}
 			else if (MouseDown(10, 50, 70, 100))
 			{
 				//画笔
 				MousePutBk(mouse_new.x, mouse_new.y);
-				ImgRectangle(72, 52, 128, 98, Gray, 2);
+				ImgRectangle(72, 52, 128, 98, ThemeColor2, 2);
 				return 50;
 			}
 			else if (MouseDown(70, 50, 130, 100))
 			{
 				//裁剪
 				MousePutBk(mouse_new.x, mouse_new.y);
-				ImgRectangle(72, 52, 128, 98, Gray, 2);
+				ImgRectangle(72, 52, 128, 98, ThemeColor2, 2);
 				return 0;
 			}
 			else if (MouseDown(130, 50, 190, 100))
 			{
 				//图形
 				MousePutBk(mouse_new.x, mouse_new.y);
-				ImgRectangle(72, 52, 128, 98, Gray, 2);
+				ImgRectangle(72, 52, 128, 98, ThemeColor2, 2);
 				return 65;
 			}
 			else if (MouseDown(650, 50, 700, 100))
 			{
 				//调整
 				MousePutBk(mouse_new.x, mouse_new.y);
-				ImgRectangle(132, 52, 188, 98, Gray, 2);
-				Bar(192, 52, 448, 98, Gray);
+				ImgRectangle(132, 52, 188, 98, ThemeColor2, 2);
+				Bar(192, 52, 448, 98, ThemeColor2);
 				return 70;
 			}
 			else if (MouseDown(700, 50, 750, 100))
 			{
 				//粗细
 				MousePutBk(mouse_new.x, mouse_new.y);
-				ImgRectangle(12, 52, 68, 98, Gray, 2);
+				ImgRectangle(12, 52, 68, 98, ThemeColor2, 2);
 				return 75;
 			}
 			else if (MouseDown(750, 50, 800, 100))
 			{
 				//颜色
 				MousePutBk(mouse_new.x, mouse_new.y);
-				ImgRectangle(72, 52, 128, 98, Gray, 2);
+				ImgRectangle(72, 52, 128, 98, ThemeColor2, 2);
 				return 80;
 			}
 			else if (MouseDown(703, 570, 735, 600))
 			{
 				//设置
 				MousePutBk(mouse_new.x, mouse_new.y);
-				ImgRectangle(72, 52, 128, 98, Gray, 2);
+				ImgRectangle(72, 52, 128, 98, ThemeColor2, 2);
 				return 85;
 			}
 			else if (MouseDown(735, 570, 767, 600))
 			{
 				//缩小
 				MousePutBk(mouse_new.x, mouse_new.y);
-				ImgRectangle(72, 52, 128, 98, Gray, 2);
+				ImgRectangle(72, 52, 128, 98, ThemeColor2, 2);
 				return 90;
 			}
 			else if (MouseDown(767, 570, 800, 600))
 			{
 				//放大
 				MousePutBk(mouse_new.x, mouse_new.y);
-				ImgRectangle(72, 52, 128, 98, Gray, 2);
+				ImgRectangle(72, 52, 128, 98, ThemeColor2, 2);
 				return 95;
 			}
 			else if (MouseDown(0, 570, 42, 600))
 			{
 				//旋转
 				MousePutBk(mouse_new.x, mouse_new.y);
-				ImgRectangle(72, 52, 128, 98, Gray, 2);
+				ImgRectangle(72, 52, 128, 98, ThemeColor2, 2);
 				return 100;
 			}
 			else if (MouseDown(42, 570, 84, 600))
 			{
 				//翻转
 				MousePutBk(mouse_new.x, mouse_new.y);
-				ImgRectangle(72, 52, 128, 98, Gray, 2);
+				ImgRectangle(72, 52, 128, 98, ThemeColor2, 2);
 				return 105;
 			}
 			else if (MouseDown(750, 0, 800, 50))
@@ -538,103 +538,103 @@ int ImageTailor(BMPATTR* bmpattr)
 			//{
 			//	//打开
 			//	MousePutBk(mouse_new.x, mouse_new.y);
-			//	Rectangle(72, 52, 128, 98, Gray, 2);
+			//	Rectangle(72, 52, 128, 98, ThemeColor2, 2);
 			//	return 20;
 			//}
 			//else if (MouseDown(70, 0, 130, 50))
 			//{
 			//	//保存
 			//	MousePutBk(mouse_new.x, mouse_new.y);
-			//	Rectangle(72, 52, 128, 98, Gray, 2);
+			//	Rectangle(72, 52, 128, 98, ThemeColor2, 2);
 			//	return 30;
 			//}
 			//else if (MouseDown(130, 0, 190, 50))
 			//{
 			//	//新建
 			//	MousePutBk(mouse_new.x, mouse_new.y);
-			//	Rectangle(72, 52, 128, 98, Gray, 2);
+			//	Rectangle(72, 52, 128, 98, ThemeColor2, 2);
 			//	return 40;
 			//}
 			//else if (MouseDown(190,0,250,50))
 			//{
 			//	//新建
 			//	MousePutBk(mouse_new.x, mouse_new.y);
-			//	Rectangle(72, 52, 128, 98, Gray, 2);
+			//	Rectangle(72, 52, 128, 98, ThemeColor2, 2);
 			//	return 45;
 			//}
 			//else if (MouseDown(10, 50, 70, 100))
 			//{
 			//	//画笔
 			//	MousePutBk(mouse_new.x, mouse_new.y);
-			//	Rectangle(72, 52, 128, 98, Gray, 2);
+			//	Rectangle(72, 52, 128, 98, ThemeColor2, 2);
 			//	return 50;
 			//}
 			//else if (MouseDown(70, 50, 130, 100))
 			//{
 			//	//裁剪
 			//	MousePutBk(mouse_new.x, mouse_new.y);
-			//	Rectangle(72, 52, 128, 98, Gray, 2);
+			//	Rectangle(72, 52, 128, 98, ThemeColor2, 2);
 			//	return 0;
 			//}
 			//// else if(MouseDown(130,50,190,100))
 			//// {
-			//	// Rectangle(72, 52, 128, 98, Gray, 2);
+			//	// Rectangle(72, 52, 128, 98, ThemeColor2, 2);
 			//	// return 65
 			//// }
 			//else if (MouseDown(650, 50, 700, 100))
 			//{
 			//	//调整
 			//	MousePutBk(mouse_new.x, mouse_new.y);
-			//	Rectangle(12, 52, 68, 98, Gray, 2);
+			//	Rectangle(12, 52, 68, 98, ThemeColor2, 2);
 			//	return 70;
 			//}
 			//else if (MouseDown(700, 50, 750, 100))
 			//{
 			//	//粗细
 			//	MousePutBk(mouse_new.x, mouse_new.y);
-			//	Rectangle(12, 52, 68, 98, Gray, 2);
+			//	Rectangle(12, 52, 68, 98, ThemeColor2, 2);
 			//	return 75;
 			//}
 			//else if (MouseDown(750, 50, 800, 100))
 			//{
 			//	//颜色
 			//	MousePutBk(mouse_new.x, mouse_new.y);
-			//	Rectangle(72, 52, 128, 98, Gray, 2);
+			//	Rectangle(72, 52, 128, 98, ThemeColor2, 2);
 			//	return 80;
 			//}
 			//else if (MouseDown(703, 570, 735, 600))
 			//{
 			//	//设置
 			//	MousePutBk(mouse_new.x, mouse_new.y);
-			//	Rectangle(72, 52, 128, 98, Gray, 2);
+			//	Rectangle(72, 52, 128, 98, ThemeColor2, 2);
 			//	return 85;
 			//}
 			//else if (MouseDown(735, 570, 767, 600))
 			//{
 			//	//缩小
 			//	MousePutBk(mouse_new.x, mouse_new.y);
-			//	Rectangle(72, 52, 128, 98, Gray, 2);
+			//	Rectangle(72, 52, 128, 98, ThemeColor2, 2);
 			//	return 90;
 			//}
 			//else if (MouseDown(767, 570, 800, 600))
 			//{
 			//	//放大
 			//	MousePutBk(mouse_new.x, mouse_new.y);
-			//	Rectangle(72, 52, 128, 98, Gray, 2);
+			//	Rectangle(72, 52, 128, 98, ThemeColor2, 2);
 			//	return 95;
 			//}
 			//else if (MouseDown(0, 570, 42, 600))
 			//{
 			//	//旋转
 			//	MousePutBk(mouse_new.x, mouse_new.y);
-			//	Rectangle(72, 52, 128, 98, Gray, 2);
+			//	Rectangle(72, 52, 128, 98, ThemeColor2, 2);
 			//	return 100;
 			//}
 			//else if (MouseDown(42, 570, 84, 600))
 			//{
 			//	//翻转
 			//	MousePutBk(mouse_new.x, mouse_new.y);
-			//	Rectangle(72, 52, 128, 98, Gray, 2);
+			//	Rectangle(72, 52, 128, 98, ThemeColor2, 2);
 			//	return 105;
 			//}
 			//else if (MouseDown(750, 0, 800, 50))
@@ -781,11 +781,18 @@ int ImageMirror(BMPATTR bmpattr)
 int ImageFileZoom(FILEATTR fileattr)
 {
 	int i, j;
+	int flag = 0;
 	FILE* fw, *fp;
 	u32 color24;
 	double x, y;
 	int tx1, tx2, ty1, ty2;
 	u32 linebytes;
+	char* p;
+	char tfile[18] = { '\0' };
+
+	strcpy(tfile, fileattr.name);
+	p = strchr(tfile, '.');
+	*p = '\0';
 
 	linebytes = (3 * fileattr.width) % 4;
 	if (!linebytes)
@@ -797,42 +804,51 @@ int ImageFileZoom(FILEATTR fileattr)
 		linebytes = 3 * fileattr.width + 4 - linebytes;
 	}
 
-	if ((fp = fopen(fileattr.name, "rb")) == NULL)
+	//判断临时文件是否已存在
+	if ((fw = fopen(tfile, "rb")) != NULL)
 	{
-		return -1;
+		flag = 1;
 	}
-	
-	if ((fw = fopen("DATA/temp5", "wb")) == NULL)
-	{
-		return -1;
-	}
-
-	
-
-	for (i = 0; i < fileattr.nHeigth; i++)
-	{
-		y = (double)i / fileattr.scale;
-		ty1 = (int)(y - 1);
-		ty2 = (int)(y + 1);
-		ImageXY(&ty1, fileattr.heigth, 0);
-		ImageXY(&ty2, fileattr.heigth, 0);
-		for (j = 0; j < fileattr.nWidth; j++)
-		{
-			x = (double)j / fileattr.scale;
-			tx1 = (int)(x - 1);
-			tx2 = (int)(x + 1);
-			ImageXY(&tx1, fileattr.width, 0);
-			ImageXY(&tx2, fileattr.width, 0);
-
-			color24 = ImageFileRGB(fp, tx1, tx2, ty1, ty2, x, y, linebytes, fileattr.heigth);
-			fwrite(&color24, 4, 1, fw);
-		}
-	}
-
-	fclose(fp);
 	fclose(fw);
 
-	if ((fw = fopen("DATA/temp5", "rb")) == NULL)
+	//如果临时文件不存在
+	if (flag == 0)
+	{
+		if ((fp = fopen(fileattr.name, "rb")) == NULL)
+		{
+			return -1;
+		}
+
+		if ((fw = fopen(tfile, "wb")) == NULL)
+		{
+			return -1;
+		}
+
+		for (i = 0; i < fileattr.nHeigth; i++)
+		{
+			y = (double)i / fileattr.scale;
+			ty1 = (int)(y - 1);
+			ty2 = (int)(y + 1);
+			ImageXY(&ty1, fileattr.heigth, 0);
+			ImageXY(&ty2, fileattr.heigth, 0);
+			for (j = 0; j < fileattr.nWidth; j++)
+			{
+				x = (double)j / fileattr.scale;
+				tx1 = (int)(x - 1);
+				tx2 = (int)(x + 1);
+				ImageXY(&tx1, fileattr.width, 0);
+				ImageXY(&tx2, fileattr.width, 0);
+
+				color24 = ImageFileRGB(fp, tx1, tx2, ty1, ty2, x, y, linebytes, fileattr.heigth);
+				fwrite(&color24, 4, 1, fw);
+			}
+		}
+
+		fclose(fp);
+		fclose(fw);
+	}
+
+	if ((fw = fopen(tfile, "rb")) == NULL)
 	{
 		return 0;
 	}
@@ -843,12 +859,13 @@ int ImageFileZoom(FILEATTR fileattr)
 	{
 		for (j = 0; j < fileattr.nWidth; j++)
 		{
-			fread(&color24, 4, 1, fp);
-			PutPixel(fileattr.x1+j, fileattr.y1 + i, color24);
+			fread(&color24, 4, 1, fw);
+			PutPixel(fileattr.x1 + j, fileattr.y1 + i, color24);
 		}
 	}
 
 	fclose(fw);
+
 	return 1;
 }
 
@@ -983,7 +1000,7 @@ int ImageSaturation(BMPATTR attr, double times)
 				oldcolor = GetPixel(j, i);
 				//类型转换
 				U32TRGB(&rgb, oldcolor);
-				RGB2HSL(rgb, &hsl.h, &hsl.s, &hsl.l);
+				RGB2HSL(rgb, &hsl);
 				//计算公式
 				hsl.s = hsl.s * times;
 				if (hsl.s > 1)
@@ -999,7 +1016,7 @@ int ImageSaturation(BMPATTR attr, double times)
 					;
 				}
 				//类型转换
-				HSL2RGB(&rgb.r, &rgb.g, &rgb.b, hsl);
+				HSL2RGB(&rgb, hsl);
 				oldcolor = RGB2U32(rgb.r, rgb.g, rgb.b);
 
 				PutPixel(j, i, oldcolor);
@@ -1034,7 +1051,7 @@ int ImageLightness(BMPATTR attr, double times)
 				oldcolor = GetPixel(j, i);
 				//类型转换
 				U32TRGB(&rgb, oldcolor);
-				RGB2HSL(rgb, &hsl.h, &hsl.s, &hsl.l);
+				RGB2HSL(rgb, &hsl);
 				//计算公式
 				hsl.l = hsl.l * times;
 				if (hsl.l > 1.0)
@@ -1050,7 +1067,7 @@ int ImageLightness(BMPATTR attr, double times)
 					;
 				}
 				//类型转换
-				HSL2RGB(&rgb.r, &rgb.g, &rgb.b, hsl);
+				HSL2RGB(&rgb, hsl);
 				oldcolor = RGB2U32(rgb.r, rgb.g, rgb.b);
 
 				PutPixel(j, i, oldcolor);

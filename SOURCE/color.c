@@ -1,9 +1,12 @@
 #include "color.h"
 
-int RGB2HSL(RGB rgb, int* h, double* s, double* l)
+int RGB2HSL(RGB rgb, HSL* hsl)
 {
 	double rr, gg, bb;
 	double Max, Min;
+	int* h = &hsl->h;
+	double* s = &hsl->s;
+	double* l = &hsl->l;
 
 	rr = (double)rgb.r / 255.0;
 	gg = (double)rgb.g / 255.0;
@@ -81,11 +84,14 @@ int RGB2HSL(RGB rgb, int* h, double* s, double* l)
 	return 1;
 }
 
-int HSL2RGB(u8* r, u8* g, u8* b, HSL hsl)
+int HSL2RGB(RGB* rgb, HSL hsl)
 {
 	double tR, tG, tB;
 	double p, q;
 	double hk;
+	u8* r = &rgb->r;
+	u8* g = &rgb->g;
+	u8* b = &rgb->b;
 
 	if (hsl.s == 0)
 	{
@@ -169,20 +175,20 @@ RGB* U32TRGB(RGB* rgb, u32 color)
 int RefreshColor(HSL hsl, u32* nowcolor)
 {
 	int i,j;
-	u8 r, g, b;
+	RGB tRGB;
 	char colorinfo[3][8];
-	HSL2RGB(&r, &g, &b, hsl);
-	sprintf(colorinfo[0], "R%d", r);
-	sprintf(colorinfo[1], "G%d", g);
-	sprintf(colorinfo[2], "B%d", b);
-	*nowcolor = RGB2U32(r, g, b);
+	HSL2RGB(&tRGB, hsl);
+	sprintf(colorinfo[0], "R%d", tRGB.r);
+	sprintf(colorinfo[1], "G%d", tRGB.g);
+	sprintf(colorinfo[2], "B%d", tRGB.b);
+	*nowcolor = RGB2U32(tRGB.r, tRGB.g, tRGB.b);
 	for (i = 0; i < 100; i++)
 	{
 		for (j = 0; j < 36; j++)
 		{
 			hsl.l = (double)i / 100.0;
-			HSL2RGB(&r, &g, &b, hsl);
-			PutPixel(455 + j, 245 + i, RGB2U32(r, g, b));
+			HSL2RGB(&tRGB, hsl);
+			PutPixel(455 + j, 245 + i, RGB2U32(tRGB.r, tRGB.g, tRGB.b));
 		}
 	}
 	Bar(505, 295, 540, 315, *nowcolor);
@@ -193,31 +199,28 @@ int RefreshColor(HSL hsl, u32* nowcolor)
 	return 1;
 }
 
-int FreshColor(u32 color, u32* nowcolor, HSL* nowhsl)
+int FreshColor(u32 color, HSL* nowhsl)
 {
 	int i, j;
-	RGB rgb;
-	HSL hsl;
+	RGB tRGB;
+	HSL tHSL;
 	char colorinfo[3][8];
-	rgb.r = color >> 16 & 0xff;
-	rgb.g = color >> 8 & 0xff;
-	rgb.b = color & 0xff;
-	RGB2HSL(rgb, &nowhsl->h, &nowhsl->s, &nowhsl->l);
-	sprintf(colorinfo[0], "R%d", rgb.r);
-	sprintf(colorinfo[1], "G%d", rgb.g);
-	sprintf(colorinfo[2], "B%d", rgb.b);
-	RGB2HSL(rgb, &hsl.h, &hsl.s, &hsl.l);
-	*nowcolor = color;
+	U32TRGB(&tRGB, color);
+	RGB2HSL(tRGB, nowhsl);
+	sprintf(colorinfo[0], "R%d", tRGB.r);
+	sprintf(colorinfo[1], "G%d", tRGB.g);
+	sprintf(colorinfo[2], "B%d", tRGB.b);
+	RGB2HSL(tRGB, &tHSL);
 	for (i = 0; i < 100; i++)
 	{
 		for (j = 0; j < 36; j++)
 		{
-			hsl.l = (double)i / 100.0;
-			HSL2RGB(&rgb.r, &rgb.g, &rgb.b, hsl);
-			PutPixel(455 + j, 245 + i, RGB2U32(rgb.r, rgb.g, rgb.b));
+			tHSL.l = (double)i / 100.0;
+			HSL2RGB(&tRGB, tHSL);
+			PutPixel(455 + j, 245 + i, RGB2U32(tRGB.r, tRGB.g, tRGB.b));
 		}
 	}
-	Bar(505, 295, 540, 315, *nowcolor);
+	Bar(505, 295, 540, 315, color);
 	Bar(505, 245, 540, 285, 0xdeebf3);
 	TextASC12(507, 245, 8, 0, colorinfo[0]);
 	TextASC12(507, 257, 8, 0, colorinfo[1]);
@@ -228,7 +231,7 @@ int FreshColor(u32 color, u32* nowcolor, HSL* nowhsl)
 void DrawColorBox()
 {
 	int i, j;
-	u8 r, g, b;
+	RGB tRGB;
 	HSL hsl = { 0,0.0,0.5 };
 	BmpPut(248, 198, "UI//COLOR");
 	for (i = 0; i < 180; i++)
@@ -237,8 +240,8 @@ void DrawColorBox()
 		for (j = 0; j < 100; j++)
 		{	
 			hsl.s = (double)j / 100.0;
-			HSL2RGB(&r, &g, &b, hsl);
-			PutPixel(260 + i, 245 + j, RGB2U32(r, g, b));
+			HSL2RGB(&tRGB, hsl);
+			PutPixel(260 + i, 245 + j, RGB2U32(tRGB.r, tRGB.g, tRGB.b));
 		}
 	}
 }
@@ -246,11 +249,13 @@ void DrawColorBox()
 int SelectColor(u32* color)
 {
 	HSL nowhsl = { 0,0,0 };
-	u32 nowcolor = 0;
+	u32 nowcolor = *color;
 	MOUSE mouse_old, mouse_new;
+
 	BmpSave(248, 198, 552, 352, "DATA//BK4");
 	DrawColorBox();
-	FreshColor(*color, &nowcolor, &nowhsl);
+	FreshColor(*color, &nowhsl);
+
 	MouseStatus(&mouse_old);
 	MouseStoreBk(mouse_old.x, mouse_old.y);
 	while (1)

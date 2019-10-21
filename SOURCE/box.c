@@ -106,3 +106,83 @@ void DrawAdjustBox()
 {
 	BmpPut(248, 198, "UI//ADST");	//ADST:adjust
 }
+
+void Welcome()
+{
+	int i = 0, j = 0;
+	u32 color = ColorStart;
+	HSL tHSL;
+	RGB tRGB;
+	int tHue0;
+	const double dLightness = -12 / 60000.0;
+	const double dSaturation = 30 / 60000.0;
+	const double dHue = -120 / 600.0;
+
+	U32TRGB(&tRGB, color);
+	RGB2HSL(tRGB, &tHSL);
+	tHue0 = tHSL.h;
+
+	//Bar(0, 0, 800, 600, White);
+	//BmpPut(0, 0, "UI//WELC");
+	
+	delay(100);
+
+	//渐变背景
+	for (i = 0; i < 600; i++)
+	{
+		for (j = 0; j < 800; j++)
+		{
+			PutPixel(j, i, color);
+		}
+		tHSL.l = tHSL.l - dLightness;
+		tHSL.s = tHSL.s - dSaturation;
+		tHSL.h = (int)(tHue0 - dHue * i + 0.5);
+		HSL2RGB(&tRGB, tHSL);
+		color = RGB2U32(tRGB.r, tRGB.g, tRGB.b);
+	}
+
+	Bar(100, 100, 250, 100+2, White);
+	Bar(100, 100, 100+2, 175, White);
+	Bar(550, 250-2, 700, 250, White);
+	Bar(700-2, 175, 700, 250, White);
+
+	TextASC128(200+30, 100, 64, White, "Phot", 2);
+	TextASC128(445+30, 100, 64, White, "o", 2);
+
+	//TextGB64(80, 300, 72, White, "照片管理与编辑系统", 0);
+
+	TextASC64(160-60, 250, 32, White, "M", 2);
+	TextASC64(205-60, 250, 32, White, "anger And Edi", 2);
+	TextASC64(600-60, 250, 32, White, "ting", 2);
+
+	TextGB16(650, 550, 14, White, "按任意键进入");
+
+	//TextGB64(330, 250, 64, 0, "作者：王子毅", 4);
+	//TextGB64(520, 350, 64, 0, "牛保健", 4);
+
+	//TextASC64(80-10, 150, 32, 0, "Phot", 2);
+	//TextASC64(200-10, 150, 32, 0, "o M", 2);
+	//TextASC64(315-10, 150, 32, 0, "anger and Edi", 2);
+	//TextASC64(720-10, 150, 32, 0, "t", 2);
+
+	//TextASC64(80 - 11, 150, 32, 0, "Phot", 2);
+	//TextASC64(200 - 11, 150, 32, 0, "o M", 2);
+	//TextASC64(315 - 11, 150, 32, 0, "anger and Edi", 2);
+	//TextASC64(720 - 11, 150, 32, 0, "t", 2);
+
+	/*TextASC128(80 - 10, 120, 64, 0, "Phot", 2);
+	TextASC128(300 - 10, 120, 64, 0, "o S", 2);
+	TextASC128(500 - 10, 120, 64, 0, "hop", 2);*/
+
+	/*TextGB64(350, 250, 64, 0, "作者", 4);
+	TextGB64(530, 250, 64, 0, "王子毅", 4);
+	TextGB64(530, 350, 64, 0, "牛保健", 4);
+
+	TextGB16(650, 450, 14, 0, "按任意键进入");*/
+
+	/*TextGB64(150 + 2, 200 + 2, 64, 0xf0e981, "照片管理与编辑系统", 0);
+	TextGB64(350 + 2, 300 + 2, 64, 0xf0e981, "作者：王子毅", 0);
+	TextGB64(500 + 2, 400 + 2, 64, 0xf0e981, "牛保健", 0);*/
+
+	getch();
+}

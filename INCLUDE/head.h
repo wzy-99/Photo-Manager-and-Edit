@@ -26,9 +26,10 @@
 #define White 0xffffff
 #define Gray 0xa9b6c2
 #define Silvery 0xe4e8eb	//ÒøÉ«
+#define Blue 0x728fa8
 
-#define ThemeColor1 0x728fa8
-#define ThemeColor2 0xA9B6C2
+#define ThemeColor1 Blue
+#define ThemeColor2 Gray
 
 typedef unsigned char u8;
 typedef unsigned int u16;

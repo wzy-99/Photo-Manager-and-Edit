@@ -41,6 +41,112 @@ int TextASC24(int x, int y, int part, u32 color,unsigned char* str)
 	return 1;
 }
 
+int TextASC64(int x, int y, int part, u32 color, unsigned char* str, int delayus)
+{
+	int i, j;
+	unsigned int offset;
+	unsigned long int bytes1, bytes2;
+	FILE* fp = fopen("ZK//ASCCB64", "rb");	//粉笔体
+	if (fp)
+	{
+		while (*str != '\0')
+		{
+			if (*str <= 127)
+			{
+				offset = *str * 512l;
+				fseek(fp, offset, 0);
+				for (i = 0; i < 64; i++)
+				{
+					fread(&bytes1, 4, 1, fp);
+					fread(&bytes2, 4, 1, fp);
+					for (j = 0; j < 32; j++)
+					{
+						if (bytes1 & (1l << j))	//长整型
+						{
+							PutPixel(x + j, y + i, color);
+						}
+						if (bytes2 & (1l << j))	//长整型
+						{
+							PutPixel(x + j + 32, y + i, color);
+						}
+					}
+					delay(delayus);
+				}
+				x = x + part;
+				str++;
+			}
+			else
+			{
+				str = str + 2;
+			}
+		}
+		fclose(fp);
+	}
+	else
+	{
+		exit(0);
+	}
+	return 1;
+}
+
+int TextASC128(int x, int y, int part, u32 color, unsigned char* str, int delayus)
+{
+	int i, j;
+	unsigned long int offset;
+	unsigned long int bytes1, bytes2, bytes3, bytes4;
+	FILE* fp = fopen("ZK//ASCCB128", "rb");	//粉笔体
+	if (fp)
+	{
+		while (*str != '\0')
+		{
+			if (*str <= 127)
+			{
+				offset = *str * 2048l;
+				fseek(fp, offset, 0);
+				for (i = 0; i < 128; i++)
+				{
+					fread(&bytes1, 4, 1, fp);
+					fread(&bytes2, 4, 1, fp);
+					fread(&bytes3, 4, 1, fp);
+					fread(&bytes4, 4, 1, fp);
+					for (j = 0; j < 32; j++)
+					{
+						if (bytes1 & (1l << j))	//长整型
+						{
+							PutPixel(x + j, y + i, color);
+						}
+						if (bytes2 & (1l << j))	//长整型
+						{
+							PutPixel(x + j + 32, y + i, color);
+						}
+						if (bytes3 & (1l << j))	//长整型
+						{
+							PutPixel(x + j + 64, y + i, color);
+						}
+						if (bytes4 & (1l << j))	//长整型
+						{
+							PutPixel(x + j + 96, y + i, color);
+						}
+					}
+					delay(delayus);
+				}
+				x = x + part;
+				str++;
+			}
+			else
+			{
+				str = str + 2;
+			}
+		}
+		fclose(fp);
+	}
+	else
+	{
+		exit(0);
+	}
+	return 1;
+}
+
 
 int TextASC16(int x, int y, int part, u32 color, unsigned char* str)
 {
@@ -208,6 +314,60 @@ int TextGB32(int x, int y, int part, u32 color, unsigned char* str)		//使用uchar
 							PutPixel(x + j, y + i, color);
 						}
 					}
+				}
+				str = str + 2;
+			}
+			x = x + part;
+		}
+		fclose(fp);
+	}
+	else
+	{
+		exit(0);
+	}
+	return 1;
+}
+
+int TextGB64(int x, int y, int part, u32 color, unsigned char* str, int delayus)		//使用uchar因为位码、段码的值大于127
+{
+	int i, j;
+	//char asc[2] = { '\0','\0' };
+	unsigned char hBytes, lBytes;
+	unsigned long int offset;
+	unsigned long int bytes1;
+	unsigned long int bytes2;
+	FILE* fp = fopen("ZK//GBTT64", "rb");	//潭体64位
+	if (fp)
+	{
+		while (*str != '\0')
+		{
+			if (*str <= 127)
+			{
+				//忽略
+				str++;
+			}
+			else
+			{
+				hBytes = *str - 0XA1;
+				lBytes = *(str + 1) - 0XA1;
+				offset = (hBytes * 94 + lBytes) * 512l;	//长整型
+				fseek(fp, offset, 0);
+				for (i = 0; i < 64; i++)
+				{
+					fread(&bytes1, 4, 1, fp);
+					fread(&bytes2, 4, 1, fp);
+					for (j = 0; j < 32; j++)
+					{
+						if (bytes1 & (1l << j))	//长整型
+						{
+							PutPixel(x + j, y + i, color);
+						}
+						if (bytes2 & (1l << j))	//长整型
+						{
+							PutPixel(x + j + 32, y + i, color);
+						}
+					}
+					delay(delayus);
 				}
 				str = str + 2;
 			}

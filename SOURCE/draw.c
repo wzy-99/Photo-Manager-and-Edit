@@ -35,48 +35,48 @@ int DrawPen(BMPATTR bmpattr, MENUSTATE* state)
 			{
 				//打开
 				MousePutBk(mouse_new.x, mouse_new.y);
-				ImgRectangle(12, 52, 68, 98, Gray, 2);
+				ImgRectangle(12, 52, 68, 98, ThemeColor2, 2);
 				return 20;
 			}
 			else if (MouseDown(70, 0, 130, 50))
 			{
 				//保存
 				MousePutBk(mouse_new.x, mouse_new.y);
-				ImgRectangle(12, 52, 68, 98, Gray, 2);
+				ImgRectangle(12, 52, 68, 98, ThemeColor2, 2);
 				return 30;
 			}
 			else if (MouseDown(130, 0, 190, 50))
 			{
 				//新建
 				MousePutBk(mouse_new.x, mouse_new.y);
-				ImgRectangle(12, 52, 68, 98, Gray, 2);
+				ImgRectangle(12, 52, 68, 98, ThemeColor2, 2);
 				return 40;
 			}
 			else if (MouseDown(10, 50, 70, 100))
 			{
 				//画笔
 				MousePutBk(mouse_new.x, mouse_new.y);
-				ImgRectangle(12, 52, 68, 98, Gray, 2);
+				ImgRectangle(12, 52, 68, 98, ThemeColor2, 2);
 				return 0;
 			}
 			else if (MouseDown(70, 50, 130, 100))
 			{
 				//裁剪
 				MousePutBk(mouse_new.x, mouse_new.y);
-				ImgRectangle(12, 52, 68, 98, Gray, 2);
+				ImgRectangle(12, 52, 68, 98, ThemeColor2, 2);
 				return 60;
 			}
 			 //else if(MouseDown(130,50,190,100))
 			 //{
 				////图形
-				//Rectangle(12, 52, 68, 98, Gray, 2);
+				//Rectangle(12, 52, 68, 98, ThemeColor2, 2);
 				//return 65
 			 //}
 			else if (MouseDown(650, 50, 700, 100))
 			{
 				//调整
 				MousePutBk(mouse_new.x, mouse_new.y);
-				ImgRectangle(12, 52, 68, 98, Gray, 2);
+				ImgRectangle(12, 52, 68, 98, ThemeColor2, 2);
 				return 70;
 			}
 			 else if(MouseDown(700,50,750,100))
@@ -99,35 +99,35 @@ int DrawPen(BMPATTR bmpattr, MENUSTATE* state)
 			{
 				//缩小
 				MousePutBk(mouse_new.x, mouse_new.y);
-				ImgRectangle(12, 52, 68, 98, Gray, 2);
+				ImgRectangle(12, 52, 68, 98, ThemeColor2, 2);
 				return 85;
 			}
 			else if (MouseDown(735, 570, 767, 600))
 			{
 				//缩小
 				MousePutBk(mouse_new.x, mouse_new.y);
-				ImgRectangle(12, 52, 68, 98, Gray, 2);
+				ImgRectangle(12, 52, 68, 98, ThemeColor2, 2);
 				return 90;
 			}
 			else if (MouseDown(767, 570, 800, 600))
 			{
 				//放大
 				MousePutBk(mouse_new.x, mouse_new.y);
-				ImgRectangle(12, 52, 68, 98, Gray, 2);
+				ImgRectangle(12, 52, 68, 98, ThemeColor2, 2);
 				return 95;
 			}
 			else if (MouseDown(0, 570, 42, 600))
 			{
 				//旋转
 				MousePutBk(mouse_new.x, mouse_new.y);
-				ImgRectangle(12, 52, 68, 98, Gray, 2);
+				ImgRectangle(12, 52, 68, 98, ThemeColor2, 2);
 				return 100;
 			}
 			else if (MouseDown(42, 570, 84, 600))
 			{
 				//翻转
 				MousePutBk(mouse_new.x, mouse_new.y);
-				ImgRectangle(12, 52, 68, 98, Gray, 2);
+				ImgRectangle(12, 52, 68, 98, ThemeColor2, 2);
 				return 105;
 			}
 			else if (MouseDown(750, 0, 800, 50))
@@ -173,7 +173,7 @@ int SelectSize(u8* size1, u8* size2)
 				{
 					s1++;
 					itoa(s1, c1, 10);
-					Bar(380, 260, 415, 290, Gray);
+					Bar(380, 260, 415, 290, ThemeColor2);
 					TextASC24(385, 260, 24, 0, c1);
 				}
 				else
@@ -187,7 +187,7 @@ int SelectSize(u8* size1, u8* size2)
 				{
 					s1--;
 					itoa(s1, c1, 10);
-					Bar(380, 260, 415, 290, Gray);
+					Bar(380, 260, 415, 290, ThemeColor2);
 					TextASC24(385, 260, 24, 0, c1);
 				}
 				else
@@ -201,7 +201,7 @@ int SelectSize(u8* size1, u8* size2)
 				{
 					s2++;
 					itoa(s2, c2, 10);
-					Bar(380, 300, 415, 330, Gray);
+					Bar(380, 300, 415, 330, ThemeColor2);
 					TextASC24(385, 300, 24, 0, c2);
 				}
 				else
@@ -215,7 +215,7 @@ int SelectSize(u8* size1, u8* size2)
 				{
 					s2--;
 					itoa(s2, c2, 10);
-					Bar(380, 300, 415, 330, Gray);
+					Bar(380, 300, 415, 330, ThemeColor2);
 					TextASC24(385, 300, 24, 0, c2);
 				}
 				else
@@ -329,56 +329,56 @@ int DrawPicture(BMPATTR bmpattr, MENUSTATE* state)
 			{
 				//打开
 				MousePutBk(mouse_new.x, mouse_new.y);
-				ImgRectangle(132, 52, 188, 98, Gray, 2);
-				Bar(192, 52, 448, 98, Gray);
+				ImgRectangle(132, 52, 188, 98, ThemeColor2, 2);
+				Bar(192, 52, 448, 98, ThemeColor2);
 				return 20;
 			}
 			else if (MouseDown(70, 0, 130, 50))
 			{
 				//保存
 				MousePutBk(mouse_new.x, mouse_new.y);
-				ImgRectangle(132, 52, 188, 98, Gray, 2);
-				Bar(192, 52, 448, 98, Gray);
+				ImgRectangle(132, 52, 188, 98, ThemeColor2, 2);
+				Bar(192, 52, 448, 98, ThemeColor2);
 				return 30;
 			}
 			else if (MouseDown(130, 0, 190, 50))
 			{
 				//新建
 				MousePutBk(mouse_new.x, mouse_new.y);
-				ImgRectangle(132, 52, 188, 98, Gray, 2);
-				Bar(192, 52, 448, 98, Gray);
+				ImgRectangle(132, 52, 188, 98, ThemeColor2, 2);
+				Bar(192, 52, 448, 98, ThemeColor2);
 				return 40;
 			}
 			else if (MouseDown(10, 50, 70, 100))
 			{
 				//画笔
 				MousePutBk(mouse_new.x, mouse_new.y);
-				ImgRectangle(132, 52, 188, 98, Gray, 2);
-				Bar(192, 52, 448, 98, Gray);
+				ImgRectangle(132, 52, 188, 98, ThemeColor2, 2);
+				Bar(192, 52, 448, 98, ThemeColor2);
 				return 50;
 			}
 			else if (MouseDown(70, 50, 130, 100))
 			{
 				//裁剪
 				MousePutBk(mouse_new.x, mouse_new.y);
-				ImgRectangle(132, 52, 188, 98, Gray, 2);
-				Bar(192, 52, 448, 98, Gray);
+				ImgRectangle(132, 52, 188, 98, ThemeColor2, 2);
+				Bar(192, 52, 448, 98, ThemeColor2);
 				return 60;
 			}
 			else if (MouseDown(130, 50, 190, 100))
 			{
 				//图形
 				MousePutBk(mouse_new.x, mouse_new.y);
-				ImgRectangle(132, 52, 188, 98, Gray, 2);
-				Bar(192, 52, 448, 98, Gray);
+				ImgRectangle(132, 52, 188, 98, ThemeColor2, 2);
+				Bar(192, 52, 448, 98, ThemeColor2);
 				return 0;
 			}
 			else if (MouseDown(650, 50, 700, 100))
 			{
 				//调整
 				MousePutBk(mouse_new.x, mouse_new.y);
-				ImgRectangle(132, 52, 188, 98, Gray, 2);
-				Bar(192, 52, 448, 98, Gray);
+				ImgRectangle(132, 52, 188, 98, ThemeColor2, 2);
+				Bar(192, 52, 448, 98, ThemeColor2);
 				return 70;
 			}
 			else if (MouseDown(700, 50, 750, 100))
@@ -401,40 +401,40 @@ int DrawPicture(BMPATTR bmpattr, MENUSTATE* state)
 			{
 				//设置
 				MousePutBk(mouse_new.x, mouse_new.y);
-				ImgRectangle(132, 52, 188, 98, Gray, 2);
-				Bar(192, 52, 448, 98, Gray);
+				ImgRectangle(132, 52, 188, 98, ThemeColor2, 2);
+				Bar(192, 52, 448, 98, ThemeColor2);
 				return 85;
 			}
 			else if (MouseDown(735, 570, 767, 600))
 			{
 				//缩小
 				MousePutBk(mouse_new.x, mouse_new.y);
-				ImgRectangle(132, 52, 188, 98, Gray, 2);
-				Bar(192, 52, 448, 98, Gray);
+				ImgRectangle(132, 52, 188, 98, ThemeColor2, 2);
+				Bar(192, 52, 448, 98, ThemeColor2);
 				return 90;
 			}
 			else if (MouseDown(767, 570, 800, 600))
 			{
 				//放大
 				MousePutBk(mouse_new.x, mouse_new.y);
-				ImgRectangle(132, 52, 188, 98, Gray, 2);
-				Bar(192, 52, 448, 98, Gray);
+				ImgRectangle(132, 52, 188, 98, ThemeColor2, 2);
+				Bar(192, 52, 448, 98, ThemeColor2);
 				return 95;
 			}
 			else if (MouseDown(0, 570, 42, 600))
 			{
 				//旋转
 				MousePutBk(mouse_new.x, mouse_new.y);
-				ImgRectangle(132, 52, 188, 98, Gray, 2);
-				Bar(192, 52, 448, 98, Gray);
+				ImgRectangle(132, 52, 188, 98, ThemeColor2, 2);
+				Bar(192, 52, 448, 98, ThemeColor2);
 				return 100;
 			}
 			else if (MouseDown(42, 570, 84, 600))
 			{
 				//翻转
 				MousePutBk(mouse_new.x, mouse_new.y);
-				ImgRectangle(132, 52, 188, 98, Gray, 2);
-				Bar(192, 52, 448, 98, Gray);
+				ImgRectangle(132, 52, 188, 98, ThemeColor2, 2);
+				Bar(192, 52, 448, 98, ThemeColor2);
 				return 105;
 			}
 			else if (MouseDown(750, 0, 800, 50))
@@ -456,11 +456,11 @@ int DrawLine(BMPATTR bmpattr, MENUSTATE* state)
 	char xystring1[16];
 	char xystring2[16];
 
-	ImgRectangle(132, 52, 188, 98, Gray, 2);
+	ImgRectangle(132, 52, 188, 98, ThemeColor2, 2);
 	ImgRectangle(192, 52, 248, 98, 0xff0000, 2);
-	ImgRectangle(252, 52, 298, 98, Gray, 2);
-	ImgRectangle(302, 52, 378, 98, Gray, 2);
-	ImgRectangle(382, 52, 448, 98, Gray, 2);
+	ImgRectangle(252, 52, 298, 98, ThemeColor2, 2);
+	ImgRectangle(302, 52, 378, 98, ThemeColor2, 2);
+	ImgRectangle(382, 52, 448, 98, ThemeColor2, 2);
 
 	MouseStatus(&mouse_old);
 	MouseStoreBk(mouse_old.x, mouse_old.y);
@@ -493,7 +493,7 @@ int DrawLine(BMPATTR bmpattr, MENUSTATE* state)
 				tx1 = x1 - bmpattr.x1;
 				ty1 = y1 - bmpattr.y1;
 
-				Bar(200, 570 + 1, 700, 600, Gray);
+				Bar(200, 570 + 1, 700, 600, ThemeColor2);
 				sprintf(xystring1, "坐标1:%d,%d", tx1, ty1);
 				TextGB16(200, 580, 14, 0, xystring1);
 			}
@@ -505,7 +505,7 @@ int DrawLine(BMPATTR bmpattr, MENUSTATE* state)
 				tx2 = x2 - bmpattr.x1;
 				ty2 = y2 - bmpattr.y1;
 
-				//Bar(400, 570, 600, 600, Gray);
+				//Bar(400, 570, 600, 600, ThemeColor2);
 				sprintf(xystring2, "坐标2:%d,%d", tx2, ty2);
 				TextGB16(450, 580, 14, 0, xystring2);
 
@@ -517,9 +517,9 @@ int DrawLine(BMPATTR bmpattr, MENUSTATE* state)
 			else if (MouseDown(190, 50, 250, 100))
 			{
 				//再次点击，退出画线
-				Bar(200, 570, 700, 600, Gray);
+				Bar(200, 570, 700, 600, ThemeColor2);
 				MousePutBk(mouse_new.x, mouse_new.y);
-				ImgRectangle(192, 52, 248, 98, Gray, 2);
+				ImgRectangle(192, 52, 248, 98, ThemeColor2, 2);
 				ImgRectangle(132, 52, 188, 98, 0xff0000, 2);
 				return 0;
 			}
@@ -547,7 +547,6 @@ int DrawLine(BMPATTR bmpattr, MENUSTATE* state)
 			mouse_old = mouse_new;
 		}
 	}
-	return 1;
 }
 
 int DrawTriangle(BMPATTR bmpattr, MENUSTATE* state)
@@ -560,11 +559,11 @@ int DrawTriangle(BMPATTR bmpattr, MENUSTATE* state)
 	char xystring3[16];
 	MOUSE mouse_old, mouse_new;
 
-	ImgRectangle(132, 52, 188, 98, Gray, 2);
-	ImgRectangle(192, 52, 248, 98, Gray, 2);
+	ImgRectangle(132, 52, 188, 98, ThemeColor2, 2);
+	ImgRectangle(192, 52, 248, 98, ThemeColor2, 2);
 	ImgRectangle(252, 52, 298, 98, 0xff0000, 2);
-	ImgRectangle(302, 52, 378, 98, Gray, 2);
-	ImgRectangle(382, 52, 448, 98, Gray, 2);
+	ImgRectangle(302, 52, 378, 98, ThemeColor2, 2);
+	ImgRectangle(382, 52, 448, 98, ThemeColor2, 2);
 
 	MouseStatus(&mouse_old);
 	MouseStoreBk(mouse_old.x, mouse_old.y);
@@ -597,7 +596,7 @@ int DrawTriangle(BMPATTR bmpattr, MENUSTATE* state)
 				tx1 = x1 - bmpattr.x1;
 				ty1 = y1 - bmpattr.y1;
 
-				Bar(200, 570, 600, 600, Gray);
+				Bar(200, 570, 600, 600, ThemeColor2);
 				sprintf(xystring1, "点1:%d,%d", tx1, ty1);
 				TextGB16(200, 580, 14, 0, xystring1);
 			}
@@ -609,7 +608,7 @@ int DrawTriangle(BMPATTR bmpattr, MENUSTATE* state)
 				tx2 = x2 - bmpattr.x1;
 				ty2 = y2 - bmpattr.y1;
 
-				//Bar(200, 570, 600, 600, Gray);
+				//Bar(200, 570, 600, 600, ThemeColor2);
 				sprintf(xystring2, "点2:%d,%d", tx2, ty2);
 				TextGB16(350, 580, 14, 0, xystring2);
 			}
@@ -621,7 +620,7 @@ int DrawTriangle(BMPATTR bmpattr, MENUSTATE* state)
 				tx3 = x3 - bmpattr.x1;
 				ty3 = y3 - bmpattr.y1;
 
-				//Bar(200, 570, 600, 600, Gray);
+				//Bar(200, 570, 600, 600, ThemeColor2);
 				sprintf(xystring3, "点3:%d,%d", tx3, ty3);
 				TextGB16(500, 580, 14, 0, xystring3);
 
@@ -631,9 +630,9 @@ int DrawTriangle(BMPATTR bmpattr, MENUSTATE* state)
 			else if (MouseDown(250, 50, 300, 100))
 			{
 				//再次点击，退出画三角形
-				Bar(200, 570, 700, 600, Gray);
+				Bar(200, 570, 700, 600, ThemeColor2);
 				MousePutBk(mouse_new.x, mouse_new.y);
-				ImgRectangle(252, 52, 298, 98, Gray, 2);
+				ImgRectangle(252, 52, 298, 98, ThemeColor2, 2);
 				ImgRectangle(132, 52, 188, 98, 0xff0000, 2);
 				return 0;
 			}
@@ -661,7 +660,6 @@ int DrawTriangle(BMPATTR bmpattr, MENUSTATE* state)
 			mouse_old = mouse_new;
 		}
 	}
-	return 1;
 }
 
 int DrawRectangle(BMPATTR bmpattr, MENUSTATE* state)
@@ -673,11 +671,11 @@ int DrawRectangle(BMPATTR bmpattr, MENUSTATE* state)
 	char xystring2[16];
 	MOUSE mouse_old, mouse_new;
 
-	ImgRectangle(132, 52, 188, 98, Gray, 2);
-	ImgRectangle(192, 52, 248, 98, Gray, 2);
-	ImgRectangle(252, 52, 298, 98, Gray, 2);
+	ImgRectangle(132, 52, 188, 98, ThemeColor2, 2);
+	ImgRectangle(192, 52, 248, 98, ThemeColor2, 2);
+	ImgRectangle(252, 52, 298, 98, ThemeColor2, 2);
 	ImgRectangle(302, 52, 378, 98, 0xff0000, 2);
-	ImgRectangle(382, 52, 448, 98, Gray, 2);
+	ImgRectangle(382, 52, 448, 98, ThemeColor2, 2);
 
 	MouseStatus(&mouse_old);
 	MouseStoreBk(mouse_old.x, mouse_old.y);
@@ -710,7 +708,7 @@ int DrawRectangle(BMPATTR bmpattr, MENUSTATE* state)
 				tx1 = x1 - bmpattr.x1;
 				ty1 = y1 - bmpattr.y1;
 
-				Bar(200, 570 + 1, 700, 600, Gray);
+				Bar(200, 570 + 1, 700, 600, ThemeColor2);
 				sprintf(xystring1, "坐标1:%d,%d", tx1, ty1);
 				TextGB16(200, 580, 14, 0, xystring1);
 			}
@@ -722,7 +720,7 @@ int DrawRectangle(BMPATTR bmpattr, MENUSTATE* state)
 				tx2 = x2 - bmpattr.x1;
 				ty2 = y2 - bmpattr.y1;
 
-				//Bar(200, 570, 600, 600, Gray);
+				//Bar(200, 570, 600, 600, ThemeColor2);
 				sprintf(xystring2, "坐标2:%d,%d", tx2, ty2);
 				TextGB16(450, 580, 14, 0, xystring2);
 				MousePutBk(mouse_new.x, mouse_new.y);
@@ -733,9 +731,9 @@ int DrawRectangle(BMPATTR bmpattr, MENUSTATE* state)
 			else if (MouseDown(300, 50, 380, 100))
 			{
 				//再次点击，退出画矩形
-				Bar(200, 570, 700, 600, Gray);
+				Bar(200, 570, 700, 600, ThemeColor2);
 				MousePutBk(mouse_new.x, mouse_new.y);
-				ImgRectangle(302, 52, 378, 98, Gray, 2);
+				ImgRectangle(302, 52, 378, 98, ThemeColor2, 2);
 				ImgRectangle(132, 52, 188, 98, 0xff0000, 2);
 				return 0;
 			}
@@ -763,7 +761,6 @@ int DrawRectangle(BMPATTR bmpattr, MENUSTATE* state)
 			mouse_old = mouse_new;
 		}
 	}
-	return 1;
 }
 
 int DrawCircle(BMPATTR bmpattr, MENUSTATE* state)
@@ -776,10 +773,10 @@ int DrawCircle(BMPATTR bmpattr, MENUSTATE* state)
 	char rstring[16];
 	MOUSE mouse_old, mouse_new;
 
-	ImgRectangle(132, 52, 188, 98, Gray, 2);
-	ImgRectangle(192, 52, 248, 98, Gray, 2);
-	ImgRectangle(252, 52, 298, 98, Gray, 2);
-	ImgRectangle(302, 52, 378, 98, Gray, 2);
+	ImgRectangle(132, 52, 188, 98, ThemeColor2, 2);
+	ImgRectangle(192, 52, 248, 98, ThemeColor2, 2);
+	ImgRectangle(252, 52, 298, 98, ThemeColor2, 2);
+	ImgRectangle(302, 52, 378, 98, ThemeColor2, 2);
 	ImgRectangle(382, 52, 448, 98, 0xff0000, 2);
 
 	MouseStatus(&mouse_old);
@@ -813,7 +810,7 @@ int DrawCircle(BMPATTR bmpattr, MENUSTATE* state)
 				tx1 = x1 - bmpattr.x1;
 				ty1 = y1 - bmpattr.y1;
 
-				Bar(200, 570 + 1, 700, 600, Gray);
+				Bar(200, 570 + 1, 700, 600, ThemeColor2);
 				sprintf(xystring, "坐标:%d,%d", tx1, ty1);
 				TextGB16(200, 580, 14, 0, xystring);
 			}
@@ -824,7 +821,7 @@ int DrawCircle(BMPATTR bmpattr, MENUSTATE* state)
 				flag = 0;
 				r = (int)sqrt((double)((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2)));
 
-				//Bar(200, 570, 600, 600, Gray);
+				//Bar(200, 570, 600, 600, ThemeColor2);
 				sprintf(rstring, "半径:%d", r);
 				TextGB16(450, 580, 14, 0, rstring);
 				MousePutBk(mouse_new.x, mouse_new.y);
@@ -835,9 +832,9 @@ int DrawCircle(BMPATTR bmpattr, MENUSTATE* state)
 			else if (MouseDown(380, 50, 450, 100))
 			{
 				//再次点击，退出画圆
-				Bar(200, 570, 700, 600, Gray);
+				Bar(200, 570, 700, 600, ThemeColor2);
 				MousePutBk(mouse_new.x, mouse_new.y);
-				ImgRectangle(382, 52, 448, 98, Gray, 2);
+				ImgRectangle(382, 52, 448, 98, ThemeColor2, 2);
 				ImgRectangle(132, 52, 188, 98, 0xff0000, 2);
 				return 0;
 			}
@@ -865,5 +862,4 @@ int DrawCircle(BMPATTR bmpattr, MENUSTATE* state)
 			mouse_old = mouse_new;
 		}
 	}
-	return 1;
 }
