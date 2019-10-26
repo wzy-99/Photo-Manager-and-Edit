@@ -26,7 +26,7 @@ void DrawAdjustBox(void);
 
 void DrawZoomSettingBox(u8 patton);
 
-void Welcome();
+void Welcome(void);
 
 
 #endif

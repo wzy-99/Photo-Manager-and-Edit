@@ -29,7 +29,7 @@ int FileNameInput(char* filename)
 		//回车确认：20
 		return 20;
 	}
-	else if ((key & 0xff) != 0 && len < 12)
+	else if ((key & 0xff) != 0 && len < 8)
 	{
 		filename[len] = key & 0xff;
 		filename[len + 1] = '\0';
@@ -477,7 +477,7 @@ int FileList(BMPATTR* bmpattr)
 				if (fileattr.flag == 1)
 				{
 					fileattr.flag = 0;
-					Bar(290, 220, 460, 420, Silvery);
+					Bar(290, 220, 460, 390, Silvery);
 					Bar(545, 220, 620, 479, Silvery);
 					Bar(470, 345, 620, 415, Silvery);
 					remove(filepath);

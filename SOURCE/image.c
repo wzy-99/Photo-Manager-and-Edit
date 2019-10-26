@@ -288,6 +288,9 @@ int ImageTailor(BMPATTR* bmpattr)
 {
 	int flag = 0;
 	int x1, y1, x2, y2;
+	int tx1, ty1, tx2, ty2;
+	char xystring1[16];
+	char xystring2[16];
 	MOUSE mouse_old, mouse_new;
 
 	if (bmpattr->flag == 0)
@@ -325,6 +328,11 @@ int ImageTailor(BMPATTR* bmpattr)
 					x1 = mouse_new.x;
 					y1 = mouse_new.y;
 					flag = 1;
+					tx1 = x1 - bmpattr->x1;
+					ty1 = y1 - bmpattr->y1;
+					Bar(200, 570 + 1, 700, 600, Gray);
+					sprintf(xystring1, "坐标1:%d,%d", tx1, ty1);
+					TextGB16(200, 580, 14, 0, xystring1);
 				}
 			}
 			else if (MouseUp(bmpattr->x1, bmpattr->y1, bmpattr->x2, bmpattr->y2) && flag == 1)
@@ -339,10 +347,18 @@ int ImageTailor(BMPATTR* bmpattr)
 					x2 = mouse_new.x;
 					y2 = mouse_new.y;
 					flag = 0;
+					tx2 = x2 - bmpattr->x1;
+					ty2 = y2 - bmpattr->y1;
+					sprintf(xystring2, "坐标2:%d,%d", tx2, ty2);
+					TextGB16(450, 580, 14, 0, xystring2);
 
 					if (abs(x1 - x2) < BMP_WIDTH_MIN || abs(y1 - y2) < BMP_HEIGTH_MIN)
 					{
+						MousePutBk(mouse_new.x, mouse_new.y);
 						WarnBox("完全裁剪");
+						MouseStatus(&mouse_new);
+						MouseStoreBk(mouse_new.x, mouse_new.y);
+						mouse_old = mouse_new;
 						continue;
 					}
 
@@ -374,100 +390,121 @@ int ImageTailor(BMPATTR* bmpattr)
 			{
 				//打开
 				MousePutBk(mouse_new.x, mouse_new.y);
-				ImgRectangle(72, 52, 128, 98, ThemeColor2, 2);
+				ImgRectangle(72, 52, 128, 98, Gray, 2);
+				Bar(200, 570 + 1, 700, 600, Gray);
 				return 20;
 			}
 			else if (MouseDown(70, 0, 130, 50))
 			{
 				//保存
 				MousePutBk(mouse_new.x, mouse_new.y);
-				ImgRectangle(72, 52, 128, 98, ThemeColor2, 2);
+				ImgRectangle(72, 52, 128, 98, Gray, 2);
+				Bar(200, 570 + 1, 700, 600, Gray);
 				return 30;
 			}
 			else if (MouseDown(130, 0, 190, 50))
 			{
 				//新建
 				MousePutBk(mouse_new.x, mouse_new.y);
-				ImgRectangle(72, 52, 128, 98, ThemeColor2, 2);
+				ImgRectangle(72, 52, 128, 98, Gray, 2);
+				Bar(200, 570 + 1, 700, 600, Gray);
 				return 40;
 			}
 			else if (MouseDown(10, 50, 70, 100))
 			{
 				//画笔
 				MousePutBk(mouse_new.x, mouse_new.y);
-				ImgRectangle(72, 52, 128, 98, ThemeColor2, 2);
+				ImgRectangle(72, 52, 128, 98, Gray, 2);
+				Bar(200, 570 + 1, 700, 600, Gray);
 				return 50;
 			}
 			else if (MouseDown(70, 50, 130, 100))
 			{
 				//裁剪
 				MousePutBk(mouse_new.x, mouse_new.y);
-				ImgRectangle(72, 52, 128, 98, ThemeColor2, 2);
+				ImgRectangle(72, 52, 128, 98, Gray, 2);
+				Bar(200, 570 + 1, 700, 600, Gray);
 				return 0;
 			}
 			else if (MouseDown(130, 50, 190, 100))
 			{
 				//图形
 				MousePutBk(mouse_new.x, mouse_new.y);
-				ImgRectangle(72, 52, 128, 98, ThemeColor2, 2);
+				ImgRectangle(72, 52, 128, 98, Gray, 2);
+				Bar(200, 570 + 1, 700, 600, Gray);
 				return 65;
 			}
 			else if (MouseDown(650, 50, 700, 100))
 			{
 				//调整
 				MousePutBk(mouse_new.x, mouse_new.y);
-				ImgRectangle(132, 52, 188, 98, ThemeColor2, 2);
-				Bar(192, 52, 448, 98, ThemeColor2);
+				ImgRectangle(132, 52, 188, 98, Gray, 2);
+				Bar(200, 570 + 1, 700, 600, Gray);
 				return 70;
 			}
 			else if (MouseDown(700, 50, 750, 100))
 			{
 				//粗细
 				MousePutBk(mouse_new.x, mouse_new.y);
-				ImgRectangle(12, 52, 68, 98, ThemeColor2, 2);
+				ImgRectangle(12, 52, 68, 98, Gray, 2);
+				Bar(200, 570 + 1, 700, 600, Gray);
 				return 75;
 			}
 			else if (MouseDown(750, 50, 800, 100))
 			{
 				//颜色
 				MousePutBk(mouse_new.x, mouse_new.y);
-				ImgRectangle(72, 52, 128, 98, ThemeColor2, 2);
+				ImgRectangle(72, 52, 128, 98, Gray, 2);
+				Bar(200, 570 + 1, 700, 600, Gray);
 				return 80;
 			}
 			else if (MouseDown(703, 570, 735, 600))
 			{
 				//设置
 				MousePutBk(mouse_new.x, mouse_new.y);
-				ImgRectangle(72, 52, 128, 98, ThemeColor2, 2);
+				ImgRectangle(72, 52, 128, 98, Gray, 2);
+				Bar(200, 570 + 1, 700, 600, Gray);
 				return 85;
 			}
 			else if (MouseDown(735, 570, 767, 600))
 			{
 				//缩小
 				MousePutBk(mouse_new.x, mouse_new.y);
-				ImgRectangle(72, 52, 128, 98, ThemeColor2, 2);
+				ImgRectangle(72, 52, 128, 98, Gray, 2);
+				Bar(200, 570 + 1, 700, 600, Gray);
 				return 90;
 			}
 			else if (MouseDown(767, 570, 800, 600))
 			{
 				//放大
 				MousePutBk(mouse_new.x, mouse_new.y);
-				ImgRectangle(72, 52, 128, 98, ThemeColor2, 2);
+				ImgRectangle(72, 52, 128, 98, Gray, 2);
+				Bar(200, 570 + 1, 700, 600, Gray);
 				return 95;
 			}
 			else if (MouseDown(0, 570, 42, 600))
 			{
 				//旋转
 				MousePutBk(mouse_new.x, mouse_new.y);
-				ImgRectangle(72, 52, 128, 98, ThemeColor2, 2);
+				ImgRectangle(72, 52, 128, 98, Gray, 2);
+				Bar(200, 570 + 1, 700, 600, Gray);
 				return 100;
 			}
 			else if (MouseDown(42, 570, 84, 600))
 			{
 				//翻转
 				MousePutBk(mouse_new.x, mouse_new.y);
-				ImgRectangle(72, 52, 128, 98, ThemeColor2, 2);
+				ImgRectangle(72, 52, 128, 98, Gray, 2);
+				Bar(200, 570 + 1, 700, 600, Gray);
 				return 105;
+			}
+			else if (MouseDown(84, 570, 126, 600))
+			{
+				//拾色器
+				MousePutBk(mouse_new.x, mouse_new.y);
+				ImgRectangle(72, 52, 128, 98, Gray, 2);
+				Bar(200, 570 + 1, 700, 600, Gray);
+				return 110;
 			}
 			else if (MouseDown(750, 0, 800, 50))
 			{
@@ -479,173 +516,6 @@ int ImageTailor(BMPATTR* bmpattr)
 				;
 			}
 			mouse_old = mouse_new;
-			////简化模型：我们只关注鼠标的按下与弹起，对于鼠标的移动过程可以简化
-			//if (mouse_old.button == mouse_new.button)
-			//{
-			//	//如果鼠标移动了但未改变点击状态
-			//	mouse_old = mouse_new;
-			//	continue;
-			//}
-			//mouse_old = mouse_new;
-			//if (MouseDown(bmpattr->x1, bmpattr->y1, bmpattr->x2, bmpattr->y2) && flag == 0)
-			//{
-			//	x1 = mouse_new.x;
-			//	y1 = mouse_new.y;
-			//	flag = 1;	//记录状态
-			//}
-			////鼠标在图像区点击后有两种情况：1.在图像区松开2.在图像区外松开
-			////情况1:
-			//else if (MouseUp(bmpattr->x1, bmpattr->y1, bmpattr->x2, bmpattr->y2) && flag == 1)
-			//{
-			//	x2 = mouse_new.x;
-			//	y2 = mouse_new.y;
-			//	flag = 0;	//重新记录
-			//	if (x1 == x2 || y1 == y2)
-			//	{
-			//		//判断是否为完全裁剪
-			//		//如果是，则本次裁剪无效
-			//		continue;
-			//	}
-			//	MousePutBk(mouse_new.x, mouse_new.y);
-			//	//重新计算图像属性
-			//	bmpattr->width = abs(x2 - x1);
-			//	bmpattr->heigth = abs(y2 - y1);
-			//	bmpattr->oWidth = bmpattr->width;
-			//	bmpattr->oHeigth = bmpattr->heigth;
-			//	bmpattr->x1 = SCR_WIDTH / 2 - bmpattr->width / 2;
-			//	bmpattr->x2 = SCR_WIDTH / 2 + bmpattr->width / 2;
-			//	bmpattr->y1 = SCR_HEIGHT / 2 - bmpattr->heigth / 2 + 35;
-			//	bmpattr->y2 = SCR_HEIGHT / 2 + bmpattr->heigth / 2 + 35;
-			//	//裁剪图像
-			//	BmpSave(bmpattr->x1, bmpattr->y1, bmpattr->x2, bmpattr->y2, "DATA//temp0");
-			//	Bar(0, 100, 800, 570, White);
-			//	BmpPut(bmpattr->x1, bmpattr->y1, "DATA//temp0");
-			//	//注意：这里是old_mouse
-			//	MouseStatus(&mouse_old);
-			//	MouseStoreBk(mouse_old.x, mouse_old.y);
-			//}
-			////情况2：
-			//else if(MouseOutUp(bmpattr->x1, bmpattr->y1, bmpattr->x2, bmpattr->y2) && flag == 1)
-			//{
-			//	flag = 0;
-			//	//删除记录
-			//}
-			//else
-			//{
-			//	;
-			//}
-			//if (MouseDown(10, 0, 70, 50))
-			//{
-			//	//打开
-			//	MousePutBk(mouse_new.x, mouse_new.y);
-			//	Rectangle(72, 52, 128, 98, ThemeColor2, 2);
-			//	return 20;
-			//}
-			//else if (MouseDown(70, 0, 130, 50))
-			//{
-			//	//保存
-			//	MousePutBk(mouse_new.x, mouse_new.y);
-			//	Rectangle(72, 52, 128, 98, ThemeColor2, 2);
-			//	return 30;
-			//}
-			//else if (MouseDown(130, 0, 190, 50))
-			//{
-			//	//新建
-			//	MousePutBk(mouse_new.x, mouse_new.y);
-			//	Rectangle(72, 52, 128, 98, ThemeColor2, 2);
-			//	return 40;
-			//}
-			//else if (MouseDown(190,0,250,50))
-			//{
-			//	//新建
-			//	MousePutBk(mouse_new.x, mouse_new.y);
-			//	Rectangle(72, 52, 128, 98, ThemeColor2, 2);
-			//	return 45;
-			//}
-			//else if (MouseDown(10, 50, 70, 100))
-			//{
-			//	//画笔
-			//	MousePutBk(mouse_new.x, mouse_new.y);
-			//	Rectangle(72, 52, 128, 98, ThemeColor2, 2);
-			//	return 50;
-			//}
-			//else if (MouseDown(70, 50, 130, 100))
-			//{
-			//	//裁剪
-			//	MousePutBk(mouse_new.x, mouse_new.y);
-			//	Rectangle(72, 52, 128, 98, ThemeColor2, 2);
-			//	return 0;
-			//}
-			//// else if(MouseDown(130,50,190,100))
-			//// {
-			//	// Rectangle(72, 52, 128, 98, ThemeColor2, 2);
-			//	// return 65
-			//// }
-			//else if (MouseDown(650, 50, 700, 100))
-			//{
-			//	//调整
-			//	MousePutBk(mouse_new.x, mouse_new.y);
-			//	Rectangle(12, 52, 68, 98, ThemeColor2, 2);
-			//	return 70;
-			//}
-			//else if (MouseDown(700, 50, 750, 100))
-			//{
-			//	//粗细
-			//	MousePutBk(mouse_new.x, mouse_new.y);
-			//	Rectangle(12, 52, 68, 98, ThemeColor2, 2);
-			//	return 75;
-			//}
-			//else if (MouseDown(750, 50, 800, 100))
-			//{
-			//	//颜色
-			//	MousePutBk(mouse_new.x, mouse_new.y);
-			//	Rectangle(72, 52, 128, 98, ThemeColor2, 2);
-			//	return 80;
-			//}
-			//else if (MouseDown(703, 570, 735, 600))
-			//{
-			//	//设置
-			//	MousePutBk(mouse_new.x, mouse_new.y);
-			//	Rectangle(72, 52, 128, 98, ThemeColor2, 2);
-			//	return 85;
-			//}
-			//else if (MouseDown(735, 570, 767, 600))
-			//{
-			//	//缩小
-			//	MousePutBk(mouse_new.x, mouse_new.y);
-			//	Rectangle(72, 52, 128, 98, ThemeColor2, 2);
-			//	return 90;
-			//}
-			//else if (MouseDown(767, 570, 800, 600))
-			//{
-			//	//放大
-			//	MousePutBk(mouse_new.x, mouse_new.y);
-			//	Rectangle(72, 52, 128, 98, ThemeColor2, 2);
-			//	return 95;
-			//}
-			//else if (MouseDown(0, 570, 42, 600))
-			//{
-			//	//旋转
-			//	MousePutBk(mouse_new.x, mouse_new.y);
-			//	Rectangle(72, 52, 128, 98, ThemeColor2, 2);
-			//	return 100;
-			//}
-			//else if (MouseDown(42, 570, 84, 600))
-			//{
-			//	//翻转
-			//	MousePutBk(mouse_new.x, mouse_new.y);
-			//	Rectangle(72, 52, 128, 98, ThemeColor2, 2);
-			//	return 105;
-			//}
-			//else if (MouseDown(750, 0, 800, 50))
-			//{
-			//	//退出
-			//	exit(0);
-			//}
-			//else
-			//{
-			//	;
-			//}
 		}
 	}
 }
@@ -1267,3 +1137,203 @@ int ImageAdjustment(BMPATTR* bmpattr)
 		}
 	}
 }
+
+////简化模型：我们只关注鼠标的按下与弹起，对于鼠标的移动过程可以简化
+//if (mouse_old.button == mouse_new.button)
+//{
+//	//如果鼠标移动了但未改变点击状态
+//	mouse_old = mouse_new;
+//	continue;
+//}
+//mouse_old = mouse_new;
+//if (MouseDown(bmpattr->x1, bmpattr->y1, bmpattr->x2, bmpattr->y2) && flag == 0)
+//{
+//	x1 = mouse_new.x;
+//	y1 = mouse_new.y;
+//	flag = 1;	//记录状态
+//	tx1 = x1 - bmpattr->x1;
+//	ty1 = y1 - bmpattr->y1;
+//	Bar(200, 570 + 1, 700, 600, Gray);
+//	sprintf(xystring1, "坐标1:%d,%d", tx1, ty1);
+//	TextGB16(200, 580, 14, 0, xystring1);
+//}
+////鼠标在图像区点击后有两种情况：1.在图像区松开2.在图像区外松开
+////情况1:
+//else if (MouseUp(bmpattr->x1, bmpattr->y1, bmpattr->x2, bmpattr->y2) && flag == 1)
+//{
+//	x2 = mouse_new.x;
+//	y2 = mouse_new.y;
+//	flag = 0;	//重新记录
+//	tx2 = x2 - bmpattr->x1;
+//	ty2 = y2 - bmpattr->y1;
+//	sprintf(xystring2, "坐标2:%d,%d", tx2, ty2);
+//	TextGB16(450, 580, 14, 0, xystring2);
+//	if (x1 == x2 || y1 == y2)
+//	{
+//		//判断是否为完全裁剪
+//		//如果是，则本次裁剪无效
+//		continue;
+//	}
+//	MousePutBk(mouse_new.x, mouse_new.y);
+//	//重新计算图像属性
+//	bmpattr->width = abs(x2 - x1);
+//	bmpattr->heigth = abs(y2 - y1);
+//	bmpattr->oWidth = bmpattr->width;
+//	bmpattr->oHeigth = bmpattr->heigth;
+//	bmpattr->x1 = SCR_WIDTH / 2 - bmpattr->width / 2;
+//	bmpattr->x2 = SCR_WIDTH / 2 + bmpattr->width / 2;
+//	bmpattr->y1 = SCR_HEIGHT / 2 - bmpattr->heigth / 2 + 35;
+//	bmpattr->y2 = SCR_HEIGHT / 2 + bmpattr->heigth / 2 + 35;
+//	//裁剪图像
+//	BmpSave(bmpattr->x1, bmpattr->y1, bmpattr->x2, bmpattr->y2, "DATA//temp0");
+//	Bar(0, 100, 800, 570, White);
+//	BmpPut(bmpattr->x1, bmpattr->y1, "DATA//temp0");
+//	//注意：这里是old_mouse
+//	MouseStatus(&mouse_old);
+//	MouseStoreBk(mouse_old.x, mouse_old.y);
+//}
+////情况2：
+//else if(MouseOutUp(bmpattr->x1, bmpattr->y1, bmpattr->x2, bmpattr->y2) && flag == 1)
+//{
+//	flag = 0;
+//	//删除记录
+//}
+//else
+//{
+//	;
+//}
+//if (MouseDown(10, 0, 70, 50))
+//{
+//	//打开
+//	MousePutBk(mouse_new.x, mouse_new.y);
+//	Rectangle(72, 52, 128, 98, Gray, 2);
+//	Bar(200, 570 + 1, 700, 600, Gray);
+//	return 20;
+//}
+//else if (MouseDown(70, 0, 130, 50))
+//{
+//	//保存
+//	MousePutBk(mouse_new.x, mouse_new.y);
+//	Rectangle(72, 52, 128, 98, Gray, 2);
+//	Bar(200, 570 + 1, 700, 600, Gray);
+//	return 30;
+//}
+//else if (MouseDown(130, 0, 190, 50))
+//{
+//	//新建
+//	MousePutBk(mouse_new.x, mouse_new.y);
+//	Rectangle(72, 52, 128, 98, Gray, 2);
+//	Bar(200, 570 + 1, 700, 600, Gray);
+//	return 40;
+//}
+//else if (MouseDown(190,0,250,50))
+//{
+//	//新建
+//	MousePutBk(mouse_new.x, mouse_new.y);
+//	Rectangle(72, 52, 128, 98, Gray, 2);
+//	Bar(200, 570 + 1, 700, 600, Gray);
+//	return 45;
+//}
+//else if (MouseDown(10, 50, 70, 100))
+//{
+//	//画笔
+//	MousePutBk(mouse_new.x, mouse_new.y);
+//	Rectangle(72, 52, 128, 98, Gray, 2);
+//	Bar(200, 570 + 1, 700, 600, Gray);
+//	return 50;
+//}
+//else if (MouseDown(70, 50, 130, 100))
+//{
+//	//裁剪
+//	MousePutBk(mouse_new.x, mouse_new.y);
+//	Rectangle(72, 52, 128, 98, Gray, 2);
+//	Bar(200, 570 + 1, 700, 600, Gray);
+//	return 0;
+//}
+//// else if(MouseDown(130,50,190,100))
+//// {
+//	// Rectangle(72, 52, 128, 98, Gray, 2);
+//	Bar(200, 570 + 1, 700, 600, Gray);
+//	// return 65
+//// }
+//else if (MouseDown(650, 50, 700, 100))
+//{
+//	//调整
+//	MousePutBk(mouse_new.x, mouse_new.y);
+//	Rectangle(12, 52, 68, 98, Gray, 2);
+//	Bar(200, 570 + 1, 700, 600, Gray);
+//	return 70;
+//}
+//else if (MouseDown(700, 50, 750, 100))
+//{
+//	//粗细
+//	MousePutBk(mouse_new.x, mouse_new.y);
+//	Rectangle(12, 52, 68, 98, Gray, 2);
+//	Bar(200, 570 + 1, 700, 600, Gray);
+//	return 75;
+//}
+//else if (MouseDown(750, 50, 800, 100))
+//{
+//	//颜色
+//	MousePutBk(mouse_new.x, mouse_new.y);
+//	Rectangle(72, 52, 128, 98, Gray, 2);
+//	return 80;
+//	Bar(200, 570 + 1, 700, 600, Gray);
+//}
+//else if (MouseDown(703, 570, 735, 600))
+//{
+//	//设置
+//	MousePutBk(mouse_new.x, mouse_new.y);
+//	Rectangle(72, 52, 128, 98, Gray, 2);
+//	Bar(200, 570 + 1, 700, 600, Gray);
+//	return 85;
+//}
+//else if (MouseDown(735, 570, 767, 600))
+//{
+//	//缩小
+//	MousePutBk(mouse_new.x, mouse_new.y);
+//	Rectangle(72, 52, 128, 98, Gray, 2);
+//	Bar(200, 570 + 1, 700, 600, Gray);
+//	return 90;
+//}
+//else if (MouseDown(767, 570, 800, 600))
+//{
+//	//放大
+//	MousePutBk(mouse_new.x, mouse_new.y);
+//	Rectangle(72, 52, 128, 98, Gray, 2);
+//	Bar(200, 570 + 1, 700, 600, Gray);
+//	return 95;
+//}
+//else if (MouseDown(0, 570, 42, 600))
+//{
+//	//旋转
+//	MousePutBk(mouse_new.x, mouse_new.y);
+//	Rectangle(72, 52, 128, 98, Gray, 2);
+//	Bar(200, 570 + 1, 700, 600, Gray);
+//	return 100;
+//}
+//else if (MouseDown(42, 570, 84, 600))
+//{
+//	//翻转
+//	MousePutBk(mouse_new.x, mouse_new.y);
+//	Rectangle(72, 52, 128, 98, Gray, 2);
+//	Bar(200, 570 + 1, 700, 600, Gray);
+//	return 105;
+//}
+//else if (MouseDown(84, 570, 126, 600))
+//{
+//	//拾色器
+//	MousePutBk(mouse_new.x, mouse_new.y);
+//	ImgRectangle(72, 52, 128, 98, Gray, 2);
+//	Bar(200, 570 + 1, 700, 600, Gray);
+//	return 110;
+//}
+//else if (MouseDown(750, 0, 800, 50))
+//{
+//	//退出
+//	exit(0);
+//}
+//else
+//{
+//	;
+//}

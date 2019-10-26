@@ -314,3 +314,73 @@ int SelectColor(u32* color)
 	}
 
 }
+
+int PickColor(u32* color)
+{
+	int x, y;
+	RGB tRGB;
+	char colorstring[20];
+	MOUSE mouse_old, mouse_new;
+
+	U32TRGB(&tRGB, *color);
+	sprintf(colorstring, "R:%d G:%d B:%d", tRGB.r, tRGB.g, tRGB.b);
+	TextGB16(200, 580, 14, 0, "当前颜色为：");
+	Bar(300, 580, 320, 590, *color);
+	TextASC16(400, 580, 14, 0, colorstring);
+
+	MouseStatus(&mouse_old);
+	MouseStoreBk(mouse_old.x, mouse_old.y);
+	MouseDraw(mouse_old);
+
+	while (1)
+	{
+		MouseStatus(&mouse_new);
+		if (mouse_new.x == mouse_old.x && mouse_new.y == mouse_old.y && mouse_new.button == mouse_old.button)
+		{
+			;
+		}
+		else
+		{
+			MousePutBk(mouse_old.x, mouse_old.y);
+			MouseStoreBk(mouse_new.x, mouse_new.y);
+			MouseDraw(mouse_new);
+
+			if (mouse_new.button == mouse_old.button)
+			{
+				mouse_old = mouse_new;
+				continue;
+			}
+
+			if (MouseDown(84, 570, 126, 600))
+			{
+				//再次点击，退出拾色器
+				MousePutBk(mouse_new.x, mouse_new.y);
+				Bar(200, 570 + 1, 700, 600, Gray);
+				return 0;
+			}
+			else if (MouseDown(750, 0, 800, 50))
+			{
+				//退出
+				exit(0);
+			}
+			else if (MouseDown(1, 1, 800, 600))
+			{
+				x = mouse_new.x - 1;
+				y = mouse_new.y - 1;
+				*color = GetPixel(x, y);
+
+				U32TRGB(&tRGB, *color);
+				Bar(200, 570 + 1, 700, 600, Gray);
+				sprintf(colorstring, "R:%d G:%d B:%d", tRGB.r, tRGB.g, tRGB.b);
+				TextGB16(200, 580, 14, 0, "当前颜色为：");
+				Bar(300, 580, 320, 590, *color);
+				TextASC16(400, 580, 14, 0, colorstring);
+			}
+			else
+			{
+				;
+			}
+			mouse_old = mouse_new;
+		}
+	}
+}

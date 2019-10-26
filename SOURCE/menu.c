@@ -122,6 +122,12 @@ void MenuManager()
 				MousePutBk(mouse_old.x, mouse_old.y);
 				message = 105;
 			}
+			else if (MouseDown(84, 570, 126, 600) || message == 110)
+			{
+				//拾色器
+				MousePutBk(mouse_old.x, mouse_old.y);
+				message = 110;
+			}
 			else if (MouseDown(750, 0, 800, 50))
 			{
 				//退出
@@ -218,6 +224,12 @@ void MenuManager()
 			case 105:
 				//旋转
 				message = ImageMirror(bmpattr);
+				MouseStatus(&mouse_old);
+				MouseStoreBk(mouse_old.x, mouse_old.y);
+				break;
+			case 110:
+				//拾色器
+				message = PickColor(&state.color);
 				MouseStatus(&mouse_old);
 				MouseStoreBk(mouse_old.x, mouse_old.y);
 				break;
