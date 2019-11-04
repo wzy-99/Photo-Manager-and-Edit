@@ -1,10 +1,6 @@
 #ifndef BOX_H
 #define BOX_H
 
-#define CharColor 
-#define ColorStart 0x7ecef4
-//#define ColorEnd 
-
 #include "head.h"
 #include "svga.h"
 #include "mouse.h"
