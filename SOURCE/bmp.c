@@ -1,8 +1,21 @@
 #include "bmp.h"
 
+/**
+ *  @ brief		BmpPut
+ *
+ *  @ param		x		横坐标
+ *				y		纵坐标
+ *				path	文件路径
+ *
+ *	@ note		打开文件
+ *
+ *	@ return	正常返回	1
+ *				错误返回	-1
+ **/
+
 int BmpPut(int x, int y, char* path)
 {
-	int i, j;	
+	int i, j;
 	BGR* buffer;
 	u32 color24;
 	u32 linebytes;
@@ -19,26 +32,30 @@ int BmpPut(int x, int y, char* path)
 			fclose(fp);
 			return 0;
 		}
+
 		fseek(fp, 30L, 0);
 		fread(&bmpinfo.biCompression, 4, 1, fp);
 		if (bmpinfo.biCompression != 0UL)
 		{
 			fclose(fp);
-			return 0;
+			return -1;
 		}
+
 		fseek(fp, 18L, 0);
 		fread(&bmpinfo.biWidth, 4, 1, fp);
 		if (bmpinfo.biWidth > SCR_WIDTH)
 		{
 			fclose(fp);
-			return 0;
+			return -1;
 		}
+
 		fread(&bmpinfo.biHeight, 4, 1, fp);
 		if (bmpinfo.biHeight > SCR_HEIGHT)
 		{
 			fclose(fp);
-			return 0;
+			return -1;
 		}
+
 		linebytes = (3 * bmpinfo.biWidth) % 4;
 		if (!linebytes)
 		{
@@ -48,11 +65,13 @@ int BmpPut(int x, int y, char* path)
 		{
 			linebytes = 3 * bmpinfo.biWidth + 4 - linebytes;
 		}
+
 		if ((buffer = (BGR*)malloc(linebytes)) == 0)
 		{
 			fclose(fp);
 			return -1;
 		}
+
 		fseek(fp, 54L, 0);
 		for (i = bmpinfo.biHeight - 1; i > -1; i--)
 		{
@@ -63,17 +82,30 @@ int BmpPut(int x, int y, char* path)
 				PutPixel(j + x, i + y, color24);
 			}
 		}
+
 		free(buffer);
 		fclose(fp);
 	}
 	else
 	{
 		//打开失败
-		exit(0);
-		//return -1;
+		return -1;
 	}
 	return 1;
 }
+
+/**
+ *  @ brief		BmpSave
+ *
+ *  @ param		x1、x2	横坐标
+ *				y1、y2	纵坐标
+ *				path	文件路径
+ *
+ *	@ note		保存文件
+ *
+ *	@ return	正常返回	1
+ *				错误返回	-1
+ **/
 
 int BmpSave(int x1,int y1,int x2,int y2,char* path)
 {
@@ -119,13 +151,11 @@ int BmpSave(int x1,int y1,int x2,int y2,char* path)
 	if ((buffer = (BGR*)malloc(3 * width)) == 0)
 	{
 		//无法开辟内存
-		//exit(0);
 		return -1;
 	}
 	if ((fp = fopen(path, "wb")) == NULL)
 	{
 		//无法创建文件
-		//exit(0);
 		return -1;
 	}
 
@@ -150,13 +180,25 @@ int BmpSave(int x1,int y1,int x2,int y2,char* path)
 	return 1;
 }
 
+/**
+ *  @ brief		BmpInfo
+ *
+ *  @ param		bmpattr		图像信息指针
+ *				filename	文件名
+ *
+ *	@ note		获取文件信息
+ *
+ *	@ return	正常返回	1
+ *				错误返回	-1
+ **/
+
 int BmpInfo(BMPATTR* bmpattr,char* filename)
 {
 	FILE* fp;
 	u16 bit;			//位深
 	u32 compression;	//压缩
 
-	BmpName(filename);//添加文件类型后缀
+	BmpName(filename);	//添加文件类型后缀
 
 	if ((fp=fopen(filename,"rb"))==NULL)
 	{
@@ -226,6 +268,17 @@ int BmpInfo(BMPATTR* bmpattr,char* filename)
 	}
 	return 1;
 }
+
+/**
+ *  @ brief		BmpName
+ *
+ *  @ param		filename	文件名
+ *				
+ *	@ note		修饰文件名
+ *
+ *	@ return	正常返回	1
+ *				错误返回	0
+ **/
 
 int BmpName(char* filename)
 {

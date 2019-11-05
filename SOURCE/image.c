@@ -31,12 +31,14 @@ int ImageZoom(BMPATTR* bmpattr, double times, u8 patton)
 
 	if (nWidth > 798 || nHeigth > 468)
 	{
+		fclose(fp);
 		//上限
 		return -3;
 	}
 
 	if (nWidth < bmpattr->oWidth - 5 || nHeigth < bmpattr->oHeigth - 5)
 	{
+		fclose(fp);
 		//下限
 		return -4;
 	}
@@ -871,20 +873,22 @@ int ImageSaturation(BMPATTR attr, double times)
 				//类型转换
 				U32TRGB(&rgb, oldcolor);
 				RGB2HSL(rgb, &hsl);
+				////计算公式
+				//hsl.s = hsl.s * times;
+				//if (hsl.s > 1)
+				//{
+				//	hsl.s = 1.0;
+				//}
+				//else if (hsl.s < 0)
+				//{
+				//	hsl.s = 0.0;
+				//}
+				//else
+				//{
+				//	;
+				//}
 				//计算公式
-				hsl.s = hsl.s * times;
-				if (hsl.s > 1)
-				{
-					hsl.s = 1.0;
-				}
-				else if (hsl.s < 0)
-				{
-					hsl.s = 0.0;
-				}
-				else
-				{
-					;
-				}
+				hsl.s = pow(hsl.s, 1 / times);
 				//类型转换
 				HSL2RGB(&rgb, hsl);
 				oldcolor = RGB2U32(rgb.r, rgb.g, rgb.b);
@@ -922,20 +926,22 @@ int ImageLightness(BMPATTR attr, double times)
 				//类型转换
 				U32TRGB(&rgb, oldcolor);
 				RGB2HSL(rgb, &hsl);
+				////计算公式
+				//hsl.l = hsl.l * times;
+				//if (hsl.l > 1.0)
+				//{
+				//	hsl.l = 1.0;
+				//}
+				//else if (hsl.s < 0)
+				//{
+				//	hsl.l = 0;
+				//}
+				//else
+				//{
+				//	;
+				//}
 				//计算公式
-				hsl.l = hsl.l * times;
-				if (hsl.l > 1.0)
-				{
-					hsl.l = 1.0;
-				}
-				else if (hsl.s < 0)
-				{
-					hsl.l = 0;
-				}
-				else
-				{
-					;
-				}
+				hsl.l = pow(hsl.l, 1 / times);
 				//类型转换
 				HSL2RGB(&rgb, hsl);
 				oldcolor = RGB2U32(rgb.r, rgb.g, rgb.b);
