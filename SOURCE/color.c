@@ -414,14 +414,27 @@ int SelectColor(u32* color)
 }
 
 /**
- *  @ brief		PickColor
- *
- *  @ param		color	当前颜色值
- *
- *	@ note		拾色器
- *
- *	@ return	0
- **/
+*  函数名      PickColor
+*  传入参数    color      当前颜色值
+*  功能        拾色器
+*  返回值      0          退出拾色器
+			   20         切换为打开功能
+			   30         切换为保存功能
+			   40         切换为新建功能
+			   45         切换为图库功能
+			   50         切换为画笔功能
+			   60         切换为裁剪功能
+			   65         切换为图形功能
+			   70         切换为调整功能
+			   75         切换为粗细功能
+			   80         切换为选色功能
+			   85         切换为设置功能
+			   90         切换为缩小功能
+			   95         切换为放大功能
+			   100        切换为旋转功能
+			   105        切换为翻转功能
+			   120        切换为滤镜功能
+**/
 
 int PickColor(u32* color)
 {
@@ -574,6 +587,13 @@ int PickColor(u32* color)
 				MousePutBk(mouse_new.x, mouse_new.y);
 				Bar(200, 570 + 1, 700, 600, Gray);
 				return 0;
+			}
+			else if (MouseDown(700, 0, 750, 50))
+			{
+				//滤镜
+				MousePutBk(mouse_new.x, mouse_new.y);
+				Bar(200, 570 + 1, 700, 600, Gray);
+				return 120;
 			}
 			else if (MouseDown(750, 0, 800, 50))
 			{

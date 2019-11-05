@@ -20,6 +20,7 @@ int DrawLine(BMPATTR bmpattr, MENUSTATE* state);					//调用画线函数
 int DrawTriangle(BMPATTR bmpattr, MENUSTATE* state);				//调用画三角形函数
 int DrawRectangle(BMPATTR bmpatttr, MENUSTATE* state);				//调用画矩形函数
 int DrawCircle(BMPATTR bmpattr, MENUSTATE* state);					//调用画圆函数
+int DrawShading(BMPATTR bmpattr, MENUSTATE* state);                 //调用画渐变矩形函数
 
 
 

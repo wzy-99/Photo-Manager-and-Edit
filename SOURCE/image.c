@@ -286,6 +286,27 @@ u32 ImageRGB(int x1, int x2, int y1, int y2, double x, double y, u8 patton)
 	return ((u32)r << 16) | ((u32)g << 8) | ((u32)b);
 }
 
+/**
+*  函数名      ImgTailor
+*  输入参数    bmpattr    图片
+*  功能        裁剪
+*  返回值      0          图片未打开
+			   1          退出画裁剪函数
+			   20         切换为打开功能
+			   30         切换为保存功能
+			   40         切换为新建功能
+			   45         切换为图库功能
+			   50         切换为画笔功能
+			   65         切换为画图形功能
+			   70         切换为调整功能
+			   85         切换为设置功能
+			   90         切换为缩小功能
+			   95         切换为放大功能
+			   100        切换为旋转功能
+			   105        切换为翻转功能
+			   120        切换为滤镜功能
+
+**/
 int ImageTailor(BMPATTR* bmpattr)
 {
 	int flag = 0;
@@ -306,9 +327,11 @@ int ImageTailor(BMPATTR* bmpattr)
 	MouseStatus(&mouse_old);
 	MouseStoreBk(mouse_old.x, mouse_old.y);
 	MouseDraw(mouse_old);
+
 	while (1)
 	{
 		MouseStatus(&mouse_new);
+
 		if (mouse_new.x == mouse_old.x && mouse_new.y == mouse_old.y && mouse_new.button == mouse_old.button)
 		{
 			continue;	//如果鼠标没有移动也没有点击
@@ -319,7 +342,7 @@ int ImageTailor(BMPATTR* bmpattr)
 			MouseStoreBk(mouse_new.x, mouse_new.y);
 			MouseDraw(mouse_new);
 
-			if (MouseDown(bmpattr->x1, bmpattr->y1, bmpattr->x2, bmpattr->y2) && flag == 0)
+			if (MouseDown(bmpattr->x1, bmpattr->y1, bmpattr->x2, bmpattr->y2) && flag == 0)    //点击图片内一个点
 			{
 				if (mouse_old.button == 1)
 				{
@@ -337,7 +360,7 @@ int ImageTailor(BMPATTR* bmpattr)
 					TextGB16(200, 580, 14, 0, xystring1);
 				}
 			}
-			else if (MouseUp(bmpattr->x1, bmpattr->y1, bmpattr->x2, bmpattr->y2) && flag == 1)
+			else if (MouseUp(bmpattr->x1, bmpattr->y1, bmpattr->x2, bmpattr->y2) && flag == 1)    //拖动至图片内另一个点松开
 			{
 
 				if (mouse_new.x == x1 && mouse_new.y == y1)
@@ -366,6 +389,7 @@ int ImageTailor(BMPATTR* bmpattr)
 
 					MousePutBk(mouse_new.x, mouse_new.y);
 
+					/*将两点作为新图片的顶点，更新裁剪后的图片信息*/
 					bmpattr->heigth = abs(y2 - y1);
 					bmpattr->width = abs(x2 - x1);
 					bmpattr->oWidth = bmpattr->width;
@@ -375,6 +399,7 @@ int ImageTailor(BMPATTR* bmpattr)
 					bmpattr->y1 = SCR_HEIGHT / 2 - bmpattr->heigth / 2 + 35;
 					bmpattr->y2 = SCR_HEIGHT / 2 + bmpattr->heigth / 2 + 35;
 
+					/*将裁剪后的图片保存，然后将画面清屏后再重新打开*/
 					BmpSave(bmpattr->x1, bmpattr->y1, bmpattr->x2, bmpattr->y2, "DATA//temp0");
 					Bar(0, 100, 800, 570, White);
 					BmpPut(bmpattr->x1, bmpattr->y1, "DATA//temp0");
@@ -383,11 +408,13 @@ int ImageTailor(BMPATTR* bmpattr)
 					MouseStoreBk(mouse_new.x, mouse_new.y);
 				}
 			}
-			else if (MouseUp(0, 0, 800, 600) && flag == 1)
+			else if (MouseUp(0, 0, 800, 600) && flag == 1)    //在图片外松开无效，重新裁剪
 			{
 				flag = 0;
 				continue;
 			}
+
+			/*功能切换*/
 			else if (MouseDown(10, 0, 70, 50))
 			{
 				//打开
@@ -412,6 +439,14 @@ int ImageTailor(BMPATTR* bmpattr)
 				Bar(200, 570 + 1, 700, 600, Gray);
 				return 40;
 			}
+			else if (MouseDown(190, 0, 250, 50))
+			{
+				//图库
+				MousePutBk(mouse_new.x, mouse_new.y);
+				ImgRectangle(72, 52, 128, 98, Gray, 2);
+				Bar(200, 570 + 1, 700, 600, Gray);
+				return 45;
+			}
 			else if (MouseDown(10, 50, 70, 100))
 			{
 				//画笔
@@ -426,7 +461,7 @@ int ImageTailor(BMPATTR* bmpattr)
 				MousePutBk(mouse_new.x, mouse_new.y);
 				ImgRectangle(72, 52, 128, 98, Gray, 2);
 				Bar(200, 570 + 1, 700, 600, Gray);
-				return 0;
+				return 1;
 			}
 			else if (MouseDown(130, 50, 190, 100))
 			{
@@ -508,6 +543,14 @@ int ImageTailor(BMPATTR* bmpattr)
 				Bar(200, 570 + 1, 700, 600, Gray);
 				return 110;
 			}
+			else if (MouseDown(700, 0, 750, 50))
+			{
+				//滤镜
+				MousePutBk(mouse_new.x, mouse_new.y);
+				ImgRectangle(72, 52, 128, 98, Gray, 2);
+				Bar(200, 570 + 1, 700, 600, Gray);
+				return 120;
+			}
 			else if (MouseDown(750, 0, 800, 50))
 			{
 				//退出
@@ -517,21 +560,31 @@ int ImageTailor(BMPATTR* bmpattr)
 			{
 				;
 			}
+
 			mouse_old = mouse_new;
 		}
 	}
 }
 
+/**
+*  函数名      ImageRot
+*  传入参数    bmpattr     图片
+*  功能        拾色器
+*  返回值      0           图片未打开
+			   -1          旋转后图片超高
+			   -2          旋转后图片超宽
+			   1           函数成功运行
+**/
 int ImageRot(BMPATTR* bmpattr)
 {
-	int width, heigth;
-	int i, j;
-	int tx1 = bmpattr->x1;
+	int width, heigth;        //记下旋转后图片的宽和高的临时变量
+	int i, j;                 //循环变量
+	int tx1 = bmpattr->x1;    //记录图片顶点坐标的临时变量
 	int tx2 = bmpattr->x2;
 	int ty1 = bmpattr->y1;
 	int ty2 = bmpattr->y2;
-	u32 color24;
-	FILE* fp;
+	u32 color24;              //记录每一点的颜色值
+	FILE* fp;                 //将记下的颜色值写入文件中，再从文件中读取，重新显示图片
 
 	if (bmpattr->flag == 0)
 	{
@@ -539,11 +592,13 @@ int ImageRot(BMPATTR* bmpattr)
 		return 0;
 	}
 
+	/*以二进制只写模式打开临时文件，如果文件打开失败，退出*/
 	if ((fp = fopen("DATA//temp3", "wb")) == NULL)
 	{
 		exit(0);
 	}
 
+	/*从上至下，从右至左将每一点的颜色值写入文件*/
 	for (i = tx2; i >= tx1; i--)
 	{
 		for (j = ty1; j <= ty2; j++)
@@ -552,32 +607,41 @@ int ImageRot(BMPATTR* bmpattr)
 			fwrite(&color24, 4, 1, fp);
 		}
 	}
-	fclose(fp);
 
+	fclose(fp);    //关闭文件
+
+	/*以二进制只读模式打开临时文件，如果文件打开失败，退出*/
 	if ((fp = fopen("DATA//temp3", "rb")) == NULL)
 	{
 		exit(0);
 	}
 
+	/*记下旋转后图片的高和宽*/
 	heigth = bmpattr->width;
 	width = bmpattr->heigth;
 
+	/*如果超高，退出*/
 	if (heigth > BMP_HEIGTH_MAX)
 	{
-		return 0;
-	}
-	if (width > BMP_WIDTH_MAX)
-	{
-		return 0;
+		return -1;
 	}
 
+	/*如果超宽，退出*/
+	if (width > BMP_WIDTH_MAX)
+	{
+		return -2;
+	}
+
+	/*记下旋转后图片的顶点坐标*/
 	tx1 = SCR_WIDTH / 2 - width / 2;
 	tx2 = SCR_WIDTH / 2 + width / 2;
 	ty1 = SCR_HEIGHT / 2 - heigth / 2 + 35;
 	ty2 = SCR_HEIGHT / 2 + heigth / 2 + 35;
 
+	/*清屏*/
 	Bar(0, 100, 800, 570, White);
 
+	/*从左至右，从上至下重新将旋转后的图片画出*/
 	for (i = ty1; i <= ty2; i++)
 	{
 		for (j = tx1; j <= tx2; j++)
@@ -586,8 +650,10 @@ int ImageRot(BMPATTR* bmpattr)
 			PutPixel(j, i, color24);
 		}
 	}
-	fclose(fp);
 
+	fclose(fp);    //关闭文件
+
+	/*更新旋转后的图片信息*/
 	bmpattr->width = width;
 	bmpattr->heigth = heigth;
 	bmpattr->x1 = tx1;
@@ -595,9 +661,18 @@ int ImageRot(BMPATTR* bmpattr)
 	bmpattr->y1 = ty1;
 	bmpattr->y2 = ty2;
 
-	return 0;
+	return 1;
 }
 
+/**
+*  函数名      ImageMirror
+*  传入参数    bmpattr     图片
+*  功能        拾色器
+*  返回值      0           图片未打开
+			   -1          旋转后图片超高
+			   -2          旋转后图片超宽
+			   1           函数成功运行
+**/
 int ImageMirror(BMPATTR bmpattr)
 {
 	int i, j;
@@ -615,11 +690,13 @@ int ImageMirror(BMPATTR bmpattr)
 		return 0;
 	}
 
+	/*以二进制只写模式打开临时文件，如果文件打开失败，退出*/
 	if ((fp = fopen("DATA//temp4", "wb")) == NULL)
 	{
 		exit(0);
 	}
 
+	/*从右至左，从上至下将每一个点的颜色值写入文件*/
 	for (i = ty1; i <= ty2; i++)
 	{
 		for (j = tx2; j >= tx1; j--)
@@ -628,15 +705,19 @@ int ImageMirror(BMPATTR bmpattr)
 			fwrite(&color24, 4, 1, fp);
 		}
 	}
-	fclose(fp);
 
+	fclose(fp);    //关闭文件
+
+	/*以二进制只读模式打开临时文件，如果文件打开失败，退出*/
 	if ((fp = fopen("DATA//temp4", "rb")) == NULL)
 	{
 		exit(0);
 	}
 
+	/*清屏*/
 	Bar(0, 100, 800, 570, White);
 
+	/*从左至右，从上至下重新将翻转后的图片画出*/
 	for (i = ty1; i <= ty2; i++)
 	{
 		for (j = tx1; j <= tx2; j++)
@@ -645,7 +726,8 @@ int ImageMirror(BMPATTR bmpattr)
 			PutPixel(j, i, color24);
 		}
 	}
-	fclose(fp);
+
+	fclose(fp);    //关闭文件
 
 	return 0;
 }
