@@ -1,5 +1,9 @@
 #include "box.h"
 
+//#define BMPPUT
+
+#ifdef BMPPUT
+
 int WarnBox(char* error)
 {
 	double lenth = strlen(error) / 4.0;
@@ -107,39 +111,207 @@ void DrawAdjustBox()
 	BmpPut(248, 198, "UI//ADST");	//ADST:adjust
 }
 
+#endif
+
+#define	DRAWPIC
+
+#ifdef DRAWPIC
+
+void DrawBox(void)
+{
+	Bar(250, 200, 500, 240, ThemeColor1);
+	Bar(250, 240, 550, 350, ThemeColor2);
+	Bar(500, 200, 550, 240, ThemeColor3);
+	Line(510, 205, 540, 235, 0, 1);
+	Line(510, 235, 540, 205, 0, 1);
+}
+
+void DrawWarnBox(void)
+{
+	DrawBox();
+	Bar(250, 320, 550, 350, 0xa8afb5);
+	Line(250, 320, 550, 320, 0x93999f, 2);
+	Line(405, 320, 405, 350, 0x93999f, 2);
+	TextGB32(359, 201, 30, 0, "警告");
+	TextGB16(304, 325, 14, 0, "确认");
+	TextGB16(458, 325, 14, 0, "取消");
+}
+
+int WarnBox(char* error)
+{
+	double lenth = strlen(error) / 4.0;
+	int x = SCR_WIDTH / 2 - lenth * 40;
+	MOUSE mouse_old, mouse_new;
+	BmpSave(248, 198, 552, 352, "DATA//BK3");
+
+	DrawWarnBox();
+
+	TextGB32(x, 260, 40, 0, error);
+	MouseStatus(&mouse_old);
+	MouseStoreBk(mouse_old.x, mouse_old.y);
+	MouseDraw(mouse_old);
+	while (1)
+	{
+		MouseStatus(&mouse_new);
+		if (mouse_new.x == mouse_old.x && mouse_new.y == mouse_old.y && mouse_old.button == mouse_new.button)
+		{
+			;
+		}
+		else
+		{
+			MousePutBk(mouse_old.x, mouse_old.y);
+			MouseStoreBk(mouse_new.x, mouse_new.y);
+			MouseDraw(mouse_new);
+			mouse_old = mouse_new;
+			if (MouseDown(250, 320, 405, 350))
+			{
+				MousePutBk(mouse_old.x, mouse_old.y);
+				BmpPut(248, 198, "DATA//BK3");
+				/*MouseStatus(&mouse_new);
+				MouseStoreBk(mouse_new.x, mouse_new.y);*/
+				return 1;
+			}
+			else if (MouseDown(405, 320, 550, 350))
+			{
+				MousePutBk(mouse_old.x, mouse_old.y);
+				BmpPut(248, 198, "DATA//BK3");
+				/*MouseStatus(&mouse_new);
+				MouseStoreBk(mouse_new.x, mouse_new.y);*/
+				return 0;
+			}
+			else if (MouseDown(500, 200, 550, 240))
+			{
+				MousePutBk(mouse_old.x, mouse_old.y);
+				BmpPut(248, 198, "DATA//BK3");
+				/*MouseStatus(&mouse_new);
+				MouseStoreBk(mouse_new.x, mouse_new.y);*/
+				return 0;
+			}
+			else if (MouseDown(750, 0, 800, 50))
+			{
+				//退出
+				exit(0);
+			}
+			else
+			{
+				;
+			}
+		}
+	}
+}
+
+void DrawZoomSettingBox(u8 patton)
+{
+	DrawBox();
+	Bar(450, 260, 470, 280, 0xffffff);
+	Bar(485, 255, 540, 285, 0xffffff);
+	Bar(450, 310, 470, 330, 0xffffff);
+	Bar(485, 305, 540, 335, 0xffffff);
+	TextGB32(325, 205, 30, 0, "放缩模式");
+	TextGB32(270, 255, 30, 0, "双线性内插法");
+	TextGB32(270, 305, 30, 0, "邻近点插值法");
+	TextGB16(490, 260, 14, 0, "确认");
+	TextGB16(490, 310, 14, 0, "取消");
+
+	if (patton)
+	{
+		Bar(455, 265, 465, 275, 0);
+		Bar(455, 315, 465, 325, White);
+	}
+	else
+	{
+		Bar(455, 265, 465, 275, White);
+		Bar(455, 315, 465, 325, 0);
+	}
+}
+
+void DrawOpenBox()
+{
+	DrawBox();
+	Bar(265, 260, 460, 305, 0xffffff);
+	Bar(475, 260, 540, 305, 0xffffff);
+	Bar(265, 315, 540, 340, 0xcfcccc);
+	TextGB32(325, 205, 30, 0, "打开文件");
+	TextGB32(480, 270, 30, 0, "确认");
+	TextGB16(273, 320, 14, 0xfc1c1c, "注意：");
+	TextGB16(320, 320, 14, 0, "文件格式必须为24位BMP位图");
+}
+
+void DrawNewBox()
+{
+	DrawBox();
+	Bar(330, 255, 450, 290, 0xffffff);
+	Bar(475, 255, 535, 290, 0xffffff);
+	Bar(330, 305, 450, 335, 0xffffff);
+	Bar(475, 305, 535, 335, 0xffffff);
+	TextGB32(325, 205, 30, 0, "新建文件");
+	TextGB16(480, 260, 14, 0, "确认");
+	TextGB16(480, 310, 14, 0, "选色");
+	TextGB16(260, 260, 14, 0, "宽度：");
+	TextGB16(260, 305, 14, 0, "高度：");
+}
+
+void DrawSaveBox()
+{
+	DrawBox();
+	Bar(265, 260, 460, 305, 0xffffff);
+	Bar(475, 260, 540, 305, 0xffffff);
+	Bar(265, 315, 540, 340, 0xcfcccc);
+	TextGB32(325, 205, 30, 0, "保存文件");
+	TextGB32(480, 270, 30, 0, "确认");
+	TextGB16(273, 320, 14, 0xfc1c1c, "注意：");
+	TextGB16(320, 320, 14, 0, "文件格式必须为24位BMP位图");
+}
+
+void DrawListBox()
+{
+	BmpPut(150, 150, "UI//LIST");
+}
+
+void DrawSizeBox()
+{
+	DrawBox();
+	Bar(425, 265, 450, 285, 0xffffff);
+	Bar(455, 265, 480, 285, 0xffffff);
+	Bar(490, 265, 535, 285, 0xffffff);
+	Bar(425, 305, 450, 325, 0xffffff);
+	Bar(455, 305, 480, 325, 0xffffff);
+	Bar(490, 305, 535, 325, 0xffffff);
+	TextGB32(325, 205, 30, 0, "粗细调整");
+	TextGB16(270, 265, 14, 0, "画笔粗细：");
+	TextGB16(430, 267, 14, 0, "+");
+	TextGB16(460, 267, 14, 0, "-");
+	TextGB16(500, 270, 14, 0, "确认");
+	TextGB16(270, 305, 14, 0, "图形粗细");
+	TextGB16(430, 307, 14, 0, "+");
+	TextGB16(460, 307, 14, 0, "-");
+	TextGB16(500, 310, 14, 0, "取消");
+}
+
+void DrawAdjustBox()
+{
+	DrawBox();
+	Bar(485, 255, 540, 285, 0xffffff);
+	Bar(485, 305, 540, 335, 0xffffff);
+	Line(345, 265, 445, 265, 0xd6dadf, 2);
+	Line(345, 295, 445, 295, 0xd6dadf, 2);
+	Line(345, 325, 445, 325, 0xd6dadf, 2);
+	TextGB32(325, 205, 30, 0, "图像调整");
+	TextGB16(265, 250, 14, 0, "对比度");
+	TextGB16(265, 280, 14, 0, "饱和度");
+	TextGB16(265, 310, 14, 0, "亮 度");
+	TextGB16(490, 260, 14, 0, "确认");
+	TextGB16(490, 310, 14, 0, "取消");
+}
+
+#endif
+
 void Welcome()
 {
-	int i = 0, j = 0;
-	u32 color = ColorStart;
-	HSL tHSL;
-	RGB tRGB;
-	int tHue0;
-	const double dLightness = -12 / 60000.0;
-	const double dSaturation = 30 / 60000.0;
-	const double dHue = -120 / 600.0;
-
-	U32TRGB(&tRGB, color);
-	RGB2HSL(tRGB, &tHSL);
-	tHue0 = tHSL.h;
-
-	//Bar(0, 0, 800, 600, White);
-	//BmpPut(0, 0, "UI//WELC");
+	const u32 ColorStart = 0x7ecef4;
+	const u32 ColorEnd = 0xf09fc3;
 	
-	delay(100);
-
-	//渐变背景
-	for (i = 0; i < 600; i++)
-	{
-		for (j = 0; j < 800; j++)
-		{
-			PutPixel(j, i, color);
-		}
-		tHSL.l = tHSL.l - dLightness;
-		tHSL.s = tHSL.s - dSaturation;
-		tHSL.h = (int)(tHue0 - dHue * i + 0.5);
-		HSL2RGB(&tRGB, tHSL);
-		color = RGB2U32(tRGB.r, tRGB.g, tRGB.b);
-	}
+	ImgShading(0, 0, 800, 600, ColorStart, ColorEnd);
 
 	Bar(100, 100, 250, 100+2, White);
 	Bar(100, 100, 100+2, 175, White);
@@ -149,40 +321,11 @@ void Welcome()
 	TextASC128(200+30, 100, 64, White, "Phot", 2);
 	TextASC128(445+30, 100, 64, White, "o", 2);
 
-	//TextGB64(80, 300, 72, White, "照片管理与编辑系统", 0);
-
 	TextASC64(160-60, 250, 32, White, "M", 2);
 	TextASC64(205-60, 250, 32, White, "anger And Edi", 2);
 	TextASC64(600-60, 250, 32, White, "ting", 2);
 
 	TextGB16(650, 550, 14, White, "按任意键进入");
-
-	//TextGB64(330, 250, 64, 0, "作者：王子毅", 4);
-	//TextGB64(520, 350, 64, 0, "牛保健", 4);
-
-	//TextASC64(80-10, 150, 32, 0, "Phot", 2);
-	//TextASC64(200-10, 150, 32, 0, "o M", 2);
-	//TextASC64(315-10, 150, 32, 0, "anger and Edi", 2);
-	//TextASC64(720-10, 150, 32, 0, "t", 2);
-
-	//TextASC64(80 - 11, 150, 32, 0, "Phot", 2);
-	//TextASC64(200 - 11, 150, 32, 0, "o M", 2);
-	//TextASC64(315 - 11, 150, 32, 0, "anger and Edi", 2);
-	//TextASC64(720 - 11, 150, 32, 0, "t", 2);
-
-	/*TextASC128(80 - 10, 120, 64, 0, "Phot", 2);
-	TextASC128(300 - 10, 120, 64, 0, "o S", 2);
-	TextASC128(500 - 10, 120, 64, 0, "hop", 2);*/
-
-	/*TextGB64(350, 250, 64, 0, "作者", 4);
-	TextGB64(530, 250, 64, 0, "王子毅", 4);
-	TextGB64(530, 350, 64, 0, "牛保健", 4);
-
-	TextGB16(650, 450, 14, 0, "按任意键进入");*/
-
-	/*TextGB64(150 + 2, 200 + 2, 64, 0xf0e981, "照片管理与编辑系统", 0);
-	TextGB64(350 + 2, 300 + 2, 64, 0xf0e981, "作者：王子毅", 0);
-	TextGB64(500 + 2, 400 + 2, 64, 0xf0e981, "牛保健", 0);*/
 
 	getch();
 }

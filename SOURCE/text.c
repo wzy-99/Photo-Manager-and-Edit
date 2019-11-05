@@ -147,7 +147,6 @@ int TextASC128(int x, int y, int part, u32 color, unsigned char* str, int delayu
 	return 1;
 }
 
-
 int TextASC16(int x, int y, int part, u32 color, unsigned char* str)
 {
 	int i, j;

@@ -1,36 +1,66 @@
 #include "draw.h"
 
+/**
+*  函数名      DrawPen
+*  传入参数    bmpattr    图片
+			   state      菜单状态
+*  函数功能    画笔
+*  返回值      0          图片未打开
+			   1          退出画笔函数
+			   20         切换为打开功能
+			   30         切换为保存功能
+			   40         切换为新建功能
+			   45         切换为图库功能
+			   60         切换为裁剪功能
+			   65         切换为画图形功能
+			   70         切换为调整功能
+			   85         切换为设置功能
+			   90         切换为缩小功能
+			   95         切换为放大功能
+			   100        切换为旋转功能
+			   105        切换为翻转功能
+
+**/
 int DrawPen(BMPATTR bmpattr, MENUSTATE* state)
 {
-	MOUSE mouse_old, mouse_new;
+	MOUSE mouse_old, mouse_new;    //定义老鼠标和新鼠标
+
+	/*若图片未打开，显示警告框，退出函数*/
 	if (bmpattr.flag == 0)
 	{
 		WarnBox("图片未打开");
 		return 0;
 	}
 
-	ImgRectangle(12, 52, 68, 98, 0xff0000, 2);
-	MouseStatus(&mouse_old);
-	MouseStoreBk(mouse_old.x, mouse_old.y);
-	MouseDraw(mouse_old);
+	ImgRectangle(12, 52, 68, 98, 0xff0000, 2);    //将画笔图案打上红框，提醒现在正处于画笔状态
+	MouseStatus(&mouse_old);                      //获取老鼠标状态
+	MouseStoreBk(mouse_old.x, mouse_old.y);       //记录老鼠标的背景图案
+	MouseDraw(mouse_old);                         //画新鼠标
+
+	/*移动鼠标，执行画笔功能*/
 	while (1)
 	{
-		MouseStatus(&mouse_new);
+		MouseStatus(&mouse_new);    //获取新鼠标状态
+
+		/*如果鼠标状态未改变，不执行任何操作*/
 		if (mouse_new.x == mouse_old.x && mouse_new.y == mouse_old.y && mouse_new.button == mouse_old.button)
 		{
 			;
 		}
 		else
 		{
-			MousePutBk(mouse_old.x, mouse_old.y);
-			MouseStoreBk(mouse_new.x, mouse_new.y);
-			MouseDraw(mouse_new);
-			mouse_old = mouse_new;
-			if (MouseDown(bmpattr.x1, bmpattr.y1, bmpattr.x2, bmpattr.y2))
+			MousePutBk(mouse_old.x, mouse_old.y);      //擦去老鼠标
+			MouseStoreBk(mouse_new.x, mouse_new.y);    //记录新鼠标的背景图案
+			MouseDraw(mouse_new);                      //画新鼠标
+			mouse_old = mouse_new;                     //重置鼠标
+
+			if (MouseDown(bmpattr.x1, bmpattr.y1, bmpattr.x2, bmpattr.y2))                     //如果在图片内部点击
 			{
-				MouseStatus(&mouse_old);
-				ImgDrawPixel(bmpattr, mouse_old.x, mouse_old.y, state->color, state->size);
+				MouseStatus(&mouse_old);                                                       //记录老鼠标的状态
+				ImgDrawPixel(bmpattr, mouse_old.x, mouse_old.y, state->color, state->size);    //以当前颜色和画笔粗细在鼠标处画一个点
 			}
+
+			/*功能切换*/
 			else if (MouseDown(10, 0, 70, 50))
 			{
 				//打开
@@ -52,12 +82,19 @@ int DrawPen(BMPATTR bmpattr, MENUSTATE* state)
 				ImgRectangle(12, 52, 68, 98, ThemeColor2, 2);
 				return 40;
 			}
+			else if (MouseDown(190, 0, 250, 50))
+			{
+				//图库
+				MousePutBk(mouse_new.x, mouse_new.y);
+				ImgRectangle(12, 52, 68, 98, ThemeColor2, 2);
+				return 45;
+			}
 			else if (MouseDown(10, 50, 70, 100))
 			{
 				//画笔
 				MousePutBk(mouse_new.x, mouse_new.y);
 				ImgRectangle(12, 52, 68, 98, ThemeColor2, 2);
-				return 0;
+				return 1;
 			}
 			else if (MouseDown(70, 50, 130, 100))
 			{
@@ -66,12 +103,13 @@ int DrawPen(BMPATTR bmpattr, MENUSTATE* state)
 				ImgRectangle(12, 52, 68, 98, ThemeColor2, 2);
 				return 60;
 			}
-			 //else if(MouseDown(130,50,190,100))
-			 //{
-				////图形
-				//Rectangle(12, 52, 68, 98, ThemeColor2, 2);
-				//return 65
-			 //}
+			else if (MouseDown(130, 50, 190, 100))
+			{
+				//图形
+				MousePutBk(mouse_new.x, mouse_new.y);
+				ImgRectangle(12, 52, 68, 98, ThemeColor2, 2);
+				return 65;
+			}
 			else if (MouseDown(650, 50, 700, 100))
 			{
 				//调整
@@ -79,14 +117,14 @@ int DrawPen(BMPATTR bmpattr, MENUSTATE* state)
 				ImgRectangle(12, 52, 68, 98, ThemeColor2, 2);
 				return 70;
 			}
-			 else if(MouseDown(700,50,750,100))
-			 {
+			else if (MouseDown(700, 50, 750, 100))
+			{
 				//粗细
 				MousePutBk(mouse_new.x, mouse_new.y);
 				SelectSize(&state->size, &state->size2);
 				MouseStatus(&mouse_old);
 				MouseStoreBk(mouse_old.x, mouse_old.y);
-			 }
+			}
 			else if (MouseDown(750, 50, 800, 100))
 			{
 				//颜色
@@ -97,7 +135,7 @@ int DrawPen(BMPATTR bmpattr, MENUSTATE* state)
 			}
 			else if (MouseDown(703, 570, 735, 600))
 			{
-				//缩小
+				//设置
 				MousePutBk(mouse_new.x, mouse_new.y);
 				ImgRectangle(12, 52, 68, 98, ThemeColor2, 2);
 				return 85;
@@ -129,6 +167,14 @@ int DrawPen(BMPATTR bmpattr, MENUSTATE* state)
 				MousePutBk(mouse_new.x, mouse_new.y);
 				ImgRectangle(12, 52, 68, 98, ThemeColor2, 2);
 				return 105;
+			}
+			else if (MouseDown(84, 570, 126, 600))
+			{
+				//拾色器
+				MousePutBk(mouse_new.x, mouse_new.y);
+				PickColor(&state->color);
+				MouseStatus(&mouse_old);
+				MouseStoreBk(mouse_old.x, mouse_old.y);
 			}
 			else if (MouseDown(750, 0, 800, 50))
 			{
@@ -259,126 +305,169 @@ int SelectSize(u8* size1, u8* size2)
 	}
 }
 
+/**
+*  函数名      DrawPicture
+*  传入参数    bmpattr    图片
+			   state      菜单状态
+*  功能        画图形
+*  返回值      0          图片未打开
+			   1          退出画图形函数
+			   20         切换为打开功能
+			   30         切换为保存功能
+			   40         切换为新建功能
+			   45         切换为图库功能
+			   50         切换为画笔功能
+			   60         切换为裁剪功能
+			   70         切换为调整功能
+			   85         切换为设置功能
+			   90         切换为缩小功能
+			   95         切换为放大功能
+			   100        切换为旋转功能
+			   105        切换为翻转功能
+**/
 int DrawPicture(BMPATTR bmpattr, MENUSTATE* state)
 {
-	MOUSE mouse_old, mouse_new;
+	MOUSE mouse_old, mouse_new;    //定义老鼠标和新鼠标
 
+	/*若图片未打开，显示警告框，退出函数*/
 	if (bmpattr.flag == 0)
 	{
 		WarnBox("图片未打开");
 		return	0;
 	}
 
-	ImgRectangle(132, 52, 188, 98, 0xff0000, 2);
-	Line(207, 61, 234, 89, 0x000000, 2);
-	Triangle(275, 61, 256, 89, 293, 89, 0x000000, 2);
-	ImgRectangle(322, 61, 371, 89, 0x000000, 2);
-	Circle(418, 75, 14, 0x000000, 2);
+	ImgRectangle(132, 52, 188, 98, 0xff0000, 2);         //将画笔图案打上红框，提醒现在正处于画笔状态
+	Line(207, 61, 234, 89, 0x000000, 2);                 //显示画直线功能的图案
+	Triangle(275, 61, 256, 89, 293, 89, 0x000000, 2);    //显示画三角形功能的图案
+	ImgRectangle(322, 61, 371, 89, 0x000000, 2);         //显示画矩形功能的图案
+	Circle(418, 75, 14, 0x000000, 2);                    //显示画圆功能的图案
+	ImgShading(460, 61, 510, 89, ThemeColor1, ThemeColor2);            //显示画渐变矩形功能的图案
 
-	MouseStatus(&mouse_old);
-	MouseStoreBk(mouse_old.x, mouse_old.y);
-	MouseDraw(mouse_old);
+	MouseStatus(&mouse_old);                   //获取老鼠标状态
+	MouseStoreBk(mouse_old.x, mouse_old.y);    //记录老鼠标的背景图案
+	MouseDraw(mouse_old);                      //画老鼠标
+
+	/*移动鼠标，执行画图形功能*/
 	while (1)
 	{
-		MouseStatus(&mouse_new);
+		MouseStatus(&mouse_new);    //获取新鼠标状态
+
+		/*如果鼠标状态未改变，不执行任何操作*/
 		if (mouse_new.x == mouse_old.x && mouse_new.y == mouse_old.y && mouse_new.button == mouse_old.button)
 		{
 			;
 		}
 		else
 		{
-			MousePutBk(mouse_old.x, mouse_old.y);
-			MouseStoreBk(mouse_new.x, mouse_new.y);
-			MouseDraw(mouse_new);
+			MousePutBk(mouse_old.x, mouse_old.y);          //擦去老鼠标
+			MouseStoreBk(mouse_new.x, mouse_new.y);        //记录新鼠标的背景图案
+			MouseDraw(mouse_new);                          //画新鼠标
 
-			if (mouse_new.button == mouse_old.button)
+			if (mouse_new.button == mouse_old.button)      //如果鼠标点击状态未改变，不执行画图形操作
 			{
 				mouse_old = mouse_new;
 				continue;
 			}
 
-			if (MouseDown(190, 50, 250, 100))
+			if (MouseDown(190, 50, 250, 100))              //如果点击直线图案，执行画直线操作
 			{
-				MousePutBk(mouse_new.x, mouse_new.y);
-				DrawLine(bmpattr, state);
-				MouseStatus(&mouse_new);
-				MouseStoreBk(mouse_new.x, mouse_new.y);
+				MousePutBk(mouse_new.x, mouse_new.y);      //擦去新鼠标
+				DrawLine(bmpattr, state);                  //调用画直线函数
+				MouseStatus(&mouse_new);                   //获取新鼠标的状态
+				MouseStoreBk(mouse_new.x, mouse_new.y);    //记录新鼠标的背景图案
 			}
-			else if (MouseDown(250, 50, 300, 100))
+			else if (MouseDown(250, 50, 300, 100))         //如果点击三角形图案，执行画三角形操作
 			{
-				MousePutBk(mouse_new.x, mouse_new.y);
-				DrawTriangle(bmpattr, state);
-				MouseStatus(&mouse_new);
-				MouseStoreBk(mouse_new.x, mouse_new.y);
+				MousePutBk(mouse_new.x, mouse_new.y);      //擦去新鼠标
+				DrawTriangle(bmpattr, state);              //调用画三角形函数
+				MouseStatus(&mouse_new);                   //获取新鼠标的状态
+				MouseStoreBk(mouse_new.x, mouse_new.y);    //记录新鼠标的背景图案
 			}
-			else if (MouseDown(300, 50, 380, 100))
+			else if (MouseDown(300, 50, 380, 100))         //如果点击矩形图案，执行画矩形操作
 			{
-				MousePutBk(mouse_new.x, mouse_new.y);
-				DrawRectangle(bmpattr, state);
-				MouseStatus(&mouse_new);
-				MouseStoreBk(mouse_new.x, mouse_new.y);
+				MousePutBk(mouse_new.x, mouse_new.y);      //擦去新鼠标
+				DrawRectangle(bmpattr, state);             //调用画矩形函数
+				MouseStatus(&mouse_new);                   //获取新鼠标的状态
+				MouseStoreBk(mouse_new.x, mouse_new.y);    //记录新鼠标的背景图案
 			}
-			else if (MouseDown(380, 50, 450, 100))
+			else if (MouseDown(380, 50, 450, 100))         //如果点击圆图案，执行画圆操作
 			{
-				MousePutBk(mouse_new.x, mouse_new.y);
-				DrawCircle(bmpattr, state);
-				MouseStatus(&mouse_new);
-				MouseStoreBk(mouse_new.x, mouse_new.y);
+				MousePutBk(mouse_new.x, mouse_new.y);      //擦去新鼠标
+				DrawCircle(bmpattr, state);                //调用画圆函数
+				MouseStatus(&mouse_new);                   //获取新鼠标的状态
+				MouseStoreBk(mouse_new.x, mouse_new.y);    //记录新鼠标的背景图案
 			}
+			else if (MouseDown(450, 50, 520, 100))         //如果点击渐变矩形图案，执行画渐变矩形操作
+			{
+				MousePutBk(mouse_new.x, mouse_new.y);      //擦去新鼠标
+				DrawShading(bmpattr, state);               //调用画渐变矩形函数
+				MouseStatus(&mouse_new);                   //获取新鼠标的状态
+				MouseStoreBk(mouse_new.x, mouse_new.y);    //记录新鼠标的背景图案
+			}
+
+			/*功能切换*/
 			else if (MouseDown(10, 0, 70, 50))
 			{
 				//打开
 				MousePutBk(mouse_new.x, mouse_new.y);
-				ImgRectangle(132, 52, 188, 98, ThemeColor2, 2);
-				Bar(192, 52, 448, 98, ThemeColor2);
+				ImgRectangle(132, 52, 188, 98, Gray, 2);
+				Bar(192, 52, 518, 98, Gray);
 				return 20;
 			}
 			else if (MouseDown(70, 0, 130, 50))
 			{
 				//保存
 				MousePutBk(mouse_new.x, mouse_new.y);
-				ImgRectangle(132, 52, 188, 98, ThemeColor2, 2);
-				Bar(192, 52, 448, 98, ThemeColor2);
+				ImgRectangle(132, 52, 188, 98, Gray, 2);
+				Bar(192, 52, 518, 98, Gray);
 				return 30;
 			}
 			else if (MouseDown(130, 0, 190, 50))
 			{
 				//新建
 				MousePutBk(mouse_new.x, mouse_new.y);
-				ImgRectangle(132, 52, 188, 98, ThemeColor2, 2);
-				Bar(192, 52, 448, 98, ThemeColor2);
+				ImgRectangle(132, 52, 188, 98, Gray, 2);
+				Bar(192, 52, 518, 98, Gray);
 				return 40;
+			}
+			else if (MouseDown(190, 0, 250, 50))
+			{
+				//图库
+				MousePutBk(mouse_new.x, mouse_new.y);
+				ImgRectangle(132, 52, 188, 98, Gray, 2);
+				Bar(192, 52, 518, 98, Gray);
+				return 45;
 			}
 			else if (MouseDown(10, 50, 70, 100))
 			{
 				//画笔
 				MousePutBk(mouse_new.x, mouse_new.y);
-				ImgRectangle(132, 52, 188, 98, ThemeColor2, 2);
-				Bar(192, 52, 448, 98, ThemeColor2);
+				ImgRectangle(132, 52, 188, 98, Gray, 2);
+				Bar(192, 52, 518, 98, Gray);
 				return 50;
 			}
 			else if (MouseDown(70, 50, 130, 100))
 			{
 				//裁剪
 				MousePutBk(mouse_new.x, mouse_new.y);
-				ImgRectangle(132, 52, 188, 98, ThemeColor2, 2);
-				Bar(192, 52, 448, 98, ThemeColor2);
+				ImgRectangle(132, 52, 188, 98, Gray, 2);
+				Bar(192, 52, 518, 98, Gray);
 				return 60;
 			}
 			else if (MouseDown(130, 50, 190, 100))
 			{
 				//图形
 				MousePutBk(mouse_new.x, mouse_new.y);
-				ImgRectangle(132, 52, 188, 98, ThemeColor2, 2);
-				Bar(192, 52, 448, 98, ThemeColor2);
-				return 0;
+				ImgRectangle(132, 52, 188, 98, Gray, 2);
+				Bar(192, 52, 518, 98, Gray);
+				return 1;
 			}
 			else if (MouseDown(650, 50, 700, 100))
 			{
 				//调整
 				MousePutBk(mouse_new.x, mouse_new.y);
-				ImgRectangle(132, 52, 188, 98, ThemeColor2, 2);
-				Bar(192, 52, 448, 98, ThemeColor2);
+				ImgRectangle(132, 52, 188, 98, Gray, 2);
+				Bar(192, 52, 518, 98, Gray);
 				return 70;
 			}
 			else if (MouseDown(700, 50, 750, 100))
@@ -401,90 +490,112 @@ int DrawPicture(BMPATTR bmpattr, MENUSTATE* state)
 			{
 				//设置
 				MousePutBk(mouse_new.x, mouse_new.y);
-				ImgRectangle(132, 52, 188, 98, ThemeColor2, 2);
-				Bar(192, 52, 448, 98, ThemeColor2);
+				ImgRectangle(132, 52, 188, 98, Gray, 2);
+				Bar(192, 52, 518, 98, Gray);
 				return 85;
 			}
 			else if (MouseDown(735, 570, 767, 600))
 			{
 				//缩小
 				MousePutBk(mouse_new.x, mouse_new.y);
-				ImgRectangle(132, 52, 188, 98, ThemeColor2, 2);
-				Bar(192, 52, 448, 98, ThemeColor2);
+				ImgRectangle(132, 52, 188, 98, Gray, 2);
+				Bar(192, 52, 518, 98, Gray);
 				return 90;
 			}
 			else if (MouseDown(767, 570, 800, 600))
 			{
 				//放大
 				MousePutBk(mouse_new.x, mouse_new.y);
-				ImgRectangle(132, 52, 188, 98, ThemeColor2, 2);
-				Bar(192, 52, 448, 98, ThemeColor2);
+				ImgRectangle(132, 52, 188, 98, Gray, 2);
+				Bar(192, 52, 518, 98, Gray);
 				return 95;
 			}
 			else if (MouseDown(0, 570, 42, 600))
 			{
 				//旋转
 				MousePutBk(mouse_new.x, mouse_new.y);
-				ImgRectangle(132, 52, 188, 98, ThemeColor2, 2);
-				Bar(192, 52, 448, 98, ThemeColor2);
+				ImgRectangle(132, 52, 188, 98, Gray, 2);
+				Bar(192, 52, 518, 98, Gray);
 				return 100;
 			}
 			else if (MouseDown(42, 570, 84, 600))
 			{
 				//翻转
 				MousePutBk(mouse_new.x, mouse_new.y);
-				ImgRectangle(132, 52, 188, 98, ThemeColor2, 2);
-				Bar(192, 52, 448, 98, ThemeColor2);
+				ImgRectangle(132, 52, 188, 98, Gray, 2);
+				Bar(192, 52, 518, 98, Gray);
 				return 105;
+			}
+			else if (MouseDown(84, 570, 126, 600))
+			{
+				//拾色器
+				MousePutBk(mouse_new.x, mouse_new.y);
+				PickColor(&state->color);
+				MouseStatus(&mouse_new);
+				MouseStoreBk(mouse_new.x, mouse_new.y);
 			}
 			else if (MouseDown(750, 0, 800, 50))
 			{
 				//退出
 				exit(0);
 			}
-			mouse_old = mouse_new;
+
+			mouse_old = mouse_new;    //重置鼠标
 		}
 	}
 }
 
+/**
+*  函数名      DrawLine
+*  输入参数    bmpattr    图片
+			   state      菜单状态
+*  功能        画直线
+*  返回值      0          退出画直线函数
+**/
 int DrawLine(BMPATTR bmpattr, MENUSTATE* state)
 {
-	int x1, y1, x2, y2;
-	int tx1, ty1, tx2, ty2;
-	int flag = 0;
-	MOUSE mouse_old, mouse_new;
-	char xystring1[16];
-	char xystring2[16];
+	int x1, y1, x2, y2;            //定义直线两个端点的x,y坐标
+	int tx1, ty1, tx2, ty2;        //定义直线两个端点的x,y相对坐标
+	int flag = 0;                  //记录鼠标点击的是直线的第几个端点
+	MOUSE mouse_old, mouse_new;    //定义老鼠标和新鼠标
+	char xystring1[16];            //用于存放第一个端点的显示信息的字符数组
+	char xystring2[16];            //用于存放第二个端点的显示信息的字符数组
 
-	ImgRectangle(132, 52, 188, 98, ThemeColor2, 2);
+	/*将直线图案打上红框，提醒现在正处于画直线状态*/
+	ImgRectangle(132, 52, 188, 98, Gray, 2);
 	ImgRectangle(192, 52, 248, 98, 0xff0000, 2);
-	ImgRectangle(252, 52, 298, 98, ThemeColor2, 2);
-	ImgRectangle(302, 52, 378, 98, ThemeColor2, 2);
-	ImgRectangle(382, 52, 448, 98, ThemeColor2, 2);
+	ImgRectangle(252, 52, 298, 98, Gray, 2);
+	ImgRectangle(302, 52, 378, 98, Gray, 2);
+	ImgRectangle(382, 52, 448, 98, Gray, 2);
+	ImgRectangle(452, 52, 518, 98, Gray, 2);
 
-	MouseStatus(&mouse_old);
-	MouseStoreBk(mouse_old.x, mouse_old.y);
-	MouseDraw(mouse_old);
+	MouseStatus(&mouse_old);                   //获取老鼠标状态
+	MouseStoreBk(mouse_old.x, mouse_old.y);    //记录老鼠标的背景图案
+	MouseDraw(mouse_old);                      //画老鼠标
 
+	/*移动鼠标，执行画直线功能*/
 	while (1)
 	{
-		MouseStatus(&mouse_new);
+		MouseStatus(&mouse_new);    //获取新鼠标状态
+
+		/*如果鼠标状态未改变，不执行任何操作*/
 		if (mouse_new.x == mouse_old.x && mouse_new.y == mouse_old.y && mouse_new.button == mouse_old.button)
 		{
 			;
 		}
 		else
 		{
-			MousePutBk(mouse_old.x, mouse_old.y);
-			MouseStoreBk(mouse_new.x, mouse_new.y);
-			MouseDraw(mouse_new);
+			MousePutBk(mouse_old.x, mouse_old.y);        //擦去老鼠标
+			MouseStoreBk(mouse_new.x, mouse_new.y);      //记录新鼠标的背景图案
+			MouseDraw(mouse_new);                        //画新鼠标
 
-			if (mouse_new.button == mouse_old.button)
+			if (mouse_new.button == mouse_old.button)    //如果鼠标点击状态未改变，不执行画直线操作
 			{
 				mouse_old = mouse_new;
 				continue;
 			}
 
+			/*如果点击图片内部，记录直线的第一个端点坐标*/
 			if (MouseDown(bmpattr.x1, bmpattr.y1, bmpattr.x2, bmpattr.y2) && flag == 0)
 			{
 				x1 = mouse_new.x;
@@ -493,10 +604,13 @@ int DrawLine(BMPATTR bmpattr, MENUSTATE* state)
 				tx1 = x1 - bmpattr.x1;
 				ty1 = y1 - bmpattr.y1;
 
-				Bar(200, 570 + 1, 700, 600, ThemeColor2);
+				/*显示直线第一个端点的坐标信息*/
+				Bar(200, 570 + 1, 700, 600, Gray);
 				sprintf(xystring1, "坐标1:%d,%d", tx1, ty1);
 				TextGB16(200, 580, 14, 0, xystring1);
 			}
+
+			/*如果点击图片内部，记录直线的第二个端点坐标*/
 			else if (MouseDown(bmpattr.x1, bmpattr.y1, bmpattr.x2, bmpattr.y2) && flag == 1)
 			{
 				x2 = mouse_new.x;
@@ -505,21 +619,21 @@ int DrawLine(BMPATTR bmpattr, MENUSTATE* state)
 				tx2 = x2 - bmpattr.x1;
 				ty2 = y2 - bmpattr.y1;
 
-				//Bar(400, 570, 600, 600, ThemeColor2);
+				/*显示直线第二个端点的坐标信息*/
 				sprintf(xystring2, "坐标2:%d,%d", tx2, ty2);
 				TextGB16(450, 580, 14, 0, xystring2);
 
-				MousePutBk(mouse_new.x, mouse_new.y);
-				ImgLine(bmpattr, x1, y1, x2, y2, state->color, state->size2);
-				MouseStatus(&mouse_new);
-				MouseStoreBk(mouse_new.x, mouse_new.y);
+				MousePutBk(mouse_new.x, mouse_new.y);                            //擦去新鼠标
+				ImgLine(bmpattr, x1, y1, x2, y2, state->color, state->size2);    //在图片内画直线
+				MouseStatus(&mouse_new);                                         //获取新鼠标的状态
+				MouseStoreBk(mouse_new.x, mouse_new.y);                          //记录新鼠标的背景图案
 			}
 			else if (MouseDown(190, 50, 250, 100))
 			{
 				//再次点击，退出画线
-				Bar(200, 570, 700, 600, ThemeColor2);
+				Bar(200, 570 + 1, 700, 600, Gray);
 				MousePutBk(mouse_new.x, mouse_new.y);
-				ImgRectangle(192, 52, 248, 98, ThemeColor2, 2);
+				ImgRectangle(192, 52, 248, 98, Gray, 2);
 				ImgRectangle(132, 52, 188, 98, 0xff0000, 2);
 				return 0;
 			}
@@ -539,16 +653,33 @@ int DrawLine(BMPATTR bmpattr, MENUSTATE* state)
 				MouseStatus(&mouse_new);
 				MouseStoreBk(mouse_new.x, mouse_new.y);
 			}
+			else if (MouseDown(84, 570, 126, 600))
+			{
+				//拾色器
+				Bar(200, 570 + 1, 700, 600, Gray);
+				MousePutBk(mouse_new.x, mouse_new.y);
+				PickColor(&state->color);
+				MouseStatus(&mouse_new);
+				MouseStoreBk(mouse_new.x, mouse_new.y);
+			}
 			else if (MouseDown(750, 0, 800, 50))
 			{
 				//退出
 				exit(0);
 			}
-			mouse_old = mouse_new;
+
+			mouse_old = mouse_new;    //重置鼠标
 		}
 	}
 }
 
+/**
+*  函数名      DrawTriangle
+*  输入参数    bmpattr    图片
+			   state      菜单状态
+*  功能        画三角形
+*  返回值      0          退出画三角形函数
+**/
 int DrawTriangle(BMPATTR bmpattr, MENUSTATE* state)
 {
 	int x1, y1, x2, y2, x3, y3;
@@ -559,11 +690,12 @@ int DrawTriangle(BMPATTR bmpattr, MENUSTATE* state)
 	char xystring3[16];
 	MOUSE mouse_old, mouse_new;
 
-	ImgRectangle(132, 52, 188, 98, ThemeColor2, 2);
-	ImgRectangle(192, 52, 248, 98, ThemeColor2, 2);
+	ImgRectangle(132, 52, 188, 98, Gray, 2);
+	ImgRectangle(192, 52, 248, 98, Gray, 2);
 	ImgRectangle(252, 52, 298, 98, 0xff0000, 2);
-	ImgRectangle(302, 52, 378, 98, ThemeColor2, 2);
-	ImgRectangle(382, 52, 448, 98, ThemeColor2, 2);
+	ImgRectangle(302, 52, 378, 98, Gray, 2);
+	ImgRectangle(382, 52, 448, 98, Gray, 2);
+	ImgRectangle(452, 52, 518, 98, Gray, 2);
 
 	MouseStatus(&mouse_old);
 	MouseStoreBk(mouse_old.x, mouse_old.y);
@@ -572,6 +704,7 @@ int DrawTriangle(BMPATTR bmpattr, MENUSTATE* state)
 	while (1)
 	{
 		MouseStatus(&mouse_new);
+
 		if (mouse_new.x == mouse_old.x && mouse_new.y == mouse_old.y && mouse_new.button == mouse_old.button)
 		{
 			;
@@ -596,7 +729,7 @@ int DrawTriangle(BMPATTR bmpattr, MENUSTATE* state)
 				tx1 = x1 - bmpattr.x1;
 				ty1 = y1 - bmpattr.y1;
 
-				Bar(200, 570, 600, 600, ThemeColor2);
+				Bar(200, 570 + 1, 600, 600, Gray);
 				sprintf(xystring1, "点1:%d,%d", tx1, ty1);
 				TextGB16(200, 580, 14, 0, xystring1);
 			}
@@ -608,7 +741,6 @@ int DrawTriangle(BMPATTR bmpattr, MENUSTATE* state)
 				tx2 = x2 - bmpattr.x1;
 				ty2 = y2 - bmpattr.y1;
 
-				//Bar(200, 570, 600, 600, ThemeColor2);
 				sprintf(xystring2, "点2:%d,%d", tx2, ty2);
 				TextGB16(350, 580, 14, 0, xystring2);
 			}
@@ -620,7 +752,6 @@ int DrawTriangle(BMPATTR bmpattr, MENUSTATE* state)
 				tx3 = x3 - bmpattr.x1;
 				ty3 = y3 - bmpattr.y1;
 
-				//Bar(200, 570, 600, 600, ThemeColor2);
 				sprintf(xystring3, "点3:%d,%d", tx3, ty3);
 				TextGB16(500, 580, 14, 0, xystring3);
 
@@ -630,9 +761,9 @@ int DrawTriangle(BMPATTR bmpattr, MENUSTATE* state)
 			else if (MouseDown(250, 50, 300, 100))
 			{
 				//再次点击，退出画三角形
-				Bar(200, 570, 700, 600, ThemeColor2);
+				Bar(200, 570 + 1, 700, 600, Gray);
 				MousePutBk(mouse_new.x, mouse_new.y);
-				ImgRectangle(252, 52, 298, 98, ThemeColor2, 2);
+				ImgRectangle(252, 52, 298, 98, Gray, 2);
 				ImgRectangle(132, 52, 188, 98, 0xff0000, 2);
 				return 0;
 			}
@@ -652,16 +783,33 @@ int DrawTriangle(BMPATTR bmpattr, MENUSTATE* state)
 				MouseStatus(&mouse_new);
 				MouseStoreBk(mouse_new.x, mouse_new.y);
 			}
+			else if (MouseDown(84, 570, 126, 600))
+			{
+				//拾色器
+				Bar(200, 570 + 1, 700, 600, Gray);
+				MousePutBk(mouse_new.x, mouse_new.y);
+				PickColor(&state->color);
+				MouseStatus(&mouse_new);
+				MouseStoreBk(mouse_new.x, mouse_new.y);
+			}
 			else if (MouseDown(750, 0, 800, 50))
 			{
 				//退出
 				exit(0);
 			}
+
 			mouse_old = mouse_new;
 		}
 	}
 }
 
+/**
+*  函数名      DrawRectangle
+*  输入参数    bmpattr    图片
+			   state      菜单状态
+*  功能        画矩形
+*  返回值      0          退出画矩形函数
+**/
 int DrawRectangle(BMPATTR bmpattr, MENUSTATE* state)
 {
 	int x1, y1, x2, y2;
@@ -671,11 +819,12 @@ int DrawRectangle(BMPATTR bmpattr, MENUSTATE* state)
 	char xystring2[16];
 	MOUSE mouse_old, mouse_new;
 
-	ImgRectangle(132, 52, 188, 98, ThemeColor2, 2);
-	ImgRectangle(192, 52, 248, 98, ThemeColor2, 2);
-	ImgRectangle(252, 52, 298, 98, ThemeColor2, 2);
+	ImgRectangle(132, 52, 188, 98, Gray, 2);
+	ImgRectangle(192, 52, 248, 98, Gray, 2);
+	ImgRectangle(252, 52, 298, 98, Gray, 2);
 	ImgRectangle(302, 52, 378, 98, 0xff0000, 2);
-	ImgRectangle(382, 52, 448, 98, ThemeColor2, 2);
+	ImgRectangle(382, 52, 448, 98, Gray, 2);
+	ImgRectangle(452, 52, 518, 98, Gray, 2);
 
 	MouseStatus(&mouse_old);
 	MouseStoreBk(mouse_old.x, mouse_old.y);
@@ -684,6 +833,7 @@ int DrawRectangle(BMPATTR bmpattr, MENUSTATE* state)
 	while (1)
 	{
 		MouseStatus(&mouse_new);
+
 		if (mouse_new.x == mouse_old.x && mouse_new.y == mouse_old.y && mouse_new.button == mouse_old.button)
 		{
 			;
@@ -708,7 +858,7 @@ int DrawRectangle(BMPATTR bmpattr, MENUSTATE* state)
 				tx1 = x1 - bmpattr.x1;
 				ty1 = y1 - bmpattr.y1;
 
-				Bar(200, 570 + 1, 700, 600, ThemeColor2);
+				Bar(200, 570 + 1, 700, 600, Gray);
 				sprintf(xystring1, "坐标1:%d,%d", tx1, ty1);
 				TextGB16(200, 580, 14, 0, xystring1);
 			}
@@ -720,7 +870,6 @@ int DrawRectangle(BMPATTR bmpattr, MENUSTATE* state)
 				tx2 = x2 - bmpattr.x1;
 				ty2 = y2 - bmpattr.y1;
 
-				//Bar(200, 570, 600, 600, ThemeColor2);
 				sprintf(xystring2, "坐标2:%d,%d", tx2, ty2);
 				TextGB16(450, 580, 14, 0, xystring2);
 				MousePutBk(mouse_new.x, mouse_new.y);
@@ -731,9 +880,9 @@ int DrawRectangle(BMPATTR bmpattr, MENUSTATE* state)
 			else if (MouseDown(300, 50, 380, 100))
 			{
 				//再次点击，退出画矩形
-				Bar(200, 570, 700, 600, ThemeColor2);
+				Bar(200, 570 + 1, 700, 600, Gray);
 				MousePutBk(mouse_new.x, mouse_new.y);
-				ImgRectangle(302, 52, 378, 98, ThemeColor2, 2);
+				ImgRectangle(302, 52, 378, 98, Gray, 2);
 				ImgRectangle(132, 52, 188, 98, 0xff0000, 2);
 				return 0;
 			}
@@ -753,16 +902,33 @@ int DrawRectangle(BMPATTR bmpattr, MENUSTATE* state)
 				MouseStatus(&mouse_new);
 				MouseStoreBk(mouse_new.x, mouse_new.y);
 			}
+			else if (MouseDown(84, 570, 126, 600))
+			{
+				//拾色器
+				Bar(200, 570 + 1, 700, 600, Gray);
+				MousePutBk(mouse_new.x, mouse_new.y);
+				PickColor(&state->color);
+				MouseStatus(&mouse_new);
+				MouseStoreBk(mouse_new.x, mouse_new.y);
+			}
 			else if (MouseDown(750, 0, 800, 50))
 			{
 				//退出
 				exit(0);
 			}
+
 			mouse_old = mouse_new;
 		}
 	}
 }
 
+/**
+*  函数名      DrawCircle
+*  输入参数    bmpattr    图片
+			   state      菜单状态
+*  功能        画圆
+*  返回值      0          退出画圆函数
+**/
 int DrawCircle(BMPATTR bmpattr, MENUSTATE* state)
 {
 	int x1, y1, x2, y2;
@@ -773,11 +939,12 @@ int DrawCircle(BMPATTR bmpattr, MENUSTATE* state)
 	char rstring[16];
 	MOUSE mouse_old, mouse_new;
 
-	ImgRectangle(132, 52, 188, 98, ThemeColor2, 2);
-	ImgRectangle(192, 52, 248, 98, ThemeColor2, 2);
-	ImgRectangle(252, 52, 298, 98, ThemeColor2, 2);
-	ImgRectangle(302, 52, 378, 98, ThemeColor2, 2);
+	ImgRectangle(132, 52, 188, 98, Gray, 2);
+	ImgRectangle(192, 52, 248, 98, Gray, 2);
+	ImgRectangle(252, 52, 298, 98, Gray, 2);
+	ImgRectangle(302, 52, 378, 98, Gray, 2);
 	ImgRectangle(382, 52, 448, 98, 0xff0000, 2);
+	ImgRectangle(452, 52, 518, 98, Gray, 2);
 
 	MouseStatus(&mouse_old);
 	MouseStoreBk(mouse_old.x, mouse_old.y);
@@ -786,6 +953,7 @@ int DrawCircle(BMPATTR bmpattr, MENUSTATE* state)
 	while (1)
 	{
 		MouseStatus(&mouse_new);
+
 		if (mouse_new.x == mouse_old.x && mouse_new.y == mouse_old.y && mouse_new.button == mouse_old.button)
 		{
 			;
@@ -810,7 +978,7 @@ int DrawCircle(BMPATTR bmpattr, MENUSTATE* state)
 				tx1 = x1 - bmpattr.x1;
 				ty1 = y1 - bmpattr.y1;
 
-				Bar(200, 570 + 1, 700, 600, ThemeColor2);
+				Bar(200, 570 + 1, 700, 600, Gray);
 				sprintf(xystring, "坐标:%d,%d", tx1, ty1);
 				TextGB16(200, 580, 14, 0, xystring);
 			}
@@ -821,7 +989,6 @@ int DrawCircle(BMPATTR bmpattr, MENUSTATE* state)
 				flag = 0;
 				r = (int)sqrt((double)((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2)));
 
-				//Bar(200, 570, 600, 600, ThemeColor2);
 				sprintf(rstring, "半径:%d", r);
 				TextGB16(450, 580, 14, 0, rstring);
 				MousePutBk(mouse_new.x, mouse_new.y);
@@ -832,9 +999,9 @@ int DrawCircle(BMPATTR bmpattr, MENUSTATE* state)
 			else if (MouseDown(380, 50, 450, 100))
 			{
 				//再次点击，退出画圆
-				Bar(200, 570, 700, 600, ThemeColor2);
+				Bar(200, 570 + 1, 700, 600, Gray);
 				MousePutBk(mouse_new.x, mouse_new.y);
-				ImgRectangle(382, 52, 448, 98, ThemeColor2, 2);
+				ImgRectangle(382, 52, 448, 98, Gray, 2);
 				ImgRectangle(132, 52, 188, 98, 0xff0000, 2);
 				return 0;
 			}
@@ -854,11 +1021,145 @@ int DrawCircle(BMPATTR bmpattr, MENUSTATE* state)
 				MouseStatus(&mouse_new);
 				MouseStoreBk(mouse_new.x, mouse_new.y);
 			}
+			else if (MouseDown(84, 570, 126, 600))
+			{
+				//拾色器
+				Bar(200, 570 + 1, 700, 600, Gray);
+				MousePutBk(mouse_new.x, mouse_new.y);
+				PickColor(&state->color);
+				MouseStatus(&mouse_new);
+				MouseStoreBk(mouse_new.x, mouse_new.y);
+			}
 			else if (MouseDown(750, 0, 800, 50))
 			{
 				//退出
 				exit(0);
 			}
+
+			mouse_old = mouse_new;
+		}
+	}
+}
+
+/**
+*  函数名      DrawShading
+*  输入参数    bmpattr    图片
+			   state      菜单状态
+*  功能        画渐变矩形
+*  返回值      0          退出画渐变矩形函数
+**/
+int DrawShading(BMPATTR bmpattr, MENUSTATE* state)
+{
+	int x1, y1, x2, y2;
+	int tx1, ty1, tx2, ty2;
+	int flag = 0;
+	u32 tcolor;    //用于存储用于渐变的颜色值的临时变量
+	char xystring1[16];
+	char xystring2[16];
+	MOUSE mouse_old, mouse_new;
+
+	ImgRectangle(132, 52, 188, 98, Gray, 2);
+	ImgRectangle(192, 52, 248, 98, Gray, 2);
+	ImgRectangle(252, 52, 298, 98, Gray, 2);
+	ImgRectangle(302, 52, 378, 98, Gray, 2);
+	ImgRectangle(382, 52, 448, 98, Gray, 2);
+	ImgRectangle(452, 52, 518, 98, 0xff0000, 2);
+
+	MouseStatus(&mouse_old);
+	MouseStoreBk(mouse_old.x, mouse_old.y);
+	MouseDraw(mouse_old);
+
+	/*选择用于渐变的颜色*/
+	MousePutBk(mouse_new.x, mouse_new.y);
+	SelectColor(&tcolor);
+	MouseStatus(&mouse_new);
+	MouseStoreBk(mouse_new.x, mouse_new.y);
+
+	/*选择渐变结束的颜色*/
+	MousePutBk(mouse_new.x, mouse_new.y);
+	SelectColor(&state->color);
+	MouseStatus(&mouse_new);
+	MouseStoreBk(mouse_new.x, mouse_new.y);
+
+	while (1)
+	{
+		MouseStatus(&mouse_new);
+
+		if (mouse_new.x == mouse_old.x && mouse_new.y == mouse_old.y && mouse_new.button == mouse_old.button)
+		{
+			;
+		}
+		else
+		{
+			MousePutBk(mouse_old.x, mouse_old.y);
+			MouseStoreBk(mouse_new.x, mouse_new.y);
+			MouseDraw(mouse_new);
+
+			if (mouse_new.button == mouse_old.button)
+			{
+				mouse_old = mouse_new;
+				continue;
+			}
+
+			if (MouseDown(bmpattr.x1, bmpattr.y1, bmpattr.x2, bmpattr.y2) && flag == 0)
+			{
+				x1 = mouse_new.x;
+				y1 = mouse_new.y;
+				flag = 1;
+				tx1 = x1 - bmpattr.x1;
+				ty1 = y1 - bmpattr.y1;
+
+				Bar(200, 570 + 1, 700, 600, Gray);
+				sprintf(xystring1, "坐标1:%d,%d", tx1, ty1);
+				TextGB16(200, 580, 14, 0, xystring1);
+			}
+			else if (MouseDown(bmpattr.x1, bmpattr.y1, bmpattr.x2, bmpattr.y2) && flag == 1)
+			{
+				x2 = mouse_new.x;
+				y2 = mouse_new.y;
+				flag = 0;
+				tx2 = x2 - bmpattr.x1;
+				ty2 = y2 - bmpattr.y1;
+
+				sprintf(xystring2, "坐标2:%d,%d", tx2, ty2);
+				TextGB16(450, 580, 14, 0, xystring2);
+				MousePutBk(mouse_new.x, mouse_new.y);
+				ImgMix(x1, y1, x2, y2, tcolor, state->color);
+				MouseStatus(&mouse_new);
+				MouseStoreBk(mouse_new.x, mouse_new.y);
+			}
+			else if (MouseDown(450, 50, 520, 100))
+			{
+				//再次点击，退出画渐变矩形
+				Bar(200, 570 + 1, 700, 600, Gray);
+				MousePutBk(mouse_new.x, mouse_new.y);
+				ImgRectangle(452, 52, 518, 98, Gray, 2);
+				ImgRectangle(132, 52, 188, 98, 0xff0000, 2);
+				return 0;
+			}
+			else if (MouseDown(750, 50, 800, 100))
+			{
+				//颜色
+				MousePutBk(mouse_new.x, mouse_new.y);
+				SelectColor(&state->color);
+				MouseStatus(&mouse_new);
+				MouseStoreBk(mouse_new.x, mouse_new.y);
+			}
+			else if (MouseDown(84, 570, 126, 600))
+			{
+				//拾色器
+				Bar(200, 570 + 1, 700, 600, Gray);
+				MousePutBk(mouse_new.x, mouse_new.y);
+				PickColor(&state->color);
+				MouseStatus(&mouse_new);
+				MouseStoreBk(mouse_new.x, mouse_new.y);
+			}
+			else if (MouseDown(750, 0, 800, 50))
+			{
+				//退出
+				exit(0);
+			}
+
 			mouse_old = mouse_new;
 		}
 	}

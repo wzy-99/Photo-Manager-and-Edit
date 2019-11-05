@@ -260,14 +260,18 @@ int FileSave(BMPATTR* bmpattr)
 int FileNew(BMPATTR* bmpattr)
 {
 	int type = 0;
-	u32 color = 0;
+	u32 color = 0xeeeeee;
 	int SpecialKey = 0;
-	int width = 0, heigth = 0;
-	char cWidth[6] = "";
-	char cHeigth[6] = "";
+	int width = 400, heigth = 300;
+	char cWidth[6] = "400";
+	char cHeigth[6] = "300";
 	MOUSE mouse_old, mouse_new;
+
 	BmpSave(248, 198, 552, 352, "DATA//BK2");
 	DrawNewBox();
+	TextASC24(335, 260, 14, 0, cWidth);
+	TextASC24(335, 310, 14, 0, cHeigth);
+
 	MouseStatus(&mouse_old);
 	MouseStoreBk(mouse_old.x, mouse_old.y);
 	while (1)
@@ -315,6 +319,8 @@ int FileNew(BMPATTR* bmpattr)
 					bmpattr->x2 = SCR_WIDTH / 2 + width / 2;
 					bmpattr->y1 = SCR_HEIGHT / 2 - heigth / 2 + 35;
 					bmpattr->y2 = SCR_HEIGHT / 2 + heigth / 2 + 35;
+					bmpattr->lightness = 1;
+					bmpattr->saturation = 1;
 					Bar(0, 100, 800, 570, White);
 					Bar(bmpattr->x1, bmpattr->y1, bmpattr->x2, bmpattr->y2, color);
 					return 0;
