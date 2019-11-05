@@ -23,6 +23,7 @@ int FileInfo(FILEATTR* fileattr, char* filename);	//文件信息
 int FileInfoShow(FILEATTR attr, struct ffblk dir);	//显示信息
 int FindAllFile(int* n);							//遍历文件
 int FileListShow(int i);							//显示列表
+int Exit(BMPATTR* bmpattr);							//程序退出
 
 
 #endif

@@ -161,7 +161,7 @@ int FileOpen(BMPATTR* bmpattr)
 			else if (MouseDown(750, 0, 800, 50))
 			{
 				//退出
-				exit(0);
+				//exit(0);
 			}
 			else
 			{
@@ -225,7 +225,7 @@ int FileSave(BMPATTR* bmpattr)
 					BmpName(filename);
 					BmpPut(248, 198, "DATA//BK1");
 					BmpSave(bmpattr->x1, bmpattr->y1, bmpattr->x2, bmpattr->y2, filename);
-					return 0;
+					return 1;
 				}
 			}
 			else if (MouseDown(500, 200, 550, 240) || SpecialKey == 10)
@@ -238,7 +238,7 @@ int FileSave(BMPATTR* bmpattr)
 			else if (MouseDown(750, 0, 800, 50))
 			{
 				//退出
-				exit(0);
+				//exit(0);
 			}
 			else
 			{
@@ -354,7 +354,7 @@ int FileNew(BMPATTR* bmpattr)
 			else if (MouseDown(750, 0, 800, 50))
 			{
 				//退出
-				exit(0);
+				//exit(0);
 			}
 			else
 			{
@@ -702,4 +702,38 @@ int FileInfo(FILEATTR* fileattr, char* filename)
 		fclose(fp);
 	}
 	return 1;
+}
+
+int Exit(BMPATTR* bmpattr)
+{
+	int msg = 0;
+	if (bmpattr->flag == 0)
+	{	//如果图像未打开
+		delay(100);
+		exit(0);
+	}
+	else
+	{
+		if (bmpattr->save == 1)
+		{	//如果图像已保存
+			delay(100);
+			exit(0);
+		}
+		else
+		{
+			//如果图像未保存
+			msg = WarnBox("是否保存");
+			if (msg == 0)
+			{	//不报存
+				delay(100);
+				exit(0);
+			}
+			else
+			{	//保存
+				msg = FileSave(bmpattr);
+				delay(100);
+				exit(0);
+			}
+		}
+	}
 }

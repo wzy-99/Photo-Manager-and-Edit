@@ -131,7 +131,8 @@ void MenuManager()
 			else if (MouseDown(750, 0, 800, 50))
 			{
 				//ÍË³ö
-				exit(0);
+				MousePutBk(mouse_old.x, mouse_old.y);
+				Exit(&bmpattr);
 			}
 			else
 			{
