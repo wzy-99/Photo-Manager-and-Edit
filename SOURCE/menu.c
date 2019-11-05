@@ -128,6 +128,12 @@ void MenuManager()
 				MousePutBk(mouse_old.x, mouse_old.y);
 				message = 110;
 			}
+			else if(MouseDown(700, 0, 750, 50) || message == 120)
+			{
+				//ÂË¾µ
+				MousePutBk(mouse_old.x, mouse_old.y);
+				message = 120;
+			}
 			else if (MouseDown(750, 0, 800, 50))
 			{
 				//ÍË³ö
@@ -222,7 +228,7 @@ void MenuManager()
 				MouseStoreBk(mouse_old.x, mouse_old.y);
 				break;
 			case 105:
-				//Ðý×ª
+				//·­×ª
 				message = ImageMirror(bmpattr);
 				MouseStatus(&mouse_old);
 				MouseStoreBk(mouse_old.x, mouse_old.y);
@@ -230,6 +236,12 @@ void MenuManager()
 			case 110:
 				//Ê°É«Æ÷
 				message = PickColor(&state.color);
+				MouseStatus(&mouse_old);
+				MouseStoreBk(mouse_old.x, mouse_old.y);
+				break;
+			case 120:
+				//ÂË¾µ
+				message = DrawShading(bmpattr, &state);
 				MouseStatus(&mouse_old);
 				MouseStoreBk(mouse_old.x, mouse_old.y);
 				break;

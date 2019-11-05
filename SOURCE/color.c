@@ -433,6 +433,7 @@ int SelectColor(u32* color)
 			   95         切换为放大功能
 			   100        切换为旋转功能
 			   105        切换为翻转功能
+			   120        切换为滤镜功能
 **/
 
 int PickColor(u32* color)
@@ -586,6 +587,13 @@ int PickColor(u32* color)
 				MousePutBk(mouse_new.x, mouse_new.y);
 				Bar(200, 570 + 1, 700, 600, Gray);
 				return 0;
+			}
+			else if (MouseDown(700, 0, 750, 50))
+			{
+				//滤镜
+				MousePutBk(mouse_new.x, mouse_new.y);
+				Bar(200, 570 + 1, 700, 600, Gray);
+				return 120;
 			}
 			else if (MouseDown(750, 0, 800, 50))
 			{

@@ -304,6 +304,19 @@ void DrawAdjustBox()
 	TextGB16(490, 310, 14, 0, "取消");
 }
 
+void DrawShadingBox()
+{
+	DrawBox();
+	Bar(348, 260, 400, 282, 0xffffff);
+	Bar(455, 260, 512, 282, 0xffffff);
+	Bar(348, 300, 400, 325, 0xffffff);
+	Bar(455, 300, 512, 325, 0xffffff);
+	TextGB32(324, 204, 30, 0, "图像滤镜");
+	TextGB16(280, 262, 14, 0, "颜色一：");
+	TextGB16(280, 302, 14, 0, "颜色二：");
+	TextGB16(468, 262, 14, 0, "确认");
+	TextGB16(468, 302, 14, 0, "取消");
+}
 #endif
 
 void Welcome()

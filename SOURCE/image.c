@@ -304,6 +304,7 @@ u32 ImageRGB(int x1, int x2, int y1, int y2, double x, double y, u8 patton)
 			   95         切换为放大功能
 			   100        切换为旋转功能
 			   105        切换为翻转功能
+			   120        切换为滤镜功能
 
 **/
 int ImageTailor(BMPATTR* bmpattr)
@@ -541,6 +542,14 @@ int ImageTailor(BMPATTR* bmpattr)
 				ImgRectangle(72, 52, 128, 98, Gray, 2);
 				Bar(200, 570 + 1, 700, 600, Gray);
 				return 110;
+			}
+			else if (MouseDown(700, 0, 750, 50))
+			{
+				//滤镜
+				MousePutBk(mouse_new.x, mouse_new.y);
+				ImgRectangle(72, 52, 128, 98, Gray, 2);
+				Bar(200, 570 + 1, 700, 600, Gray);
+				return 120;
 			}
 			else if (MouseDown(750, 0, 800, 50))
 			{
