@@ -9,6 +9,7 @@
 #include "text.h"
 #include "bmp.h"
 #include "color.h"
+#include "file.h"
 
 
 int WarnBox(char* error);

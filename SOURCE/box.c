@@ -1,6 +1,6 @@
 #include "box.h"
 
-//#define BMPPUT
+#define BMPPUT
 
 #ifdef BMPPUT
 
@@ -30,31 +30,29 @@ int WarnBox(char* error)
 			mouse_old = mouse_new;
 			if (MouseDown(250, 320, 405, 350))
 			{
+				//确认
 				MousePutBk(mouse_old.x, mouse_old.y);
 				BmpPut(248, 198, "DATA//BK3");
-				/*MouseStatus(&mouse_new);
-				MouseStoreBk(mouse_new.x, mouse_new.y);*/
 				return 1;
 			}
 			else if (MouseDown(405, 320, 550, 350))
 			{
+				//取消
 				MousePutBk(mouse_old.x, mouse_old.y);
 				BmpPut(248, 198, "DATA//BK3");
-				/*MouseStatus(&mouse_new);
-				MouseStoreBk(mouse_new.x, mouse_new.y);*/
-				return 0;
+				return -1;
 			}
 			else if (MouseDown(500, 200, 550, 240))
 			{
+				//关闭
 				MousePutBk(mouse_old.x, mouse_old.y);
 				BmpPut(248, 198, "DATA//BK3");
-				/*MouseStatus(&mouse_new);
-				MouseStoreBk(mouse_new.x, mouse_new.y);*/
 				return 0;
 			}
 			else if (MouseDown(750, 0, 800, 50))
 			{
 				//退出
+				delay(100);
 				exit(0);
 			}
 			else
@@ -111,11 +109,16 @@ void DrawAdjustBox()
 	BmpPut(248, 198, "UI//ADST");	//ADST:adjust
 }
 
+void DrawShadingBox()
+{
+	BmpPut(248, 198, "UI//FITER");
+}
+
 #endif
 
-#define	DRAWPIC
 
-#ifdef DRAWPIC
+
+#ifndef BMPPUT
 
 void DrawBox(void)
 {
@@ -365,7 +368,13 @@ int Exit(BMPATTR* bmpattr)
 			//如果图像未保存
 			msg = WarnBox("是否保存");
 			if (msg == 0)
-			{	//不报存
+			{	//不报存,退出
+				delay(100);
+				exit(0);
+			}
+			else if(msg == -1)
+			{
+				//不报存,退出
 				delay(100);
 				exit(0);
 			}
@@ -377,4 +386,5 @@ int Exit(BMPATTR* bmpattr)
 			}
 		}
 	}
+	return 0;
 }

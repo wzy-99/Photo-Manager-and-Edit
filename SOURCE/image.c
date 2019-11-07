@@ -283,7 +283,7 @@ u32 ImageRGB(int x1, int x2, int y1, int y2, double x, double y, u8 patton)
 		}
 	}
 
-	return ((u32)r << 16) | ((u32)g << 8) | ((u32)b);
+	return RGB2U32(r, g, b);;
 }
 
 /**
