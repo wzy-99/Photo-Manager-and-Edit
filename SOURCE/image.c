@@ -409,10 +409,11 @@ int ImageTailor(BMPATTR* bmpattr)
 					Bar(0, 100, 800, 570, White);
 					BmpPut(tbmpattr.x1, tbmpattr.y1, "DATA//temp0");
 
+					delay(1000);
 					msg = WarnBox("是否裁剪");
 
 					/*如果取消裁剪，打开原图片，否则正式更新图片信息*/
-					if (msg == 0)
+					if (msg == -1 || msg == 0)
 					{
 						Bar(0, 100, 800, 570, White);
 						BmpPut(bmpattr->x1, bmpattr->y1, "DATA//temp6");
@@ -580,7 +581,10 @@ int ImageTailor(BMPATTR* bmpattr)
 			else if (MouseDown(750, 0, 800, 50))
 			{
 				//退出
+				MousePutBk(mouse_new.x, mouse_new.y);
 				Exit(bmpattr);
+				MouseStatus(&mouse_new);
+				MouseStoreBk(mouse_new.x, mouse_new.y);
 			}
 			else
 			{

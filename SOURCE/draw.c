@@ -64,63 +64,63 @@ int DrawPen(BMPATTR* bmpattr, MENUSTATE* state)
 			else if (MouseDown(10, 0, 70, 50))
 			{
 				//打开
-				MousePutBk(mouse_new.x, mouse_new.y);
+				MousePutBk(mouse_old.x, mouse_old.y);
 				ImgRectangle(12, 52, 68, 98, ThemeColor2, 2);
 				return 20;
 			}
 			else if (MouseDown(70, 0, 130, 50))
 			{
 				//保存
-				MousePutBk(mouse_new.x, mouse_new.y);
+				MousePutBk(mouse_old.x, mouse_old.y);
 				ImgRectangle(12, 52, 68, 98, ThemeColor2, 2);
 				return 30;
 			}
 			else if (MouseDown(130, 0, 190, 50))
 			{
 				//新建
-				MousePutBk(mouse_new.x, mouse_new.y);
+				MousePutBk(mouse_old.x, mouse_old.y);
 				ImgRectangle(12, 52, 68, 98, ThemeColor2, 2);
 				return 40;
 			}
 			else if (MouseDown(190, 0, 250, 50))
 			{
 				//图库
-				MousePutBk(mouse_new.x, mouse_new.y);
+				MousePutBk(mouse_old.x, mouse_old.y);
 				ImgRectangle(12, 52, 68, 98, ThemeColor2, 2);
 				return 45;
 			}
 			else if (MouseDown(10, 50, 70, 100))
 			{
 				//画笔
-				MousePutBk(mouse_new.x, mouse_new.y);
+				MousePutBk(mouse_old.x, mouse_old.y);
 				ImgRectangle(12, 52, 68, 98, ThemeColor2, 2);
 				return 1;
 			}
 			else if (MouseDown(70, 50, 130, 100))
 			{
 				//裁剪
-				MousePutBk(mouse_new.x, mouse_new.y);
+				MousePutBk(mouse_old.x, mouse_old.y);
 				ImgRectangle(12, 52, 68, 98, ThemeColor2, 2);
 				return 60;
 			}
 			else if (MouseDown(130, 50, 190, 100))
 			{
 				//图形
-				MousePutBk(mouse_new.x, mouse_new.y);
+				MousePutBk(mouse_old.x, mouse_old.y);
 				ImgRectangle(12, 52, 68, 98, ThemeColor2, 2);
 				return 65;
 			}
 			else if (MouseDown(650, 50, 700, 100))
 			{
 				//调整
-				MousePutBk(mouse_new.x, mouse_new.y);
+				MousePutBk(mouse_old.x, mouse_old.y);
 				ImgRectangle(12, 52, 68, 98, ThemeColor2, 2);
 				return 70;
 			}
 			else if (MouseDown(700, 50, 750, 100))
 			{
 				//粗细
-				MousePutBk(mouse_new.x, mouse_new.y);
+				MousePutBk(mouse_old.x, mouse_old.y);
 				SelectSize(&state->size, &state->size2);
 				MouseStatus(&mouse_old);
 				MouseStoreBk(mouse_old.x, mouse_old.y);
@@ -128,7 +128,7 @@ int DrawPen(BMPATTR* bmpattr, MENUSTATE* state)
 			else if (MouseDown(750, 50, 800, 100))
 			{
 				//颜色
-				MousePutBk(mouse_new.x, mouse_new.y);
+				MousePutBk(mouse_old.x, mouse_old.y);
 				SelectColor(&state->color);
 				MouseStatus(&mouse_old);
 				MouseStoreBk(mouse_old.x, mouse_old.y);
@@ -136,42 +136,42 @@ int DrawPen(BMPATTR* bmpattr, MENUSTATE* state)
 			else if (MouseDown(703, 570, 735, 600))
 			{
 				//设置
-				MousePutBk(mouse_new.x, mouse_new.y);
+				MousePutBk(mouse_old.x, mouse_old.y);
 				ImgRectangle(12, 52, 68, 98, ThemeColor2, 2);
 				return 85;
 			}
 			else if (MouseDown(735, 570, 767, 600))
 			{
 				//缩小
-				MousePutBk(mouse_new.x, mouse_new.y);
+				MousePutBk(mouse_old.x, mouse_old.y);
 				ImgRectangle(12, 52, 68, 98, ThemeColor2, 2);
 				return 90;
 			}
 			else if (MouseDown(767, 570, 800, 600))
 			{
 				//放大
-				MousePutBk(mouse_new.x, mouse_new.y);
+				MousePutBk(mouse_old.x, mouse_old.y);
 				ImgRectangle(12, 52, 68, 98, ThemeColor2, 2);
 				return 95;
 			}
 			else if (MouseDown(0, 570, 42, 600))
 			{
 				//旋转
-				MousePutBk(mouse_new.x, mouse_new.y);
+				MousePutBk(mouse_old.x, mouse_old.y);
 				ImgRectangle(12, 52, 68, 98, ThemeColor2, 2);
 				return 100;
 			}
 			else if (MouseDown(42, 570, 84, 600))
 			{
 				//翻转
-				MousePutBk(mouse_new.x, mouse_new.y);
+				MousePutBk(mouse_old.x, mouse_old.y);
 				ImgRectangle(12, 52, 68, 98, ThemeColor2, 2);
 				return 105;
 			}
 			else if (MouseDown(84, 570, 126, 600))
 			{
 				//拾色器
-				MousePutBk(mouse_new.x, mouse_new.y);
+				MousePutBk(mouse_old.x, mouse_old.y);
 				PickColor(&state->color,0);
 				MouseStatus(&mouse_old);
 				MouseStoreBk(mouse_old.x, mouse_old.y);
@@ -179,14 +179,17 @@ int DrawPen(BMPATTR* bmpattr, MENUSTATE* state)
 			else if (MouseDown(700, 0, 750, 50))
 			{
 				//滤镜
-				MousePutBk(mouse_new.x, mouse_new.y);
+				MousePutBk(mouse_old.x, mouse_old.y);
 				ImgRectangle(12, 52, 68, 98, ThemeColor2, 2);
 				return 120;
 			}
 			else if (MouseDown(750, 0, 800, 50))
 			{
 				//退出
+				MousePutBk(mouse_old.x, mouse_old.y);
 				Exit(bmpattr);
+				MouseStatus(&mouse_old);
+				MouseStoreBk(mouse_old.x, mouse_old.y);
 			}
 		}
 	}
@@ -332,6 +335,7 @@ int SelectSize(u8* size1, u8* size2)
 			   100        切换为旋转功能
 			   105        切换为翻转功能
 			   120        切换为滤镜功能
+			   flag       切换至子功能
 **/
 int DrawPicture(BMPATTR* bmpattr, MENUSTATE* state)
 {
@@ -560,7 +564,10 @@ int DrawPicture(BMPATTR* bmpattr, MENUSTATE* state)
 			else if (MouseDown(750, 0, 800, 50))
 			{
 				//退出
+				MousePutBk(mouse_new.x, mouse_new.y);
 				Exit(bmpattr);
+				MouseStatus(&mouse_new);
+				MouseStoreBk(mouse_new.x, mouse_new.y);
 			}
 
 			if (flag)
@@ -568,27 +575,27 @@ int DrawPicture(BMPATTR* bmpattr, MENUSTATE* state)
 				switch (flag)
 				{
 					case 125:
-						flag = DrawLine(bmpattr, state);
+						flag = DrawLine(bmpattr, state);           //调用画直线函数
 						MouseStatus(&mouse_new);                   //获取新鼠标的状态
 						MouseStoreBk(mouse_new.x, mouse_new.y);    //记录新鼠标的背景图案
 						break;
 					case 130:
-						flag = DrawTriangle(bmpattr, state);
+						flag = DrawTriangle(bmpattr, state);       //调用画三角形函数
 						MouseStatus(&mouse_new);                   //获取新鼠标的状态
 						MouseStoreBk(mouse_new.x, mouse_new.y);    //记录新鼠标的背景图案
 						break;
 					case 135:
-						flag = DrawRectangle(bmpattr, state);
+						flag = DrawRectangle(bmpattr, state);      //调用画矩形函数
 						MouseStatus(&mouse_new);                   //获取新鼠标的状态
 						MouseStoreBk(mouse_new.x, mouse_new.y);    //记录新鼠标的背景图案
 						break;
 					case 140:
-						flag = DrawCircle(bmpattr, state);
+						flag = DrawCircle(bmpattr, state);         //调用画圆函数
 						MouseStatus(&mouse_new);                   //获取新鼠标的状态
 						MouseStoreBk(mouse_new.x, mouse_new.y);    //记录新鼠标的背景图案
 						break;
 					default:
-						Bar(192, 52, 518, 98, ThemeColor2);
+						Bar(192, 52, 518, 98, ThemeColor2);        //切换至其他功能
 						break;
 				}
 			}	
@@ -604,13 +611,9 @@ int DrawPicture(BMPATTR* bmpattr, MENUSTATE* state)
 			   state      菜单状态
 *  功能        画直线
 *  返回值      0          退出画直线函数
-			   20         切换为打开功能
-			   30         切换为保存功能
-			   40         切换为新建功能
-			   45         切换为图库功能
-			   50         切换为画笔功能
-			   60         切换为裁剪功能
-			   65         切换为图形功能
+			   130        切换至画三角形功能
+			   135        切换至画矩形功能
+			   140        切换至画圆功能
 **/
 int DrawLine(BMPATTR* bmpattr, MENUSTATE* state)
 {
@@ -822,66 +825,69 @@ int DrawLine(BMPATTR* bmpattr, MENUSTATE* state)
 				MouseStoreBk(mouse_new.x, mouse_new.y);
 				return 140;
 			}
-			//else if (MouseDown(650, 50, 700, 100))
-			//{
-			//	//调整
-			//	MousePutBk(mouse_new.x, mouse_new.y);
-			//	ImageAdjustment(bmpattr);
-			//	MouseStatus(&mouse_new);
-			//	MouseStoreBk(mouse_new.x, mouse_new.y);
-			//}
-			//else if (MouseDown(0, 570, 42, 600))
-			//{
-			//	//旋转
-			//	MousePutBk(mouse_new.x, mouse_new.y);
-			//	ImageRot(bmpattr);
-			//	MouseStatus(&mouse_new);
-			//	MouseStoreBk(mouse_new.x, mouse_new.y);
-			//}
-			//else if (MouseDown(42, 570, 84, 600))
-			//{
-			//	//翻转
-			//	MousePutBk(mouse_new.x, mouse_new.y);
-			//	ImageMirror(bmpattr);
-			//	MouseStatus(&mouse_new);
-			//	MouseStoreBk(mouse_new.x, mouse_new.y);
-			//}
-			//else if (MouseDown(703, 570, 735, 600))
-			//{
-			//	//设置
-			//	MousePutBk(mouse_new.x, mouse_new.y);
-			//	ImageZoomSet(&state->patton);
-			//	MouseStatus(&mouse_new);
-			//	MouseStoreBk(mouse_new.x, mouse_new.y);
-			//}
-			//else if (MouseDown(735, 570, 767, 600))
-			//{
-			//	//缩小
-			//	MousePutBk(mouse_new.x, mouse_new.y);
-			//	ImageZoom(bmpattr, 0.8, state->patton);
-			//	MouseStatus(&mouse_new);
-			//	MouseStoreBk(mouse_new.x, mouse_new.y);
-			//}
-			//else if (MouseDown(767, 570, 800, 600))
-			//{
-			//	//放大
-			//	MousePutBk(mouse_new.x, mouse_new.y);
-			//	ImageZoom(bmpattr, 1.25, state->patton);
-			//	MouseStatus(&mouse_new);
-			//	MouseStoreBk(mouse_new.x, mouse_new.y);
-			//}
-			//else if (MouseDown(700, 0, 750, 50))
-			//{
-			//	//滤镜
-			//	MousePutBk(mouse_new.x, mouse_new.y);
-			//	DrawShading(bmpattr);
-			//	MouseStatus(&mouse_new);
-			//	MouseStoreBk(mouse_new.x, mouse_new.y);
-			//}
+			else if (MouseDown(650, 50, 700, 100))
+			{
+				//调整
+				MousePutBk(mouse_new.x, mouse_new.y);
+				ImageAdjustment(bmpattr);
+				MouseStatus(&mouse_new);
+				MouseStoreBk(mouse_new.x, mouse_new.y);
+			}
+			else if (MouseDown(0, 570, 42, 600))
+			{
+				//旋转
+				MousePutBk(mouse_new.x, mouse_new.y);
+				ImageRot(bmpattr);
+				MouseStatus(&mouse_new);
+				MouseStoreBk(mouse_new.x, mouse_new.y);
+			}
+			else if (MouseDown(42, 570, 84, 600))
+			{
+				//翻转
+				MousePutBk(mouse_new.x, mouse_new.y);
+				ImageMirror(*bmpattr);
+				MouseStatus(&mouse_new);
+				MouseStoreBk(mouse_new.x, mouse_new.y);
+			}
+			else if (MouseDown(703, 570, 735, 600))
+			{
+				//设置
+				MousePutBk(mouse_new.x, mouse_new.y);
+				ImageZoomSet(&state->patton);
+				MouseStatus(&mouse_new);
+				MouseStoreBk(mouse_new.x, mouse_new.y);
+			}
+			else if (MouseDown(735, 570, 767, 600))
+			{
+				//缩小
+				MousePutBk(mouse_new.x, mouse_new.y);
+				ImageZoom(bmpattr, 0.8, state->patton);
+				MouseStatus(&mouse_new);
+				MouseStoreBk(mouse_new.x, mouse_new.y);
+			}
+			else if (MouseDown(767, 570, 800, 600))
+			{
+				//放大
+				MousePutBk(mouse_new.x, mouse_new.y);
+				ImageZoom(bmpattr, 1.25, state->patton);
+				MouseStatus(&mouse_new);
+				MouseStoreBk(mouse_new.x, mouse_new.y);
+			}
+			else if (MouseDown(700, 0, 750, 50))
+			{
+				//滤镜
+				MousePutBk(mouse_new.x, mouse_new.y);
+				DrawShading(bmpattr);
+				MouseStatus(&mouse_new);
+				MouseStoreBk(mouse_new.x, mouse_new.y);
+			}
 			else if (MouseDown(750, 0, 800, 50))
 			{
 				//退出
+				MousePutBk(mouse_new.x, mouse_new.y);
 				Exit(bmpattr);
+				MouseStatus(&mouse_new);
+				MouseStoreBk(mouse_new.x, mouse_new.y);
 			}
 
 			mouse_old = mouse_new;    //重置鼠标
@@ -895,6 +901,9 @@ int DrawLine(BMPATTR* bmpattr, MENUSTATE* state)
 			   state      菜单状态
 *  功能        画三角形
 *  返回值      0          退出画三角形函数
+               125        切换至画直线函数
+			   135        切换至画矩形函数
+			   140        切换至画圆函数
 **/
 int DrawTriangle(BMPATTR* bmpattr, MENUSTATE* state)
 {
@@ -1167,7 +1176,10 @@ int DrawTriangle(BMPATTR* bmpattr, MENUSTATE* state)
 			else if (MouseDown(750, 0, 800, 50))
 			{
 				//退出
+				MousePutBk(mouse_new.x, mouse_new.y);
 				Exit(bmpattr);
+				MouseStatus(&mouse_new);
+				MouseStoreBk(mouse_new.x, mouse_new.y);
 			}
 
 			mouse_old = mouse_new;
@@ -1181,6 +1193,9 @@ int DrawTriangle(BMPATTR* bmpattr, MENUSTATE* state)
 			   state      菜单状态
 *  功能        画矩形
 *  返回值      0          退出画矩形函数
+               125        切换至画直线函数
+			   130        切换至画三角形函数
+			   140        切换至画圆函数
 **/
 int DrawRectangle(BMPATTR* bmpattr, MENUSTATE* state)
 {
@@ -1442,7 +1457,10 @@ int DrawRectangle(BMPATTR* bmpattr, MENUSTATE* state)
 			else if (MouseDown(750, 0, 800, 50))
 			{
 				//退出
+				MousePutBk(mouse_new.x, mouse_new.y);
 				Exit(bmpattr);
+				MouseStatus(&mouse_new);
+				MouseStoreBk(mouse_new.x, mouse_new.y);
 			}
 
 			mouse_old = mouse_new;
@@ -1456,6 +1474,9 @@ int DrawRectangle(BMPATTR* bmpattr, MENUSTATE* state)
 			   state      菜单状态
 *  功能        画圆
 *  返回值      0          退出画圆函数
+               125        切换至画直线函数
+			   130        切换至画三角形函数
+			   135        切换至画矩形函数
 **/
 int DrawCircle(BMPATTR* bmpattr, MENUSTATE* state)
 {
@@ -1718,8 +1739,12 @@ int DrawCircle(BMPATTR* bmpattr, MENUSTATE* state)
 			else if (MouseDown(750, 0, 800, 50))
 			{
 				//退出
+				MousePutBk(mouse_new.x, mouse_new.y);
 				Exit(bmpattr);
+				MouseStatus(&mouse_new);
+				MouseStoreBk(mouse_new.x, mouse_new.y);
 			}
+
 			mouse_old = mouse_new;
 		}
 	}
@@ -1830,8 +1855,12 @@ int DrawShading(BMPATTR* bmpattr)
 			else if (MouseDown(750, 0, 800, 50))
 			{
 				//退出
+				MousePutBk(mouse_new.x, mouse_new.y);
 				Exit(bmpattr);
+				MouseStatus(&mouse_new);
+				MouseStoreBk(mouse_new.x, mouse_new.y);
 			}
+
 			mouse_old = mouse_new;
 		}
 	}

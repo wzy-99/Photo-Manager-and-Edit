@@ -435,6 +435,10 @@ int SelectColor(u32* color)
 			   100        切换为旋转功能
 			   105        切换为翻转功能
 			   120        切换为滤镜功能
+			   125        切换为画直线功能
+			   130        切换为画三角形功能
+			   135        切换为画矩形功能
+			   140        切换为画圆功能
 **/
 
 int PickColor(u32* color, int flag)
@@ -597,11 +601,6 @@ int PickColor(u32* color, int flag)
 				Bar(200, 570 + 1, 700, 600, Gray);
 				return 120;
 			}
-			else if (MouseDown(750, 0, 800, 50))
-			{
-				//退出
-				exit(0);
-			}
 			else if (MouseDown(190, 50, 250, 100) && flag == 1)
 			{
 				//直线
@@ -632,9 +631,9 @@ int PickColor(u32* color, int flag)
 			}
 			else if (MouseDown(1, 1, 800, 600))    //在屏幕内点击，触发拾色器功能
 			{
-				x = mouse_new.x - 1;        //拾取鼠标左上角处的颜色
+				x = mouse_new.x - 1;               //拾取鼠标左上角处的颜色
 				y = mouse_new.y - 1;
-				*color = GetPixel(x, y);    //获取该处颜色，并将其修改为当前颜色
+				*color = GetPixel(x, y);           //获取该处颜色，并将其修改为当前颜色
 
 				/*显示当前颜色信息*/
 				U32TRGB(&tRGB, *color);

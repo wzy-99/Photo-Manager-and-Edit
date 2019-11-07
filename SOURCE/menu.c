@@ -139,6 +139,8 @@ void MenuManager()
 				//ÍË³ö
 				MousePutBk(mouse_old.x, mouse_old.y);
 				Exit(&bmpattr);
+				MouseStatus(&mouse_old);
+				MouseStoreBk(mouse_old.x, mouse_old.y);
 			}
 			else
 			{

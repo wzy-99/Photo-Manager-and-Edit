@@ -374,13 +374,17 @@ int Exit(BMPATTR* bmpattr)
 			}
 			else if(msg == -1)
 			{
-				//不报存,退出
-				delay(100);
-				exit(0);
+				//不报存,不退出
+				return 0;
 			}
 			else
 			{	//保存
 				msg = FileSave(bmpattr);
+				if (msg == 0)
+				{
+					//放弃保存，不退出
+					return 0;
+				}
 				delay(100);
 				exit(0);
 			}
