@@ -8,7 +8,7 @@ void DrawMenu()
 void MenuManager()
 {
 	int message = 0;
-	BMPATTR bmpattr = { 0,"",1.0,0,0,0,0,0,0,0,0 };
+	BMPATTR bmpattr = { 0,0,"",1.0,0,0,0,0,0,0,0,0 };
 	MENUSTATE state = { 5,1,0,0 };
 	MOUSE mouse_old, mouse_new;
 	MouseStatus(&mouse_old);
@@ -137,7 +137,8 @@ void MenuManager()
 			else if (MouseDown(750, 0, 800, 50))
 			{
 				//ÍË³ö
-				exit(0);
+				MousePutBk(mouse_old.x, mouse_old.y);
+				Exit(&bmpattr);
 			}
 			else
 			{
@@ -169,7 +170,7 @@ void MenuManager()
 				MouseStoreBk(mouse_old.x, mouse_old.y);
 				break;
 			case 50:
-				message = DrawPen(bmpattr, &state);
+				message = DrawPen(&bmpattr, &state);
 				MouseStatus(&mouse_old);
 				MouseStoreBk(mouse_old.x, mouse_old.y);
 				break;
@@ -181,7 +182,7 @@ void MenuManager()
 				break;
 			case 65:
 				//Í¼ÐÎ
-				message = DrawPicture(bmpattr, &state);
+				message = DrawPicture(&bmpattr, &state);
 				MouseStatus(&mouse_old);
 				MouseStoreBk(mouse_old.x, mouse_old.y);
 				break;
@@ -235,13 +236,13 @@ void MenuManager()
 				break;
 			case 110:
 				//Ê°É«Æ÷
-				message = PickColor(&state.color);
+				message = PickColor(&state.color,0);
 				MouseStatus(&mouse_old);
 				MouseStoreBk(mouse_old.x, mouse_old.y);
 				break;
 			case 120:
 				//ÂË¾µ
-				message = DrawShading(bmpattr, &state);
+				message = DrawShading(&bmpattr);
 				MouseStatus(&mouse_old);
 				MouseStoreBk(mouse_old.x, mouse_old.y);
 				break;

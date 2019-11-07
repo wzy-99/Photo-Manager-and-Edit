@@ -22,7 +22,7 @@ int HSL2RGB(RGB* rgb, HSL hsl);							//HSL to RGB
 int RGB2HSL(RGB rgb, HSL*hsl);							//RGB to HSL
 double ToRGB(double p, double q, double tC);			//HSL2RGB的子级函数
 
-int PickColor(u32* color);						        //拾色器
+int PickColor(u32* color, int flag);				    //拾色器
 
 #endif
 

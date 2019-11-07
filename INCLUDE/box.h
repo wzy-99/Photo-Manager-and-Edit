@@ -25,5 +25,6 @@ void DrawZoomSettingBox(u8 patton);
 
 void Welcome(void);
 
+int Exit(BMPATTR* bmpattr);							//³ÌÐòÍË³ö
 
 #endif

@@ -342,3 +342,38 @@ void Welcome()
 
 	getch();
 }
+
+
+int Exit(BMPATTR* bmpattr)
+{
+	int msg = 0;
+	if (bmpattr->flag == 0)
+	{	//如果图像未打开
+		delay(100);
+		exit(0);
+	}
+	else
+	{
+		if (bmpattr->save == 1)
+		{	//如果图像已保存
+			delay(100);
+			exit(0);
+		}
+		else
+		{
+			//如果图像未保存
+			msg = WarnBox("是否保存");
+			if (msg == 0)
+			{	//不报存
+				delay(100);
+				exit(0);
+			}
+			else
+			{	//保存
+				msg = FileSave(bmpattr);
+				delay(100);
+				exit(0);
+			}
+		}
+	}
+}

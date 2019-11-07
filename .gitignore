@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /PIC.DSK
 /PIC.PRJ
 BMP/
@@ -5,3 +6,13 @@ DATA/
 UI/
 ZK/
 OUTPUT/
+=======
+OUTPUT/
+UI/
+BMP/
+ZK/
+VS/
+/PIC.DSK
+/PIC.PRJ
+
+>>>>>>> c83a5c5272f9fecbb2a456a7349cc8686d12bdec

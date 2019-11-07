@@ -436,7 +436,7 @@ int SelectColor(u32* color)
 			   120        切换为滤镜功能
 **/
 
-int PickColor(u32* color)
+int PickColor(u32* color, int flag)
 {
 	int x, y;						//所拾取颜色处的x,y坐标
 	RGB tRGB;						//RGB临时变量，用于显示当前颜色的RGB值
@@ -599,6 +599,34 @@ int PickColor(u32* color)
 			{
 				//退出
 				exit(0);
+			}
+			else if (MouseDown(190, 50, 250, 100) && flag == 1)
+			{
+				//直线
+				MousePutBk(mouse_new.x, mouse_new.y);
+				Bar(200, 570 + 1, 700, 600, Gray);
+				return 125;
+			}
+			else if (MouseDown(250, 50, 300, 100) && flag == 1)
+			{
+				//三角形
+				MousePutBk(mouse_new.x, mouse_new.y);
+				Bar(200, 570 + 1, 700, 600, Gray);
+				return 130;
+			}
+			else if (MouseDown(300, 50, 380, 100) && flag == 1)
+			{
+				//矩形
+				MousePutBk(mouse_new.x, mouse_new.y);
+				Bar(200, 570 + 1, 700, 600, Gray);
+				return 135;
+			}
+			else if (MouseDown(380, 50, 450, 100) && flag == 1)
+			{
+				//圆
+				MousePutBk(mouse_new.x, mouse_new.y);
+				Bar(200, 570 + 1, 700, 600, Gray);
+				return 140;
 			}
 			else if (MouseDown(1, 1, 800, 600))    //在屏幕内点击，触发拾色器功能
 			{

@@ -161,7 +161,7 @@ int FileOpen(BMPATTR* bmpattr)
 			else if (MouseDown(750, 0, 800, 50))
 			{
 				//ÍË³ö
-				exit(0);
+				//exit(0);
 			}
 			else
 			{
@@ -225,7 +225,7 @@ int FileSave(BMPATTR* bmpattr)
 					BmpName(filename);
 					BmpPut(248, 198, "DATA//BK1");
 					BmpSave(bmpattr->x1, bmpattr->y1, bmpattr->x2, bmpattr->y2, filename);
-					return 0;
+					return 1;
 				}
 			}
 			else if (MouseDown(500, 200, 550, 240) || SpecialKey == 10)
@@ -238,7 +238,7 @@ int FileSave(BMPATTR* bmpattr)
 			else if (MouseDown(750, 0, 800, 50))
 			{
 				//ÍË³ö
-				exit(0);
+				//exit(0);
 			}
 			else
 			{
@@ -354,7 +354,7 @@ int FileNew(BMPATTR* bmpattr)
 			else if (MouseDown(750, 0, 800, 50))
 			{
 				//ÍË³ö
-				exit(0);
+				//exit(0);
 			}
 			else
 			{
