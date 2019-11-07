@@ -310,10 +310,12 @@ u32 ImageRGB(int x1, int x2, int y1, int y2, double x, double y, u8 patton)
 int ImageTailor(BMPATTR* bmpattr)
 {
 	int flag = 0;
+	int msg = 0;                                          //记录warnbox的返回值
 	int x1, y1, x2, y2;
 	int tx1, ty1, tx2, ty2;
 	char xystring1[16];
 	char xystring2[16];
+	BMPATTR tbmpattr = { 0,0,"",1.0,0,0,0,0,0,0,0,0 };    //临时裁剪的图片
 	MOUSE mouse_old, mouse_new;
 
 	if (bmpattr->flag == 0)
@@ -389,23 +391,47 @@ int ImageTailor(BMPATTR* bmpattr)
 
 					MousePutBk(mouse_new.x, mouse_new.y);
 
-					/*将两点作为新图片的顶点，更新裁剪后的图片信息*/
-					bmpattr->heigth = abs(y2 - y1);
-					bmpattr->width = abs(x2 - x1);
-					bmpattr->oWidth = bmpattr->width;
-					bmpattr->oHeigth = bmpattr->heigth;
-					bmpattr->x1 = SCR_WIDTH / 2 - bmpattr->width / 2;
-					bmpattr->x2 = SCR_WIDTH / 2 + bmpattr->width / 2;
-					bmpattr->y1 = SCR_HEIGHT / 2 - bmpattr->heigth / 2 + 35;
-					bmpattr->y2 = SCR_HEIGHT / 2 + bmpattr->heigth / 2 + 35;
+					/*保存原图片*/
+					BmpSave(bmpattr->x1, bmpattr->y1, bmpattr->x2, bmpattr->y2, "DATA//temp6");
+
+					/*将两点作为新图片的顶点，更新裁剪后的图片信息（临时存储）*/
+					tbmpattr.heigth = abs(y2 - y1);
+					tbmpattr.width = abs(x2 - x1);
+					tbmpattr.oWidth = tbmpattr.width;
+					tbmpattr.oHeigth = tbmpattr.heigth;
+					tbmpattr.x1 = SCR_WIDTH / 2 - tbmpattr.width / 2;
+					tbmpattr.x2 = SCR_WIDTH / 2 + tbmpattr.width / 2;
+					tbmpattr.y1 = SCR_HEIGHT / 2 - tbmpattr.heigth / 2 + 35;
+					tbmpattr.y2 = SCR_HEIGHT / 2 + tbmpattr.heigth / 2 + 35;
 
 					/*将裁剪后的图片保存，然后将画面清屏后再重新打开*/
-					BmpSave(bmpattr->x1, bmpattr->y1, bmpattr->x2, bmpattr->y2, "DATA//temp0");
+					BmpSave(tbmpattr.x1, tbmpattr.y1, tbmpattr.x2, tbmpattr.y2, "DATA//temp0");
 					Bar(0, 100, 800, 570, White);
-					BmpPut(bmpattr->x1, bmpattr->y1, "DATA//temp0");
+					BmpPut(tbmpattr.x1, tbmpattr.y1, "DATA//temp0");
 
-					MouseStatus(&mouse_new);
-					MouseStoreBk(mouse_new.x, mouse_new.y);
+					msg = WarnBox("是否裁剪");
+
+					/*如果取消裁剪，打开原图片，否则正式更新图片信息*/
+					if (msg == 0)
+					{
+						Bar(0, 100, 800, 570, White);
+						BmpPut(bmpattr->x1, bmpattr->y1, "DATA//temp6");
+						MouseStatus(&mouse_new);
+						MouseStoreBk(mouse_new.x, mouse_new.y);
+					}
+					else
+					{
+						bmpattr->heigth = tbmpattr.heigth;
+						bmpattr->width = tbmpattr.width;
+						bmpattr->oWidth = tbmpattr.oWidth;
+						bmpattr->oHeigth = tbmpattr.oHeigth;
+						bmpattr->x1 = tbmpattr.x1;
+						bmpattr->x2 = tbmpattr.x2;
+						bmpattr->y1 = tbmpattr.y1;
+						bmpattr->y2 = tbmpattr.y2;
+						MouseStatus(&mouse_new);
+						MouseStoreBk(mouse_new.x, mouse_new.y);
+					}
 				}
 			}
 			else if (MouseUp(0, 0, 800, 600) && flag == 1)    //在图片外松开无效，重新裁剪
@@ -554,7 +580,7 @@ int ImageTailor(BMPATTR* bmpattr)
 			else if (MouseDown(750, 0, 800, 50))
 			{
 				//退出
-				exit(0);
+				Exit(bmpattr);
 			}
 			else
 			{

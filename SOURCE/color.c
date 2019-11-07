@@ -416,6 +416,7 @@ int SelectColor(u32* color)
 /**
 *  函数名      PickColor
 *  传入参数    color      当前颜色值
+               flag       是否为图形模式下调用
 *  功能        拾色器
 *  返回值      0          退出拾色器
 			   20         切换为打开功能
@@ -446,7 +447,8 @@ int PickColor(u32* color, int flag)
 	U32TRGB(&tRGB, *color);                                            //获取当前颜色的RGB值
 	sprintf(colorstring, "R:%d G:%d B:%d", tRGB.r, tRGB.g, tRGB.b);    //用字符数组存放显示信息
 	TextGB16(200, 580, 14, 0, "当前颜色为：");
-	Bar(300, 580, 320, 590, *color);                                   //显示当前颜色
+	Bar(299, 581, 321, 593, 0xffffff);
+	Bar(300, 582, 320, 592, *color);                                   //显示当前颜色
 	TextASC16(400, 580, 14, 0, colorstring);                           //输出当前颜色的RGB值
 
 	MouseStatus(&mouse_old);                   //获取老鼠标状态
@@ -639,7 +641,7 @@ int PickColor(u32* color, int flag)
 				Bar(200, 570 + 1, 700, 600, Gray);
 				sprintf(colorstring, "R:%d G:%d B:%d", tRGB.r, tRGB.g, tRGB.b);
 				TextGB16(200, 580, 14, 0, "当前颜色为：");
-				Bar(300, 580, 320, 590, *color);
+				Bar(300, 582, 320, 592, *color);
 				TextASC16(400, 580, 14, 0, colorstring);
 			}
 			else

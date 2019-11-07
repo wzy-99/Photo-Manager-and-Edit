@@ -317,6 +317,7 @@ void DrawShadingBox()
 	TextGB16(468, 262, 14, 0, "确认");
 	TextGB16(468, 302, 14, 0, "取消");
 }
+
 #endif
 
 void Welcome()

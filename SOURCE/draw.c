@@ -186,7 +186,7 @@ int DrawPen(BMPATTR* bmpattr, MENUSTATE* state)
 			else if (MouseDown(750, 0, 800, 50))
 			{
 				//退出
-				exit(0);
+				Exit(bmpattr);
 			}
 		}
 	}
@@ -560,39 +560,40 @@ int DrawPicture(BMPATTR* bmpattr, MENUSTATE* state)
 			else if (MouseDown(750, 0, 800, 50))
 			{
 				//退出
-				exit(0);
+				Exit(bmpattr);
 			}
 
-			mouse_old = mouse_new;    //重置鼠标
-		}
-		if (flag)
-		{
-			switch (flag)
+			if (flag)
 			{
-			case 125:
-				flag = DrawLine(bmpattr, state);
-				MouseStatus(&mouse_new);                   //获取新鼠标的状态
-				MouseStoreBk(mouse_new.x, mouse_new.y);    //记录新鼠标的背景图案
-				break;
-			case 130:
-				flag = DrawTriangle(bmpattr, state);
-				MouseStatus(&mouse_new);                   //获取新鼠标的状态
-				MouseStoreBk(mouse_new.x, mouse_new.y);    //记录新鼠标的背景图案
-				break;
-			case 135:
-				flag = DrawRectangle(bmpattr, state);
-				MouseStatus(&mouse_new);                   //获取新鼠标的状态
-				MouseStoreBk(mouse_new.x, mouse_new.y);    //记录新鼠标的背景图案
-				break;
-			case 140:
-				flag = DrawCircle(bmpattr, state);
-				MouseStatus(&mouse_new);                   //获取新鼠标的状态
-				MouseStoreBk(mouse_new.x, mouse_new.y);    //记录新鼠标的背景图案
-				break;
-			default:
-				Bar(192, 52, 518, 98, ThemeColor2);
-				break;
-			}
+				switch (flag)
+				{
+					case 125:
+						flag = DrawLine(bmpattr, state);
+						MouseStatus(&mouse_new);                   //获取新鼠标的状态
+						MouseStoreBk(mouse_new.x, mouse_new.y);    //记录新鼠标的背景图案
+						break;
+					case 130:
+						flag = DrawTriangle(bmpattr, state);
+						MouseStatus(&mouse_new);                   //获取新鼠标的状态
+						MouseStoreBk(mouse_new.x, mouse_new.y);    //记录新鼠标的背景图案
+						break;
+					case 135:
+						flag = DrawRectangle(bmpattr, state);
+						MouseStatus(&mouse_new);                   //获取新鼠标的状态
+						MouseStoreBk(mouse_new.x, mouse_new.y);    //记录新鼠标的背景图案
+						break;
+					case 140:
+						flag = DrawCircle(bmpattr, state);
+						MouseStatus(&mouse_new);                   //获取新鼠标的状态
+						MouseStoreBk(mouse_new.x, mouse_new.y);    //记录新鼠标的背景图案
+						break;
+					default:
+						Bar(192, 52, 518, 98, ThemeColor2);
+						break;
+				}
+			}	
+
+			mouse_old = mouse_new;    //重置鼠标
 		}
 	}
 }
@@ -716,9 +717,10 @@ int DrawLine(BMPATTR* bmpattr, MENUSTATE* state)
 				//拾色器
 				Bar(200, 570 + 1, 700, 600, Gray);
 				MousePutBk(mouse_new.x, mouse_new.y);
-				PickColor(&state->color,1);
+				flag = PickColor(&state->color,1);
 				MouseStatus(&mouse_new);
 				MouseStoreBk(mouse_new.x, mouse_new.y);
+				return flag;
 			}
 			//else if (MouseDown(10, 0, 70, 50))
 			//{
@@ -1001,9 +1003,10 @@ int DrawTriangle(BMPATTR* bmpattr, MENUSTATE* state)
 				//拾色器
 				Bar(200, 570 + 1, 700, 600, Gray);
 				MousePutBk(mouse_new.x, mouse_new.y);
-				PickColor(&state->color,1);
+				flag = PickColor(&state->color,1);
 				MouseStatus(&mouse_new);
 				MouseStoreBk(mouse_new.x, mouse_new.y);
+				return flag;
 			}
 			//else if (MouseDown(10, 0, 70, 50))
 			//{
@@ -1164,7 +1167,7 @@ int DrawTriangle(BMPATTR* bmpattr, MENUSTATE* state)
 			else if (MouseDown(750, 0, 800, 50))
 			{
 				//退出
-				exit(0);
+				Exit(bmpattr);
 			}
 
 			mouse_old = mouse_new;
@@ -1275,9 +1278,10 @@ int DrawRectangle(BMPATTR* bmpattr, MENUSTATE* state)
 				//拾色器
 				Bar(200, 570 + 1, 700, 600, Gray);
 				MousePutBk(mouse_new.x, mouse_new.y);
-				PickColor(&state->color,1);
+				flag = PickColor(&state->color,1);
 				MouseStatus(&mouse_new);
 				MouseStoreBk(mouse_new.x, mouse_new.y);
+				return flag;
 			}
 			//else if (MouseDown(10, 0, 70, 50))
 			//{
@@ -1438,7 +1442,7 @@ int DrawRectangle(BMPATTR* bmpattr, MENUSTATE* state)
 			else if (MouseDown(750, 0, 800, 50))
 			{
 				//退出
-				exit(0);
+				Exit(bmpattr);
 			}
 
 			mouse_old = mouse_new;
@@ -1550,9 +1554,10 @@ int DrawCircle(BMPATTR* bmpattr, MENUSTATE* state)
 				//拾色器
 				Bar(200, 570 + 1, 700, 600, Gray);
 				MousePutBk(mouse_new.x, mouse_new.y);
-				PickColor(&state->color,1);
+				flag = PickColor(&state->color,1);
 				MouseStatus(&mouse_new);
 				MouseStoreBk(mouse_new.x, mouse_new.y);
+				return flag;
 			}
 			//else if (MouseDown(10, 0, 70, 50))
 			//{
@@ -1713,7 +1718,7 @@ int DrawCircle(BMPATTR* bmpattr, MENUSTATE* state)
 			else if (MouseDown(750, 0, 800, 50))
 			{
 				//退出
-				exit(0);
+				Exit(bmpattr);
 			}
 			mouse_old = mouse_new;
 		}
@@ -1825,7 +1830,7 @@ int DrawShading(BMPATTR* bmpattr)
 			else if (MouseDown(750, 0, 800, 50))
 			{
 				//退出
-				exit(0);
+				Exit(bmpattr);
 			}
 			mouse_old = mouse_new;
 		}
