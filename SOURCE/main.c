@@ -11,7 +11,7 @@ void main()
 {
 	SetSVGA();
 	MouseReset();
-	//Welcome();
+	Welcome();
 	DrawMenu();
 	MenuManager();
 }
