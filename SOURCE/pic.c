@@ -624,7 +624,34 @@ void ImgMix(int x1, int y1, int x2, int y2, u32 color1, u32 color2)
 			U32TRGB(&tRGB1, color16);
 			U32TRGB(&tRGB2, color24);
 
-			/*计算混合后的RGB*/
+			///*计算混合后的RGB*/
+			//if (tRGB1.r <= 128)
+			//{
+			//	tRGB.r = (unsigned char)(tRGB1.r * tRGB2.r / 128);
+			//}
+			//else
+			//{
+			//	tRGB.r = (unsigned char)(255 - (255 - tRGB1.r) * (255 - tRGB2.r) / 128);
+			//}
+
+			//if (tRGB1.g <= 128)
+			//{
+			//	tRGB.g = (unsigned char)(tRGB1.g * tRGB2.g / 128);
+			//}
+			//else
+			//{
+			//	tRGB.g = (unsigned char)(255 - (255 - tRGB1.g) * (255 - tRGB2.g) / 128);
+			//}
+
+			//if (tRGB1.b <= 128)
+			//{
+			//	tRGB.b = (unsigned char)(tRGB1.b * tRGB2.b / 128);
+			//}
+			//else
+			//{
+			//	tRGB.b = (unsigned char)(255 - (255 - tRGB1.b) * (255 - tRGB2.b) / 128);
+			//}
+
 			tRGB.r = (unsigned char)(percent * tRGB1.r + (1 - percent) * tRGB2.r);
 			tRGB.g = (unsigned char)(percent * tRGB1.g + (1 - percent) * tRGB2.g);
 			tRGB.b = (unsigned char)(percent * tRGB1.b + (1 - percent) * tRGB2.b);
