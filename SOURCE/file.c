@@ -171,7 +171,10 @@ int FileOpen(BMPATTR* bmpattr)
 		}
 		if (bioskey(1))
 		{
+			MousePutBk(mouse_old.x, mouse_old.y);
 			SpecialKey = FileNameInput(filename);
+			MouseStatus(&mouse_old);
+			MouseStoreBk(mouse_old.x, mouse_old.y);
 		}
 		else
 		{
@@ -248,7 +251,10 @@ int FileSave(BMPATTR* bmpattr)
 		}
 		if (bioskey(1))
 		{
+			MousePutBk(mouse_old.x, mouse_old.y);
 			SpecialKey = FileNameInput(filename);
+			MouseStatus(&mouse_old);
+			MouseStoreBk(mouse_old.x, mouse_old.y);
 		}
 		else
 		{
@@ -366,11 +372,17 @@ int FileNew(BMPATTR* bmpattr)
 		{
 			if (type == 0)
 			{
+				MousePutBk(mouse_old.x, mouse_old.y);
 				SpecialKey = FileScaleInput(cWidth, 0);
+				MouseStatus(&mouse_old);
+				MouseStoreBk(mouse_old.x, mouse_old.y);
 			}
 			else if (type == 1)
 			{
+				MousePutBk(mouse_old.x, mouse_old.y);
 				SpecialKey = FileScaleInput(cHeigth, 1);
+				MouseStatus(&mouse_old);
+				MouseStoreBk(mouse_old.x, mouse_old.y);
 			}
 			else
 			{
@@ -498,11 +510,11 @@ int FileList(BMPATTR* bmpattr)
 				BmpPut(150, 150, "DATA//BK5");
 				return 0;
 			}
-			else if (MouseDown(750, 0, 800, 50))
-			{
-				//ÍË³ö
-				exit(0);
-			}
+			//else if (MouseDown(750, 0, 800, 50))
+			//{
+			//	//ÍË³ö
+			//	exit(0);
+			//}
 			else
 			{
 				;

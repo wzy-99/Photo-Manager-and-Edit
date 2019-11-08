@@ -981,6 +981,8 @@ int DrawTriangle(BMPATTR* bmpattr, MENUSTATE* state)
 
 				MousePutBk(mouse_new.x, mouse_new.y);
 				ImgTriangle(*bmpattr, x1, y1, x2, y2, x3, y3, state->color, state->size2);
+				MouseStatus(&mouse_new);                                         //获取新鼠标的状态
+				MouseStoreBk(mouse_new.x, mouse_new.y);
 			}
 			else if (MouseDown(250, 50, 300, 100))
 			{
