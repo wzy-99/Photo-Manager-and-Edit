@@ -1,10 +1,22 @@
 #include "menu.h"
 
+/*
+*  函数名      DrawMenu
+*  传入参数    无
+*  功能        画初始界面
+*  返回值      无
+*/
 void DrawMenu()
 {
 	BmpPut(0, 0, "UI//MENU");
 }
 
+/*
+*  函数名      MenuManager
+*  传入参数    无
+*  功能        根据鼠标点击界面不同位置执行相应的功能
+*  返回值      无
+*/
 void MenuManager()
 {
 	int message = 0;
