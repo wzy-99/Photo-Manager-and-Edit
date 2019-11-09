@@ -563,9 +563,9 @@ void ImgMix(int x1, int y1, int x2, int y2, u32 color1, u32 color2)
 	int i, j;                      //循环变量
 	int temp1, temp2;              //用于交换的临时变量
 	const double percent = 0.7;    //混合时背景图案所占的比例
-	u32 color_scr1;                   //用于获取背景图案的颜色值
-	u32	color_scr2;                   //用于获取渐变矩形的颜色值
-	u32 color_dst;                   //用于计算所得结果的颜色值
+	u32 color_scr1;                //用于获取背景图案的颜色值
+	u32	color_scr2;                //用于获取渐变矩形的颜色值
+	u32 color_dst;                 //用于计算所得结果的颜色值
 	RGB tRGB;                      //将计算结果的颜色值转化为RGB
 	RGB tRGB1;                     //将背景图案的颜色值转化为RGB
 	RGB tRGB2;                     //将渐变矩形的颜色值转化为RGB
