@@ -530,9 +530,9 @@ void ImgShading(int x1, int y1, int x2, int y2, u32 color1, u32 color2)
 	}
 
 	//渐变背景
-	for (i = y1; i < y2; i++)
+	for (i = y1; i <= y2; i++)
 	{
-		for (j = x1; j < x2; j++)
+		for (j = x1; j <= x2; j++)
 		{
 			PutPixel(j, i, color1);
 		}
@@ -594,9 +594,9 @@ void ImgMix(int x1, int y1, int x2, int y2, u32 color1, u32 color2)
 	}
 
 	/*读取每一点的颜色值，并写入文件*/
-	for (j = y1; j < y2; j++)
+	for (j = y1; j <= y2; j++)
 	{
-		for (i = x1; i < x2; i++)
+		for (i = x1; i <= x2; i++)
 		{
 			color_scr1 = GetPixel(i, j);
 			fwrite(&color_scr1, 4, 1, fp);
@@ -614,9 +614,9 @@ void ImgMix(int x1, int y1, int x2, int y2, u32 color1, u32 color2)
 	}
 
 	/*将背景图案的颜色值读出后，与渐变矩形的RGB按一定比例混合*/
-	for (j = y1; j < y2; j++)
+	for (j = y1; j <= y2; j++)
 	{
-		for (i = x1; i < x2; i++)
+		for (i = x1; i <= x2; i++)
 		{
 			/*分别获取背景图案和渐变矩形的颜色值，并将其转化为RGB*/
 			fread(&color_scr1, 4, 1, fp);
