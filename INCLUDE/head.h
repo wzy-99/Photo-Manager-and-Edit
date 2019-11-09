@@ -45,34 +45,36 @@ typedef long LONG;
 typedef unsigned int WORD;
 
 typedef struct {
-	unsigned char r;
-	unsigned char g;
-	unsigned char b;
+	unsigned char r;		//·¶Î§0~255
+	unsigned char g;		//·¶Î§0~255
+	unsigned char b;		//·¶Î§0~255
 } RGB;
 
 typedef struct {
-	unsigned char b;
-	unsigned char g;
-	unsigned char r;
+	unsigned char b;		//·¶Î§0~255
+	unsigned char g;		//·¶Î§0~255
+	unsigned char r;		//·¶Î§0~255
 } BGR;
 
 typedef struct {
-	int h;
-	double s;
-	double l;
+	int h;				//·¶Î§0~360
+	double s;			//·¶Î§0~1
+	double l;			//·¶Î§0~1
 } HSL;
 
 
+//ÎÄ¼şÊôĞÔ
 typedef struct {
 	int flag;						//ÎÄ¼ş×´Ì¬
 	char name[18];					//ÎÄ¼şÃû³Æ
 	double scale;					//Í¼Ïñ·ÅËõ
 	int x1, y1;						//Í¼Ïñ×ø±ê
 	unsigned int width, heigth;		//Í¼Ïñ³¤¿í
-	unsigned int nWidth, nHeigth;		//Í¼Ïñ³¤¿í
+	unsigned int nWidth, nHeigth;	//Í¼Ïñ³¤¿í
 } FILEATTR;
 
-//²Ëµ¥×´Ì¬±äÁ¿
+
+//²Ëµ¥×´Ì¬
 typedef struct {
 	u8 size;		//»­±Ê´óĞ¡
 	u8 size2;		//Í¼ĞÎ´óĞ¡
@@ -80,7 +82,8 @@ typedef struct {
 	u32 color;		//ÑÕÉ«
 } MENUSTATE;
 
-//BMPÍ¼ÏñÊôĞÔ
+
+//Í¼ÏñÊôĞÔ
 typedef struct {
 	int flag;						//Í¼Ïñ×´Ì¬
 	int save;						//±£´æ×´Ì¬
