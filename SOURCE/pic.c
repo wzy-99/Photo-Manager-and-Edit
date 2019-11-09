@@ -563,9 +563,9 @@ void ImgMix(int x1, int y1, int x2, int y2, u32 color1, u32 color2)
 	int i, j;                      //循环变量
 	int temp1, temp2;              //用于交换的临时变量
 	const double percent = 0.7;    //混合时背景图案所占的比例
-	u32 color16;                   //用于获取背景图案的颜色值
-	u32	color24;                   //用于获取渐变矩形的颜色值
-	u32 color32;                   //用于计算所得结果的颜色值
+	u32 color_scr1;                   //用于获取背景图案的颜色值
+	u32	color_scr2;                   //用于获取渐变矩形的颜色值
+	u32 color_dst;                   //用于计算所得结果的颜色值
 	RGB tRGB;                      //将计算结果的颜色值转化为RGB
 	RGB tRGB1;                     //将背景图案的颜色值转化为RGB
 	RGB tRGB2;                     //将渐变矩形的颜色值转化为RGB
@@ -598,8 +598,8 @@ void ImgMix(int x1, int y1, int x2, int y2, u32 color1, u32 color2)
 	{
 		for (i = x1; i < x2; i++)
 		{
-			color16 = GetPixel(i, j);
-			fwrite(&color16, 4, 1, fp);
+			color_scr1 = GetPixel(i, j);
+			fwrite(&color_scr1, 4, 1, fp);
 		}
 	}
 
@@ -619,46 +619,50 @@ void ImgMix(int x1, int y1, int x2, int y2, u32 color1, u32 color2)
 		for (i = x1; i < x2; i++)
 		{
 			/*分别获取背景图案和渐变矩形的颜色值，并将其转化为RGB*/
-			fread(&color16, 4, 1, fp);
-			color24 = GetPixel(i, j);
-			U32TRGB(&tRGB1, color16);
-			U32TRGB(&tRGB2, color24);
+			fread(&color_scr1, 4, 1, fp);
+			color_scr2 = GetPixel(i, j);
+			U32TRGB(&tRGB1, color_scr1);
+			U32TRGB(&tRGB2, color_scr2);
 
-			///*计算混合后的RGB*/
-			//if (tRGB1.r <= 128)
-			//{
-			//	tRGB.r = (unsigned char)(tRGB1.r * tRGB2.r / 128);
-			//}
-			//else
-			//{
-			//	tRGB.r = (unsigned char)(255 - (255 - tRGB1.r) * (255 - tRGB2.r) / 128);
-			//}
+			/*计算混合后的RGB*/
+			if (tRGB1.r <= 128)
+			{
+				tRGB.r = (unsigned char)(tRGB1.r * tRGB2.r / 128);
+			}
+			else
+			{
+				tRGB.r = (unsigned char)(255 - (255 - tRGB1.r) * (255 - tRGB2.r) / 128);
+			}
 
-			//if (tRGB1.g <= 128)
-			//{
-			//	tRGB.g = (unsigned char)(tRGB1.g * tRGB2.g / 128);
-			//}
-			//else
-			//{
-			//	tRGB.g = (unsigned char)(255 - (255 - tRGB1.g) * (255 - tRGB2.g) / 128);
-			//}
+			if (tRGB1.g <= 128)
+			{
+				tRGB.g = (unsigned char)(tRGB1.g * tRGB2.g / 128);
+			}
+			else
+			{
+				tRGB.g = (unsigned char)(255 - (255 - tRGB1.g) * (255 - tRGB2.g) / 128);
+			}
 
-			//if (tRGB1.b <= 128)
-			//{
-			//	tRGB.b = (unsigned char)(tRGB1.b * tRGB2.b / 128);
-			//}
-			//else
-			//{
-			//	tRGB.b = (unsigned char)(255 - (255 - tRGB1.b) * (255 - tRGB2.b) / 128);
-			//}
+			if (tRGB1.b <= 128)
+			{
+				tRGB.b = (unsigned char)(tRGB1.b * tRGB2.b / 128);
+			}
+			else
+			{
+				tRGB.b = (unsigned char)(255 - (255 - tRGB1.b) * (255 - tRGB2.b) / 128);
+			}
 
-			tRGB.r = (unsigned char)(percent * tRGB1.r + (1 - percent) * tRGB2.r);
-			tRGB.g = (unsigned char)(percent * tRGB1.g + (1 - percent) * tRGB2.g);
-			tRGB.b = (unsigned char)(percent * tRGB1.b + (1 - percent) * tRGB2.b);
+			//tRGB.r = (unsigned char)(percent * tRGB1.r + (1 - percent) * tRGB2.r);
+			//tRGB.g = (unsigned char)(percent * tRGB1.g + (1 - percent) * tRGB2.g);
+			//tRGB.b = (unsigned char)(percent * tRGB1.b + (1 - percent) * tRGB2.b);
+
+			tRGB.r = (unsigned char)(percent * tRGB1.r + (1 - percent) * tRGB.r);
+			tRGB.g = (unsigned char)(percent * tRGB1.g + (1 - percent) * tRGB.g);
+			tRGB.b = (unsigned char)(percent * tRGB1.b + (1 - percent) * tRGB.b);
 
 			/*将混合后的RGB转化为颜色值，并画点*/
-			color32 = RGB2U32(tRGB.r, tRGB.g, tRGB.b);
-			PutPixel(i, j, color32);
+			color_dst = RGB2U32(tRGB.r, tRGB.g, tRGB.b);
+			PutPixel(i, j, color_dst);
 		}
 	}
 
