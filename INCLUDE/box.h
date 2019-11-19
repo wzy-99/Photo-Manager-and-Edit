@@ -11,9 +11,12 @@
 #include "color.h"
 #include "file.h"
 
+#include "mix.h"
+
 
 int WarnBox(char* error);
 
+void DrawSFXBox(void);
 void DrawNewBox(void);
 void DrawOpenBox(void);
 void DrawSaveBox(void);

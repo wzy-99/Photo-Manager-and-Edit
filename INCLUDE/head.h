@@ -8,6 +8,7 @@
 #include <string.h>    /**字符串处理函数头文件**/
 #include <dos.h>       /**int86()等关于中断的头文件**/
 #include <math.h>      /**数学函数的头文件**/
+#include <time.h>
 
 #define SCR_WIDTH 800
 #define SCR_HEIGHT 600

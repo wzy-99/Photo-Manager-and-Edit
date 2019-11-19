@@ -24,6 +24,8 @@ double ToRGB(double p, double q, double tC);			//HSL2RGB的子级函数
 
 int PickColor(u32* color, int flag);				    //拾色器
 
+void RGBRange(int* rgb);
+
 #endif
 
 

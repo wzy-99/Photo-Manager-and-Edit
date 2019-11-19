@@ -402,7 +402,7 @@ int SelectColor(u32* color)
 			else if (MouseDown(750, 0, 800, 50))
 			{
 				//ÍË³ö
-				exit(0);
+				//exit(0);
 			}
 			else
 			{
@@ -650,5 +650,17 @@ int PickColor(u32* color, int flag)
 
 			mouse_old = mouse_new;    //ÖØÖÃÊó±ê
 		}
+	}
+}
+
+void RGBRange(int* c)
+{
+	if (*c>255)
+	{
+		*c = 255;
+	}
+	if (*c<0)
+	{
+		*c = 0;
 	}
 }

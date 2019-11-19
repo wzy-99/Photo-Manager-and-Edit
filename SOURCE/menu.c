@@ -1,5 +1,10 @@
 #include "menu.h"
 
+//const int MenuInfo[][5] = 
+//{
+//
+//};
+
 /*
 *  函数名      DrawMenu
 *  传入参数    无
@@ -142,9 +147,15 @@ void MenuManager()
 			}
 			else if(MouseDown(700, 0, 750, 50) || message == 120)
 			{
-				//滤镜
+				//渐变
 				MousePutBk(mouse_old.x, mouse_old.y);
 				message = 120;
+			}
+			else if (MouseDown(600, 0, 650, 50) || message == 125)
+			{
+				//滤镜
+				MousePutBk(mouse_old.x, mouse_old.y);
+				message = 125;
 			}
 			else if (MouseDown(750, 0, 800, 50))
 			{
@@ -256,7 +267,12 @@ void MenuManager()
 				break;
 			case 120:
 				//滤镜
-				message = DrawShading(&bmpattr);
+				message = Shading(&bmpattr);
+				MouseStatus(&mouse_old);
+				MouseStoreBk(mouse_old.x, mouse_old.y);
+				break;
+			case 125:
+				message = ImgSFX(&bmpattr);
 				MouseStatus(&mouse_old);
 				MouseStoreBk(mouse_old.x, mouse_old.y);
 				break;

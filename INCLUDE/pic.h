@@ -18,7 +18,5 @@ void DrawImgCircle_8(BMPATTR bmpattr, int x, int y, int a, int b, u32 color, u8 
 void DrawCircle_8(int x, int y, int a, int b, u32 color, u8 size);                                       //圆的八对称性（界面）
 int ImgDrawPixel(BMPATTR bmpattr, int x, int y, u32 color, u8 size);	                                 //画点
 int DrawPixel(int x, int y, u32 color, u8 size);					                                     //画点（界面）
-void ImgShading(int x1, int y1, int x2, int y2, u32 color1, u32 color2);                                 //画渐变矩形
-void ImgMix(int x1, int y1, int x2, int y2, u32 color1, u32 color2);                                     //图片混合
 
 #endif

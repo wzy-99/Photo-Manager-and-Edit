@@ -725,76 +725,6 @@ int DrawLine(BMPATTR* bmpattr, MENUSTATE* state)
 				MouseStoreBk(mouse_new.x, mouse_new.y);
 				return flag;
 			}
-			//else if (MouseDown(10, 0, 70, 50))
-			//{
-			//	//打开
-			//	Bar(200, 570 + 1, 700, 600, Gray);
-			//	MousePutBk(mouse_new.x, mouse_new.y);
-			//	ImgRectangle(192, 52, 248, 98, Gray, 2);
-			//	MouseStatus(&mouse_new);
-			//	MouseStoreBk(mouse_new.x, mouse_new.y);
-			//	return 20;
-			//}
-			//else if (MouseDown(70, 0, 130, 50))
-			//{
-			//	//保存
-			//	Bar(200, 570 + 1, 700, 600, Gray);
-			//	MousePutBk(mouse_new.x, mouse_new.y);
-			//	ImgRectangle(192, 52, 248, 98, Gray, 2);
-			//	MouseStatus(&mouse_new);
-			//	MouseStoreBk(mouse_new.x, mouse_new.y);
-			//	return 30;
-			//}
-			//else if (MouseDown(130, 0, 190, 50))
-			//{
-			//	//新建
-			//	Bar(200, 570 + 1, 700, 600, Gray);
-			//	MousePutBk(mouse_new.x, mouse_new.y);
-			//	ImgRectangle(192, 52, 248, 98, Gray, 2);
-			//	MouseStatus(&mouse_new);
-			//	MouseStoreBk(mouse_new.x, mouse_new.y);
-			//	return 40;
-			//}
-			//else if (MouseDown(190, 0, 250, 50))
-			//{
-			//	//图库
-			//	Bar(200, 570 + 1, 700, 600, Gray);
-			//	MousePutBk(mouse_new.x, mouse_new.y);
-			//	ImgRectangle(192, 52, 248, 98, Gray, 2);
-			//	MouseStatus(&mouse_new);
-			//	MouseStoreBk(mouse_new.x, mouse_new.y);
-			//	return 45;
-			//}
-			//else if (MouseDown(10, 50, 70, 100))
-			//{
-			//	//画笔
-			//	Bar(200, 570 + 1, 700, 600, Gray);
-			//	MousePutBk(mouse_new.x, mouse_new.y);
-			//	ImgRectangle(192, 52, 248, 98, Gray, 2);
-			//	MouseStatus(&mouse_new);
-			//	MouseStoreBk(mouse_new.x, mouse_new.y);
-			//	return 50;
-			//}
-			//else if (MouseDown(70, 50, 130, 100))
-			//{
-			//	//裁剪
-			//	Bar(200, 570 + 1, 700, 600, Gray);
-			//	MousePutBk(mouse_new.x, mouse_new.y);
-			//	ImgRectangle(192, 52, 248, 98, Gray, 2);
-			//	MouseStatus(&mouse_new);
-			//	MouseStoreBk(mouse_new.x, mouse_new.y);
-			//	return 60;
-			//}
-			//else if (MouseDown(130, 50, 190, 100))
-			//{
-			//	//图形
-			//	Bar(200, 570 + 1, 700, 600, Gray);
-			//	MousePutBk(mouse_new.x, mouse_new.y);
-			//	ImgRectangle(192, 52, 248, 98, Gray, 2);
-			//	MouseStatus(&mouse_new);
-			//	MouseStoreBk(mouse_new.x, mouse_new.y);
-			//	return 65;
-			//}
 			else if (MouseDown(250, 50, 300, 100))
 			{
 				//三角形
@@ -877,7 +807,7 @@ int DrawLine(BMPATTR* bmpattr, MENUSTATE* state)
 			{
 				//滤镜
 				MousePutBk(mouse_new.x, mouse_new.y);
-				DrawShading(bmpattr);
+				Shading(bmpattr);
 				MouseStatus(&mouse_new);
 				MouseStoreBk(mouse_new.x, mouse_new.y);
 			}
@@ -1019,76 +949,6 @@ int DrawTriangle(BMPATTR* bmpattr, MENUSTATE* state)
 				MouseStoreBk(mouse_new.x, mouse_new.y);
 				return flag;
 			}
-			//else if (MouseDown(10, 0, 70, 50))
-			//{
-			//	//打开
-			//	Bar(200, 570 + 1, 700, 600, Gray);
-			//	MousePutBk(mouse_new.x, mouse_new.y);
-			//	ImgRectangle(252, 52, 298, 98, Gray, 2);
-			//	MouseStatus(&mouse_new);
-			//	MouseStoreBk(mouse_new.x, mouse_new.y);
-			//	return 20;
-			//}
-			//else if (MouseDown(70, 0, 130, 50))
-			//{
-			//	//保存
-			//	Bar(200, 570 + 1, 700, 600, Gray);
-			//	MousePutBk(mouse_new.x, mouse_new.y);
-			//	ImgRectangle(252, 52, 298, 98, Gray, 2);
-			//	MouseStatus(&mouse_new);
-			//	MouseStoreBk(mouse_new.x, mouse_new.y);
-			//	return 30;
-			//}
-			//else if (MouseDown(130, 0, 190, 50))
-			//{
-			//	//新建
-			//	Bar(200, 570 + 1, 700, 600, Gray);
-			//	MousePutBk(mouse_new.x, mouse_new.y);
-			//	ImgRectangle(252, 52, 298, 98, Gray, 2);
-			//	MouseStatus(&mouse_new);
-			//	MouseStoreBk(mouse_new.x, mouse_new.y);
-			//	return 40;
-			//}
-			//else if (MouseDown(190, 0, 250, 50))
-			//{
-			//	//图库
-			//	Bar(200, 570 + 1, 700, 600, Gray);
-			//	MousePutBk(mouse_new.x, mouse_new.y);
-			//	ImgRectangle(252, 52, 298, 98, Gray, 2);
-			//	MouseStatus(&mouse_new);
-			//	MouseStoreBk(mouse_new.x, mouse_new.y);
-			//	return 45;
-			//}
-			//else if (MouseDown(10, 50, 70, 100))
-			//{
-			//	//画笔
-			//	Bar(200, 570 + 1, 700, 600, Gray);
-			//	MousePutBk(mouse_new.x, mouse_new.y);
-			//	ImgRectangle(252, 52, 298, 98, Gray, 2);
-			//	MouseStatus(&mouse_new);
-			//	MouseStoreBk(mouse_new.x, mouse_new.y);
-			//	return 50;
-			//}
-			//else if (MouseDown(70, 50, 130, 100))
-			//{
-			//	//裁剪
-			//	Bar(200, 570 + 1, 700, 600, Gray);
-			//	MousePutBk(mouse_new.x, mouse_new.y);
-			//	ImgRectangle(252, 52, 298, 98, Gray, 2);
-			//	MouseStatus(&mouse_new);
-			//	MouseStoreBk(mouse_new.x, mouse_new.y);
-			//	return 60;
-			//}
-			//else if (MouseDown(130, 50, 190, 100))
-			//{
-			//	//图形
-			//	Bar(200, 570 + 1, 700, 600, Gray);
-			//	MousePutBk(mouse_new.x, mouse_new.y);
-			//	ImgRectangle(252, 52, 298, 98, Gray, 2);
-			//	MouseStatus(&mouse_new);
-			//	MouseStoreBk(mouse_new.x, mouse_new.y);
-			//	return 65;
-			//}
 			else if (MouseDown(190, 50, 250, 100))
 			{
 				//直线
@@ -1171,7 +1031,7 @@ int DrawTriangle(BMPATTR* bmpattr, MENUSTATE* state)
 			{
 				//滤镜
 				MousePutBk(mouse_new.x, mouse_new.y);
-				DrawShading(bmpattr);
+				Shading(bmpattr);
 				MouseStatus(&mouse_new);
 				MouseStoreBk(mouse_new.x, mouse_new.y);
 			}
@@ -1300,76 +1160,6 @@ int DrawRectangle(BMPATTR* bmpattr, MENUSTATE* state)
 				MouseStoreBk(mouse_new.x, mouse_new.y);
 				return flag;
 			}
-			//else if (MouseDown(10, 0, 70, 50))
-			//{
-			//	//打开
-			//	Bar(200, 570 + 1, 700, 600, Gray);
-			//	MousePutBk(mouse_new.x, mouse_new.y);
-			//	ImgRectangle(302, 52, 378, 98, Gray, 2);
-			//	MouseStatus(&mouse_new);
-			//	MouseStoreBk(mouse_new.x, mouse_new.y);
-			//	return 20;
-			//}
-			//else if (MouseDown(70, 0, 130, 50))
-			//{
-			//	//保存
-			//	Bar(200, 570 + 1, 700, 600, Gray);
-			//	MousePutBk(mouse_new.x, mouse_new.y);
-			//	ImgRectangle(302, 52, 378, 98, Gray, 2);
-			//	MouseStatus(&mouse_new);
-			//	MouseStoreBk(mouse_new.x, mouse_new.y);
-			//	return 30;
-			//}
-			//else if (MouseDown(130, 0, 190, 50))
-			//{
-			//	//新建
-			//	Bar(200, 570 + 1, 700, 600, Gray);
-			//	MousePutBk(mouse_new.x, mouse_new.y);
-			//	ImgRectangle(302, 52, 378, 98, Gray, 2);
-			//	MouseStatus(&mouse_new);
-			//	MouseStoreBk(mouse_new.x, mouse_new.y);
-			//	return 40;
-			//}
-			//else if (MouseDown(190, 0, 250, 50))
-			//{
-			//	//图库
-			//	Bar(200, 570 + 1, 700, 600, Gray);
-			//	MousePutBk(mouse_new.x, mouse_new.y);
-			//	ImgRectangle(302, 52, 378, 98, Gray, 2);
-			//	MouseStatus(&mouse_new);
-			//	MouseStoreBk(mouse_new.x, mouse_new.y);
-			//	return 45;
-			//}
-			//else if (MouseDown(10, 50, 70, 100))
-			//{
-			//	//画笔
-			//	Bar(200, 570 + 1, 700, 600, Gray);
-			//	MousePutBk(mouse_new.x, mouse_new.y);
-			//	ImgRectangle(302, 52, 378, 98, Gray, 2);
-			//	MouseStatus(&mouse_new);
-			//	MouseStoreBk(mouse_new.x, mouse_new.y);
-			//	return 50;
-			//}
-			//else if (MouseDown(70, 50, 130, 100))
-			//{
-			//	//裁剪
-			//	Bar(200, 570 + 1, 700, 600, Gray);
-			//	MousePutBk(mouse_new.x, mouse_new.y);
-			//	ImgRectangle(302, 52, 378, 98, Gray, 2);
-			//	MouseStatus(&mouse_new);
-			//	MouseStoreBk(mouse_new.x, mouse_new.y);
-			//	return 60;
-			//}
-			//else if (MouseDown(130, 50, 190, 100))
-			//{
-			//	//图形
-			//	Bar(200, 570 + 1, 700, 600, Gray);
-			//	MousePutBk(mouse_new.x, mouse_new.y);
-			//	ImgRectangle(302, 52, 378, 98, Gray, 2);
-			//	MouseStatus(&mouse_new);
-			//	MouseStoreBk(mouse_new.x, mouse_new.y);
-			//	return 65;
-			//}
 			else if (MouseDown(190, 50, 250, 100))
 			{
 				//直线
@@ -1452,7 +1242,7 @@ int DrawRectangle(BMPATTR* bmpattr, MENUSTATE* state)
 			{
 				//滤镜
 				MousePutBk(mouse_new.x, mouse_new.y);
-				DrawShading(bmpattr);
+				Shading(bmpattr);
 				MouseStatus(&mouse_new);
 				MouseStoreBk(mouse_new.x, mouse_new.y);
 			}
@@ -1582,76 +1372,6 @@ int DrawCircle(BMPATTR* bmpattr, MENUSTATE* state)
 				MouseStoreBk(mouse_new.x, mouse_new.y);
 				return flag;
 			}
-			//else if (MouseDown(10, 0, 70, 50))
-			//{
-			//	//打开
-			//	Bar(200, 570 + 1, 700, 600, Gray);
-			//	MousePutBk(mouse_new.x, mouse_new.y);
-			//	ImgRectangle(382, 52, 448, 98, Gray, 2);
-			//	MouseStatus(&mouse_new);
-			//	MouseStoreBk(mouse_new.x, mouse_new.y);
-			//	return 20;
-			//}
-			//else if (MouseDown(70, 0, 130, 50))
-			//{
-			//	//保存
-			//	Bar(200, 570 + 1, 700, 600, Gray);
-			//	MousePutBk(mouse_new.x, mouse_new.y);
-			//	ImgRectangle(382, 52, 448, 98, Gray, 2);
-			//	MouseStatus(&mouse_new);
-			//	MouseStoreBk(mouse_new.x, mouse_new.y);
-			//	return 30;
-			//}
-			//else if (MouseDown(130, 0, 190, 50))
-			//{
-			//	//新建
-			//	Bar(200, 570 + 1, 700, 600, Gray);
-			//	MousePutBk(mouse_new.x, mouse_new.y);
-			//	ImgRectangle(382, 52, 448, 98, Gray, 2);
-			//	MouseStatus(&mouse_new);
-			//	MouseStoreBk(mouse_new.x, mouse_new.y);
-			//	return 40;
-			//}
-			//else if (MouseDown(190, 0, 250, 50))
-			//{
-			//	//图库
-			//	Bar(200, 570 + 1, 700, 600, Gray);
-			//	MousePutBk(mouse_new.x, mouse_new.y);
-			//	ImgRectangle(382, 52, 448, 98, Gray, 2);
-			//	MouseStatus(&mouse_new);
-			//	MouseStoreBk(mouse_new.x, mouse_new.y);
-			//	return 45;
-			//}
-			//else if (MouseDown(10, 50, 70, 100))
-			//{
-			//	//画笔
-			//	Bar(200, 570 + 1, 700, 600, Gray);
-			//	MousePutBk(mouse_new.x, mouse_new.y);
-			//	ImgRectangle(382, 52, 448, 98, Gray, 2);
-			//	MouseStatus(&mouse_new);
-			//	MouseStoreBk(mouse_new.x, mouse_new.y);
-			//	return 50;
-			//}
-			//else if (MouseDown(70, 50, 130, 100))
-			//{
-			//	//裁剪
-			//	Bar(200, 570 + 1, 700, 600, Gray);
-			//	MousePutBk(mouse_new.x, mouse_new.y);
-			//	ImgRectangle(382, 52, 448, 98, Gray, 2);
-			//	MouseStatus(&mouse_new);
-			//	MouseStoreBk(mouse_new.x, mouse_new.y);
-			//	return 60;
-			//}
-			//else if (MouseDown(130, 50, 190, 100))
-			//{
-			//	//图形
-			//	Bar(200, 570 + 1, 700, 600, Gray);
-			//	MousePutBk(mouse_new.x, mouse_new.y);
-			//	ImgRectangle(382, 52, 448, 98, Gray, 2);
-			//	MouseStatus(&mouse_new);
-			//	MouseStoreBk(mouse_new.x, mouse_new.y);
-			//	return 65;
-			//}
 			else if (MouseDown(190, 50, 250, 100))
 			{
 				//直线
@@ -1734,125 +1454,9 @@ int DrawCircle(BMPATTR* bmpattr, MENUSTATE* state)
 			{
 				//滤镜
 				MousePutBk(mouse_new.x, mouse_new.y);
-				DrawShading(bmpattr);
+				Shading(bmpattr);
 				MouseStatus(&mouse_new);
 				MouseStoreBk(mouse_new.x, mouse_new.y);
-			}
-			else if (MouseDown(750, 0, 800, 50))
-			{
-				//退出
-				MousePutBk(mouse_new.x, mouse_new.y);
-				Exit(bmpattr);
-				MouseStatus(&mouse_new);
-				MouseStoreBk(mouse_new.x, mouse_new.y);
-			}
-
-			mouse_old = mouse_new;
-		}
-	}
-}
-
-/**
-*  函数名      DrawShading
-*  输入参数    bmpattr    图片
-
-*  功能        滤镜
-*  返回值      0          图片未打开
-               -1         取消
-			   -2         关闭
-			   1          成功画滤镜
-**/
-int DrawShading(BMPATTR* bmpattr)
-{
-	u32 color1, color2;                 //用于存储用于渐变的颜色值的临时变量
-	const u32 ColorStart = 0x7ecef4;    //滤镜默认值
-	const u32 ColorEnd = 0xf09fc3;      //滤镜默认值
-	MOUSE mouse_old, mouse_new;
-
-	/*若图片未打开，显示警告框，退出函数*/
-	if (bmpattr->flag == 0)
-	{
-		WarnBox("图片未打开");
-		return 0;
-	}
-
-	MouseStatus(&mouse_old);
-	MouseStoreBk(mouse_old.x, mouse_old.y);
-	MouseDraw(mouse_old);
-
-	color1 = ColorStart;
-	color2 = ColorEnd;
-	
-	BmpSave(248, 198, 552, 352, "DATA//BK8");    //保存显示框下方的图片
-	DrawShadingBox();                            //显示框
-
-	while (1)
-	{
-		MouseStatus(&mouse_new);
-
-		if (mouse_new.x == mouse_old.x && mouse_new.y == mouse_old.y && mouse_new.button == mouse_old.button)
-		{
-			;
-		}
-		else
-		{
-			MousePutBk(mouse_old.x, mouse_old.y);
-			MouseStoreBk(mouse_new.x, mouse_new.y);
-			MouseDraw(mouse_new);
-
-			if (mouse_new.button == mouse_old.button)
-			{
-				mouse_old = mouse_new;
-				continue;
-			}
-
-			if (MouseDown(348, 260, 400, 282))
-			{
-				/*选择用于渐变的颜色*/
-				MousePutBk(mouse_new.x, mouse_new.y);
-				SelectColor(&color1);
-				MouseStatus(&mouse_new);
-				MouseStoreBk(mouse_new.x, mouse_new.y);
-
-				Bar(348 + 1, 260 + 1, 400 - 1, 282 - 1, color1);    //显示颜色一
-			}
-			else if (MouseDown(348, 300, 400, 325))
-			{
-				/*选择渐变结束的颜色*/
-				MousePutBk(mouse_new.x, mouse_new.y);
-				SelectColor(&color2);
-				MouseStatus(&mouse_new);
-				MouseStoreBk(mouse_new.x, mouse_new.y);
-
-				Bar(348 + 1, 300 + 1, 400 - 1, 325 - 1, color2);    //显示颜色二
-			}
-			else if (MouseDown(455, 260, 512, 282))
-			{
-				//点击确认（颜色一默认为ColorStart，颜色二默认为ColorEnd）
-				MousePutBk(mouse_new.x, mouse_new.y);
-				BmpPut(248, 198, "DATA//BK8");                                             //显示之前保存的图片
-				ImgMix(bmpattr->x1, bmpattr->y1, bmpattr->x2, bmpattr->y2, color1, color2);    //画滤镜
-				MouseStatus(&mouse_new);
-				MouseStoreBk(mouse_new.x, mouse_new.y);
-				return 1;
-			}
-			else if (MouseDown(455, 300, 512, 325))
-			{
-				//取消
-				MousePutBk(mouse_new.x, mouse_new.y);
-				BmpPut(248, 198, "DATA//BK8");    //显示之前保存的图片
-				MouseStatus(&mouse_new);
-				MouseStoreBk(mouse_new.x, mouse_new.y);
-				return -1;
-			}
-			else if (MouseDown(500, 200, 550, 240))
-			{
-				//关闭
-				MousePutBk(mouse_new.x, mouse_new.y);
-				BmpPut(248, 198, "DATA//BK8");    //显示之前保存的图片
-				MouseStatus(&mouse_new);
-				MouseStoreBk(mouse_new.x, mouse_new.y);
-				return -2;
 			}
 			else if (MouseDown(750, 0, 800, 50))
 			{

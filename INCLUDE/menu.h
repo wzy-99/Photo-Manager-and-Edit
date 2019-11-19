@@ -12,6 +12,7 @@
 #include "draw.h"	//»æÖÆ¿â
 #include "pic.h"	//Í¼ÐÎ¿â
 #include "color.h"	//ÑÕÉ«¿â
+#include "mix.h"	//Í¼Ïñ»ìºÏ¿â
 
 void DrawMenu(void);
 void MenuManager(void);

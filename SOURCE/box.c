@@ -114,6 +114,11 @@ void DrawShadingBox()
 	BmpPut(248, 198, "UI//FITER");
 }
 
+void DrawSFXBox()
+{
+	BmpPut(248, 198, "UI//MIX");
+}
+
 #endif
 
 
@@ -328,7 +333,7 @@ void Welcome()
 	const u32 ColorStart = 0x7ecef4;
 	const u32 ColorEnd = 0xf09fc3;
 	
-	ImgShading(0, 0, 800, 600, ColorStart, ColorEnd);
+	DrawShading(0, 0, 800, 600, ColorStart, ColorEnd);
 
 	Bar(100, 100, 250, 100+2, White);
 	Bar(100, 100, 100+2, 175, White);

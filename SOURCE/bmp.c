@@ -309,3 +309,48 @@ int BmpName(char* filename)
 		return 1;
 	}
 }
+
+/**
+ *  @ brief		DataSave
+ *
+ *  @ param		
+ *
+ *	@ note		纯二进制形式保存图像
+ *
+ *	@ return	
+ *				
+ **/
+
+int DataSave(BMPATTR* bmpattr, const char* path)
+{
+	FILE* fp;                      //将背景图案每一点的颜色值读取出来存入文件中，再从文件中读取颜色值用于计算
+
+	int x1 = bmpattr->x1;
+	int x2 = bmpattr->x1 + bmpattr->width;
+	int y1 = bmpattr->y1;
+	int y2 = bmpattr->y1 + bmpattr->heigth;
+
+	int i, j;	//循环变量
+
+	u32 color;
+
+	/*以二进制只写模式打开临时文件，如果文件打开失败，退出*/
+	if ((fp = fopen(path, "wb")) == NULL)
+	{
+		exit(0);
+	}
+
+	/*读取每一点的颜色值，并写入文件*/
+	for (j = y1; j <= y2; j++)
+	{
+		for (i = x1; i <= x2; i++)
+		{
+			color = GetPixel(i, j);
+			fwrite(&color, 4, 1, fp);
+		}
+	}
+
+	fclose(fp);    //关闭文件
+
+	return 0;
+}
