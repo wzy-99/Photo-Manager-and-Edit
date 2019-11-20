@@ -91,7 +91,7 @@ void MenuManager()
 				MousePutBk(mouse_old.x, mouse_old.y);
 				message = 65;
 			}
-			else if (MouseDown(650, 50, 700, 100) || message == 70)
+			else if (MouseDown(650, 0, 700, 50) || message == 70)
 			{
 				//µ÷Õû
 				MousePutBk(mouse_old.x, mouse_old.y);
@@ -151,11 +151,11 @@ void MenuManager()
 				MousePutBk(mouse_old.x, mouse_old.y);
 				message = 120;
 			}
-			else if (MouseDown(600, 0, 650, 50) || message == 125)
+			else if (MouseDown(600, 0, 650, 50) || message == 150)
 			{
 				//ÂË¾µ
 				MousePutBk(mouse_old.x, mouse_old.y);
-				message = 125;
+				message = 150;
 			}
 			else if (MouseDown(750, 0, 800, 50))
 			{
@@ -266,12 +266,13 @@ void MenuManager()
 				MouseStoreBk(mouse_old.x, mouse_old.y);
 				break;
 			case 120:
-				//ÂË¾µ
+				//½¥±ä
 				message = Shading(&bmpattr);
 				MouseStatus(&mouse_old);
 				MouseStoreBk(mouse_old.x, mouse_old.y);
 				break;
-			case 125:
+			case 150:
+				//ÂË¾µ
 				message = ImgSFX(&bmpattr);
 				MouseStatus(&mouse_old);
 				MouseStoreBk(mouse_old.x, mouse_old.y);

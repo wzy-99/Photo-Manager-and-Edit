@@ -304,7 +304,7 @@ u32 ImageRGB(int x1, int x2, int y1, int y2, double x, double y, u8 patton)
 			   95         切换为放大功能
 			   100        切换为旋转功能
 			   105        切换为翻转功能
-			   120        切换为滤镜功能
+			   120        切换为渐变功能
 
 **/
 int ImageTailor(BMPATTR* bmpattr)
@@ -357,7 +357,7 @@ int ImageTailor(BMPATTR* bmpattr)
 					flag = 1;
 					tx1 = x1 - bmpattr->x1;
 					ty1 = y1 - bmpattr->y1;
-					Bar(200, 570 + 1, 700, 600, Gray);
+					Bar(200, 570 + 1, 650, 600, Gray);
 					sprintf(xystring1, "坐标1:%d,%d", tx1, ty1);
 					TextGB16(200, 580, 14, 0, xystring1);
 				}
@@ -447,7 +447,7 @@ int ImageTailor(BMPATTR* bmpattr)
 				//打开
 				MousePutBk(mouse_new.x, mouse_new.y);
 				ImgRectangle(72, 52, 128, 98, Gray, 2);
-				Bar(200, 570 + 1, 700, 600, Gray);
+				Bar(200, 570 + 1, 650, 600, Gray);
 				return 20;
 			}
 			else if (MouseDown(70, 0, 130, 50))
@@ -455,7 +455,7 @@ int ImageTailor(BMPATTR* bmpattr)
 				//保存
 				MousePutBk(mouse_new.x, mouse_new.y);
 				ImgRectangle(72, 52, 128, 98, Gray, 2);
-				Bar(200, 570 + 1, 700, 600, Gray);
+				Bar(200, 570 + 1, 650, 600, Gray);
 				return 30;
 			}
 			else if (MouseDown(130, 0, 190, 50))
@@ -463,7 +463,7 @@ int ImageTailor(BMPATTR* bmpattr)
 				//新建
 				MousePutBk(mouse_new.x, mouse_new.y);
 				ImgRectangle(72, 52, 128, 98, Gray, 2);
-				Bar(200, 570 + 1, 700, 600, Gray);
+				Bar(200, 570 + 1, 650, 600, Gray);
 				return 40;
 			}
 			else if (MouseDown(190, 0, 250, 50))
@@ -471,7 +471,7 @@ int ImageTailor(BMPATTR* bmpattr)
 				//图库
 				MousePutBk(mouse_new.x, mouse_new.y);
 				ImgRectangle(72, 52, 128, 98, Gray, 2);
-				Bar(200, 570 + 1, 700, 600, Gray);
+				Bar(200, 570 + 1, 650, 600, Gray);
 				return 45;
 			}
 			else if (MouseDown(10, 50, 70, 100))
@@ -479,7 +479,7 @@ int ImageTailor(BMPATTR* bmpattr)
 				//画笔
 				MousePutBk(mouse_new.x, mouse_new.y);
 				ImgRectangle(72, 52, 128, 98, Gray, 2);
-				Bar(200, 570 + 1, 700, 600, Gray);
+				Bar(200, 570 + 1, 650, 600, Gray);
 				return 50;
 			}
 			else if (MouseDown(70, 50, 130, 100))
@@ -487,7 +487,7 @@ int ImageTailor(BMPATTR* bmpattr)
 				//裁剪
 				MousePutBk(mouse_new.x, mouse_new.y);
 				ImgRectangle(72, 52, 128, 98, Gray, 2);
-				Bar(200, 570 + 1, 700, 600, Gray);
+				Bar(200, 570 + 1, 650, 600, Gray);
 				return 1;
 			}
 			else if (MouseDown(130, 50, 190, 100))
@@ -495,23 +495,23 @@ int ImageTailor(BMPATTR* bmpattr)
 				//图形
 				MousePutBk(mouse_new.x, mouse_new.y);
 				ImgRectangle(72, 52, 128, 98, Gray, 2);
-				Bar(200, 570 + 1, 700, 600, Gray);
+				Bar(200, 570 + 1, 650, 600, Gray);
 				return 65;
 			}
-			else if (MouseDown(650, 50, 700, 100))
+			else if (MouseDown(650, 0, 700, 50))
 			{
 				//调整
 				MousePutBk(mouse_new.x, mouse_new.y);
-				ImgRectangle(132, 52, 188, 98, Gray, 2);
-				Bar(200, 570 + 1, 700, 600, Gray);
+				ImgRectangle(72, 52, 128, 98, Gray, 2);
+				Bar(200, 570 + 1, 650, 600, Gray);
 				return 70;
 			}
 			else if (MouseDown(700, 50, 750, 100))
 			{
 				//粗细
 				MousePutBk(mouse_new.x, mouse_new.y);
-				ImgRectangle(12, 52, 68, 98, Gray, 2);
-				Bar(200, 570 + 1, 700, 600, Gray);
+				ImgRectangle(72, 52, 128, 98, Gray, 2);
+				Bar(200, 570 + 1, 650, 600, Gray);
 				return 75;
 			}
 			else if (MouseDown(750, 50, 800, 100))
@@ -519,7 +519,7 @@ int ImageTailor(BMPATTR* bmpattr)
 				//颜色
 				MousePutBk(mouse_new.x, mouse_new.y);
 				ImgRectangle(72, 52, 128, 98, Gray, 2);
-				Bar(200, 570 + 1, 700, 600, Gray);
+				Bar(200, 570 + 1, 650, 600, Gray);
 				return 80;
 			}
 			else if (MouseDown(703, 570, 735, 600))
@@ -527,7 +527,7 @@ int ImageTailor(BMPATTR* bmpattr)
 				//设置
 				MousePutBk(mouse_new.x, mouse_new.y);
 				ImgRectangle(72, 52, 128, 98, Gray, 2);
-				Bar(200, 570 + 1, 700, 600, Gray);
+				Bar(200, 570 + 1, 650, 600, Gray);
 				return 85;
 			}
 			else if (MouseDown(735, 570, 767, 600))
@@ -535,7 +535,7 @@ int ImageTailor(BMPATTR* bmpattr)
 				//缩小
 				MousePutBk(mouse_new.x, mouse_new.y);
 				ImgRectangle(72, 52, 128, 98, Gray, 2);
-				Bar(200, 570 + 1, 700, 600, Gray);
+				Bar(200, 570 + 1, 650, 600, Gray);
 				return 90;
 			}
 			else if (MouseDown(767, 570, 800, 600))
@@ -543,7 +543,7 @@ int ImageTailor(BMPATTR* bmpattr)
 				//放大
 				MousePutBk(mouse_new.x, mouse_new.y);
 				ImgRectangle(72, 52, 128, 98, Gray, 2);
-				Bar(200, 570 + 1, 700, 600, Gray);
+				Bar(200, 570 + 1, 650, 600, Gray);
 				return 95;
 			}
 			else if (MouseDown(0, 570, 42, 600))
@@ -551,7 +551,7 @@ int ImageTailor(BMPATTR* bmpattr)
 				//旋转
 				MousePutBk(mouse_new.x, mouse_new.y);
 				ImgRectangle(72, 52, 128, 98, Gray, 2);
-				Bar(200, 570 + 1, 700, 600, Gray);
+				Bar(200, 570 + 1, 650, 600, Gray);
 				return 100;
 			}
 			else if (MouseDown(42, 570, 84, 600))
@@ -559,7 +559,7 @@ int ImageTailor(BMPATTR* bmpattr)
 				//翻转
 				MousePutBk(mouse_new.x, mouse_new.y);
 				ImgRectangle(72, 52, 128, 98, Gray, 2);
-				Bar(200, 570 + 1, 700, 600, Gray);
+				Bar(200, 570 + 1, 650, 600, Gray);
 				return 105;
 			}
 			else if (MouseDown(84, 570, 126, 600))
@@ -567,15 +567,15 @@ int ImageTailor(BMPATTR* bmpattr)
 				//拾色器
 				MousePutBk(mouse_new.x, mouse_new.y);
 				ImgRectangle(72, 52, 128, 98, Gray, 2);
-				Bar(200, 570 + 1, 700, 600, Gray);
+				Bar(200, 570 + 1, 650, 600, Gray);
 				return 110;
 			}
 			else if (MouseDown(700, 0, 750, 50))
 			{
-				//滤镜
+				//渐变
 				MousePutBk(mouse_new.x, mouse_new.y);
 				ImgRectangle(72, 52, 128, 98, Gray, 2);
-				Bar(200, 570 + 1, 700, 600, Gray);
+				Bar(200, 570 + 1, 650, 600, Gray);
 				return 120;
 			}
 			else if (MouseDown(750, 0, 800, 50))

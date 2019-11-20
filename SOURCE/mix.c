@@ -589,7 +589,7 @@ int ImgSFX(BMPATTR* bmpattr)
 			mouse_old = mouse_new;
 			if (MouseDown(285, 260, 335, 280))
 			{
-				//
+				//清新
 				MousePutBk(mouse_old.x, mouse_old.y);
 				BmpPut(248, 198, "DATA//BK9");
 				//ComicSFX(bmpattr);
@@ -631,11 +631,12 @@ int ImgSFX(BMPATTR* bmpattr)
 			}
 			else if (MouseDown(460, 300, 510, 320))
 			{
-				//底片
+				//日系
 				MousePutBk(mouse_old.x, mouse_old.y);
 				BmpPut(248, 198, "DATA//BK9");
 				//FrozenSFX(bmpattr);
-				NegativeSFX(bmpattr);
+				//NegativeSFX(bmpattr);
+				InstagramSFX(bmpattr);
 				return 0;
 			}
 			else if (MouseDown(500, 200, 550, 240))

@@ -434,7 +434,7 @@ int SelectColor(u32* color)
 			   95         切换为放大功能
 			   100        切换为旋转功能
 			   105        切换为翻转功能
-			   120        切换为滤镜功能
+			   120        切换为渐变功能
 			   125        切换为画直线功能
 			   130        切换为画三角形功能
 			   135        切换为画矩形功能
@@ -486,147 +486,147 @@ int PickColor(u32* color, int flag)
 			{
 				//打开
 				MousePutBk(mouse_new.x, mouse_new.y);
-				Bar(200, 570 + 1, 700, 600, Gray);
+				Bar(200, 570 + 1, 650, 600, Gray);
 				return 20;
 			}
 			else if (MouseDown(70, 0, 130, 50))
 			{
 				//保存
 				MousePutBk(mouse_new.x, mouse_new.y);
-				Bar(200, 570 + 1, 700, 600, Gray);
+				Bar(200, 570 + 1, 650, 600, Gray);
 				return 30;
 			}
 			else if (MouseDown(130, 0, 190, 50))
 			{
 				//新建
 				MousePutBk(mouse_new.x, mouse_new.y);
-				Bar(200, 570 + 1, 700, 600, Gray);
+				Bar(200, 570 + 1, 650, 600, Gray);
 				return 40;
 			}
 			else if (MouseDown(190, 0, 250, 50))
 			{
 				//图库
 				MousePutBk(mouse_new.x, mouse_new.y);
-				Bar(200, 570 + 1, 700, 600, Gray);
+				Bar(200, 570 + 1, 650, 600, Gray);
 				return 45;
 			}
 			else if (MouseDown(10, 50, 70, 100))
 			{
 				//画笔
 				MousePutBk(mouse_new.x, mouse_new.y);
-				Bar(200, 570 + 1, 700, 600, Gray);
+				Bar(200, 570 + 1, 650, 600, Gray);
 				return 50;
 			}
 			else if (MouseDown(70, 50, 130, 100))
 			{
 				//裁剪
 				MousePutBk(mouse_new.x, mouse_new.y);
-				Bar(200, 570 + 1, 700, 600, Gray);
+				Bar(200, 570 + 1, 650, 600, Gray);
 				return 60;
 			}
 			else if (MouseDown(130, 50, 190, 100))
 			{
 				//图形
 				MousePutBk(mouse_new.x, mouse_new.y);
-				Bar(200, 570 + 1, 700, 600, Gray);
+				Bar(200, 570 + 1, 650, 600, Gray);
 				return 65;
 			}
-			else if (MouseDown(650, 50, 700, 100))
+			else if (MouseDown(650, 0, 700, 50))
 			{
 				//调整
 				MousePutBk(mouse_new.x, mouse_new.y);
-				Bar(200, 570 + 1, 700, 600, Gray);
+				Bar(200, 570 + 1, 650, 600, Gray);
 				return 70;
 			}
 			else if (MouseDown(700, 50, 750, 100))
 			{
 				//粗细
 				MousePutBk(mouse_new.x, mouse_new.y);
-				Bar(200, 570 + 1, 700, 600, Gray);
+				Bar(200, 570 + 1, 650, 600, Gray);
 				return 75;
 			}
 			else if (MouseDown(750, 50, 800, 100))
 			{
 				//颜色
 				MousePutBk(mouse_new.x, mouse_new.y);
-				Bar(200, 570 + 1, 700, 600, Gray);
+				Bar(200, 570 + 1, 650, 600, Gray);
 				return 80;
 			}
 			else if (MouseDown(703, 570, 735, 600))
 			{
 				//设置
 				MousePutBk(mouse_new.x, mouse_new.y);
-				Bar(200, 570 + 1, 700, 600, Gray);
+				Bar(200, 570 + 1, 650, 600, Gray);
 				return 85;
 			}
 			else if (MouseDown(735, 570, 767, 600))
 			{
 				//缩小
 				MousePutBk(mouse_new.x, mouse_new.y);
-				Bar(200, 570 + 1, 700, 600, Gray);
+				Bar(200, 570 + 1, 650, 600, Gray);
 				return 90;
 			}
 			else if (MouseDown(767, 570, 800, 600))
 			{
 				//放大
 				MousePutBk(mouse_new.x, mouse_new.y);
-				Bar(200, 570 + 1, 700, 600, Gray);
+				Bar(200, 570 + 1, 650, 600, Gray);
 				return 95;
 			}
 			else if (MouseDown(0, 570, 42, 600))
 			{
 				//旋转
 				MousePutBk(mouse_new.x, mouse_new.y);
-				Bar(200, 570 + 1, 700, 600, Gray);
+				Bar(200, 570 + 1, 650, 600, Gray);
 				return 100;
 			}
 			else if (MouseDown(42, 570, 84, 600))
 			{
 				//翻转
 				MousePutBk(mouse_new.x, mouse_new.y);
-				Bar(200, 570 + 1, 700, 600, Gray);
+				Bar(200, 570 + 1, 650, 600, Gray);
 				return 105;
 			}
 			else if (MouseDown(84, 570, 126, 600))
 			{
 				//再次点击，退出拾色器
 				MousePutBk(mouse_new.x, mouse_new.y);
-				Bar(200, 570 + 1, 700, 600, Gray);
+				Bar(200, 570 + 1, 650, 600, Gray);
 				return 0;
 			}
 			else if (MouseDown(700, 0, 750, 50))
 			{
-				//滤镜
+				//渐变
 				MousePutBk(mouse_new.x, mouse_new.y);
-				Bar(200, 570 + 1, 700, 600, Gray);
+				Bar(200, 570 + 1, 650, 600, Gray);
 				return 120;
 			}
 			else if (MouseDown(190, 50, 250, 100) && flag == 1)
 			{
 				//直线
 				MousePutBk(mouse_new.x, mouse_new.y);
-				Bar(200, 570 + 1, 700, 600, Gray);
+				Bar(200, 570 + 1, 650, 600, Gray);
 				return 125;
 			}
 			else if (MouseDown(250, 50, 300, 100) && flag == 1)
 			{
 				//三角形
 				MousePutBk(mouse_new.x, mouse_new.y);
-				Bar(200, 570 + 1, 700, 600, Gray);
+				Bar(200, 570 + 1, 650, 600, Gray);
 				return 130;
 			}
 			else if (MouseDown(300, 50, 380, 100) && flag == 1)
 			{
 				//矩形
 				MousePutBk(mouse_new.x, mouse_new.y);
-				Bar(200, 570 + 1, 700, 600, Gray);
+				Bar(200, 570 + 1, 650, 600, Gray);
 				return 135;
 			}
 			else if (MouseDown(380, 50, 450, 100) && flag == 1)
 			{
 				//圆
 				MousePutBk(mouse_new.x, mouse_new.y);
-				Bar(200, 570 + 1, 700, 600, Gray);
+				Bar(200, 570 + 1, 650, 600, Gray);
 				return 140;
 			}
 			else if (MouseDown(1, 1, 800, 600))    //在屏幕内点击，触发拾色器功能
@@ -637,7 +637,7 @@ int PickColor(u32* color, int flag)
 
 				/*显示当前颜色信息*/
 				U32TRGB(&tRGB, *color);
-				Bar(200, 570 + 1, 700, 600, Gray);
+				Bar(200, 570 + 1, 650, 600, Gray);
 				sprintf(colorstring, "R:%d G:%d B:%d", tRGB.r, tRGB.g, tRGB.b);
 				TextGB16(200, 580, 14, 0, "当前颜色为：");
 				Bar(300, 582, 320, 592, *color);
